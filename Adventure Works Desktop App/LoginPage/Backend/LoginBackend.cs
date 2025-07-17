@@ -1,4 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals;
+using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Adventure_Works_Desktop_App
@@ -12,7 +14,7 @@ namespace Adventure_Works_Desktop_App
         {
             accountData = GetLoginDB(inputUsername, inputPassword);
 
-            if (accountData.Username.Length <= 0 || accountData == null)
+            if (accountData.Username == null || accountData.Password == null)
             {
                 return false;
             }
@@ -23,6 +25,7 @@ namespace Adventure_Works_Desktop_App
             }
             
             string displayName = GetDisplayName(inputUsername, inputPassword);
+            
             if (displayName.Equals("ERROR"))
             {
                 return false;
@@ -46,31 +49,38 @@ namespace Adventure_Works_Desktop_App
                     var result = cmd.ExecuteScalar();
                     if (result != null)
                     {
-                        return $"{result}";
+                        return result.ToString();
                     }
                 }
             }
-            return "ERROR";
+            throw new Exception(Properties.LoginBackendResources.ExceptionCannotConnectToDB);
         }
 
         private AccountData GetLoginDB(string username, string password)
         {
-            AccountData data = new AccountData("", "");
-            string query = $"select username, password from Person.Login where username = @username and password = @password";
+            AccountData data = new AccountData();
+
             using (SqlConnection conn = new SqlConnection(connection.GetConnectionString()))
             {
                 conn.Open();
-                using (SqlCommand queryStatus = new SqlCommand(query, conn))
+                
+                using (SqlCommand cmd = new SqlCommand("dbo.uspGetUsernamePassword", conn))
                 {
-                    queryStatus.Parameters.AddWithValue("@username", username);
-                    queryStatus.Parameters.AddWithValue("@password", password);
-                    SqlDataReader reader = queryStatus.ExecuteReader();
-                    while (reader.Read())
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Password", password);
+                    
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        data = new AccountData($"{reader["username"]}", $"{reader["password"]}");
+                        while (reader.Read())
+                        {
+                            data.Username = reader["Username"].ToString();
+                            data.Password = reader["Password"].ToString();
+                        }
                     }
                 }
             }
+
             return data;
         }
     }

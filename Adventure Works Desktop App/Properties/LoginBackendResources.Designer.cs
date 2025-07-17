@@ -22,14 +22,14 @@ namespace Adventure_Works_Desktop_App.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LoginFormResources {
+    internal class LoginBackendResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LoginFormResources() {
+        internal LoginBackendResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Adventure_Works_Desktop_App.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Adventure_Works_Desktop_App.Properties.LoginFormResources", typeof(LoginFormResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Adventure_Works_Desktop_App.Properties.LoginBackendResources", typeof(LoginBackendResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,11 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred during login. Please try again later.\n{0}.
+        ///   Looks up a localized string similar to ERROR: Cannot connect to the database. Check your connection and try again..
         /// </summary>
-        internal static string ErrorMessageLogin {
+        internal static string ExceptionCannotConnectToDB {
             get {
-                return ResourceManager.GetString("ErrorMessageLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid username or password. Please try again..
-        /// </summary>
-        internal static string InvalidMessageCredentials {
-            get {
-                return ResourceManager.GetString("InvalidMessageCredentials", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Successfully logged in as {0}.
-        /// </summary>
-        internal static string SuccessMessageLogin {
-            get {
-                return ResourceManager.GetString("SuccessMessageLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        internal static string TitleError {
-            get {
-                return ResourceManager.GetString("TitleError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login Failed.
-        /// </summary>
-        internal static string TitleFailedLogin {
-            get {
-                return ResourceManager.GetString("TitleFailedLogin", resourceCulture);
+                return ResourceManager.GetString("ExceptionCannotConnectToDB", resourceCulture);
             }
         }
     }

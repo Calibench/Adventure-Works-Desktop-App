@@ -122,6 +122,21 @@
     <Compile Include="ProductReviewPage\Frontend\ReviewProductForm.Designer.cs">
       <DependentUpon>ReviewProductForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AccountDataResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountDataResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\LoginBackendResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoginBackendResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\LoginFormResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LoginFormResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SalesPersonPage\Backend\RegionData.cs" />
     <Compile Include="SalesPersonPage\Backend\SalesPersonBackend.cs" />
     <Compile Include="SalesPersonPage\Backend\SalesPersonData.cs" />
@@ -202,6 +217,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProductReviewPage\Frontend\ReviewProductForm.resx">
       <DependentUpon>ReviewProductForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\AccountDataResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountDataResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LoginBackendResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoginBackendResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LoginFormResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoginFormResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.resx">
       <DependentUpon>ChangeRegionByNameForm.cs</DependentUpon>

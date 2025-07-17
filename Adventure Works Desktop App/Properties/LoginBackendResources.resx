@@ -117,24 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TitleError" xml:space="preserve">
-    <value>Error</value>
-    <comment>LOGIN_PAGE: Title for not being able to access the DB.</comment>
-  </data>
-  <data name="InvalidMessageCredentials" xml:space="preserve">
-    <value>Invalid username or password. Please try again.</value>
-    <comment>LOGIN_PAGE: The user has gotten their credentials wrong.</comment>
-  </data>
-  <data name="ErrorMessageLogin" xml:space="preserve">
-    <value>An error occurred during login. Please try again later.\n{0}</value>
-    <comment>LOGIN_PAGE: Message for when DB is not accessible.</comment>
-  </data>
-  <data name="TitleFailedLogin" xml:space="preserve">
-    <value>Login Failed</value>
-    <comment>LOGIN_PAGE(InvalidCredentialsMessage): Title for Invalid Credentials.</comment>
-  </data>
-  <data name="SuccessMessageLogin" xml:space="preserve">
-    <value>Successfully logged in as {0}</value>
-    <comment>LOGIN_PAGE: The user has entered the correct credentials and has logged in.</comment>
+  <data name="ExceptionCannotConnectToDB" xml:space="preserve">
+    <value>ERROR: Cannot connect to the database. Check your connection and try again.</value>
+    <comment>LOGIN_BACKEND: Used to show bad connection to database</comment>
   </data>
 </root>

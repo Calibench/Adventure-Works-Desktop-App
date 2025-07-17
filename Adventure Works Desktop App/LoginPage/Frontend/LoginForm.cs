@@ -55,6 +55,7 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
                 MessageBox.Show(Properties.LoginFormResources.ErrorMessageLogin + ex, Properties.LoginFormResources.TitleError,
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            ButtonInverter(loginButton);
         }
 
         private void showPasswordCheckBox_CheckedChanged(object sender, EventArgs e)

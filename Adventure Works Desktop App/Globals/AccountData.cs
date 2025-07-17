@@ -28,6 +28,14 @@ namespace Adventure_Works_Desktop_App.Globals
         { get; set; }
 
         /// <summary>
+        /// Empty account data constructor
+        /// </summary>
+        public AccountData()
+        {
+
+        }
+
+        /// <summary>
         /// A constructor to ensure all portions of Account Data is filled. Mainly used for Signup.
         /// </summary>
         /// <param name="firstName">A given user's first name</param>
@@ -44,17 +52,6 @@ namespace Adventure_Works_Desktop_App.Globals
             Password = password;
             DisplayName = displayName;
             Email = email;
-        }
-
-        /// <summary>
-        /// A constructor when just needing to contain username and password. Mainly used for Login.
-        /// </summary>
-        /// <param name="username">A given user's username</param>
-        /// <param name="password">A given user's password</param>
-        public AccountData(string username, string password)
-        {
-            Username = username;
-            Password = password;
         }
 
         /// <summary>
