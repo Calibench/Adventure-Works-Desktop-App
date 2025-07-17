@@ -105,16 +105,17 @@
             // 
             // backButton
             // 
+            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.backButton.Location = new System.Drawing.Point(22, 3);
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(75, 23);
             this.backButton.TabIndex = 1;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // submitButton
             // 
+            this.submitButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.submitButton.Location = new System.Drawing.Point(103, 3);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(75, 23);

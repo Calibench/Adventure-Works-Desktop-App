@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Xml;
@@ -8,7 +9,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     internal class EditEmployeeBackend
     {
         private Connection connect = new Connection();
-        private string id;
+        private string id = "";
         public EditEmployeeBackend(string id) 
         {
             this.id = id;
@@ -106,7 +107,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             }
         }
 
-        public void PushToSql(EmployeeDetails data)
+        public void PushToSql(EmployeeData data)
         {
             UpdateBasicEmployeeInfo(data);
             UpdateBasicPersonInfo(data);
@@ -114,7 +115,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             UpdateEmployeePayHistory(data);
         }
 
-        private void UpdateBasicEmployeeInfo(EmployeeDetails data)
+        private void UpdateBasicEmployeeInfo(EmployeeData data)
         {
             string query = "update HumanResources.Employee " +
                            "set JobTitle=@JobTitle, BirthDate=@BirthDate, MaritalStatus=@MaritalStatus, Gender=@Gender, " +
@@ -124,19 +125,19 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@JobTitle", data.GetJobTitle());
-                cmd.Parameters.AddWithValue("@BirthDate", data.GetBirthDate());
-                cmd.Parameters.AddWithValue("@MaritalStatus", data.GetMaritalStatus());
-                cmd.Parameters.AddWithValue("@Gender", data.GetGender());
-                cmd.Parameters.AddWithValue("@HireDate", data.GetHireDate());
-                cmd.Parameters.AddWithValue("@VacationHours", data.GetVacationHours());
-                cmd.Parameters.AddWithValue("@SickLeaveHours", data.GetSickLeaveHours());
-                cmd.Parameters.AddWithValue("ID", data.GetBusinessEntityID());
+                cmd.Parameters.AddWithValue("@JobTitle", data.JobTitle);
+                cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
+                cmd.Parameters.AddWithValue("@MaritalStatus", data.MaritalStatus);
+                cmd.Parameters.AddWithValue("@Gender", data.Gender);
+                cmd.Parameters.AddWithValue("@HireDate", data.HireDate);
+                cmd.Parameters.AddWithValue("@VacationHours", data.VacationHours);
+                cmd.Parameters.AddWithValue("@SickLeaveHours", data.SickLeaveHours);
+                cmd.Parameters.AddWithValue("ID", data.BusinessEntityID);
                 cmd.ExecuteNonQuery();
             }
         }
 
-        private void UpdateBasicPersonInfo(EmployeeDetails data)
+        private void UpdateBasicPersonInfo(EmployeeData data)
         {
             string query = "update Person.Person " +
                            "set FirstName=@FirstName, MiddleName=@MiddleName, LastName=@LastName " +
@@ -145,15 +146,15 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@FirstName", data.GetFirstName());
-                cmd.Parameters.AddWithValue("@MiddleName", data.GetMiddleName());
-                cmd.Parameters.AddWithValue("@LastName", data.GetLastName());
-                cmd.Parameters.AddWithValue("@ID", data.GetBusinessEntityID());
+                cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
+                cmd.Parameters.AddWithValue("@MiddleName", data.MiddleName);
+                cmd.Parameters.AddWithValue("@LastName", data.LastName);
+                cmd.Parameters.AddWithValue("@ID", data.BusinessEntityID);
                 cmd.ExecuteNonQuery();
             }
         }
 
-        private void UpdateEmployeeDepartmentHistory(EmployeeDetails data)
+        private void UpdateEmployeeDepartmentHistory(EmployeeData data)
         {
             string[] ids = new string[2];
             ids[0] = FindDepartmentDetail(data);
@@ -169,14 +170,14 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@DepartmentID", ids[0]);
                 cmd.Parameters.AddWithValue("@ShiftID", ids[1]);
-                cmd.Parameters.AddWithValue("@ID", data.GetBusinessEntityID());
+                cmd.Parameters.AddWithValue("@ID", data.BusinessEntityID);
                 cmd.ExecuteNonQuery();
             }
         }
 
-        private void UpdateEmployeePayHistory(EmployeeDetails data)
+        private void UpdateEmployeePayHistory(EmployeeData data)
         {
-            decimal reverseSalaryToRate = decimal.Parse(data.GetYearlySalary());
+            decimal reverseSalaryToRate = decimal.Parse(data.YearlySalary);
             reverseSalaryToRate /= 52; // 52 weeks
             reverseSalaryToRate /= 40; // 40 hours
             string salaryRate = $"{reverseSalaryToRate}";
@@ -196,7 +197,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@BusinessEntityID", data.GetBusinessEntityID());
+                cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
                 cmd.Parameters.AddWithValue("@RateChangeDate", date.ToString());
                 cmd.Parameters.AddWithValue("@NewRate", salaryRate);
                 cmd.Parameters.AddWithValue("@PayFrequency", payFreq);
@@ -205,14 +206,14 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             }
         }
 
-        private bool CheckSalaryChange(string salaryRate, EmployeeDetails data)
+        private bool CheckSalaryChange(string salaryRate, EmployeeData data)
         {
             string query = "select Rate from HumanResources.EmployeePayHistory where BusinessEntityID = @ID";
             using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@ID", data.GetBusinessEntityID());
+                cmd.Parameters.AddWithValue("@ID", data.BusinessEntityID);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -225,26 +226,26 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             return true;
         }
 
-        private string GetPayFreq(EmployeeDetails data)
+        private string GetPayFreq(EmployeeData data)
         {
             string query = "select PayFrequency from HumanResources.EmployeePayHistory where BusinessEntityID = @BusinessEntityID";
-            return GenFetchOneItem(query, "@BusinessEntityID", data.GetBusinessEntityID(), "PayFrequency");
+            return GenFetchOneItem(query, "@BusinessEntityID", data.BusinessEntityID, "PayFrequency");
         }
 
-        private string FindDepartmentDetail(EmployeeDetails data)
+        private string FindDepartmentDetail(EmployeeData data)
         {
             string query = "select d.DepartmentID " +
                            "from HumanResources.Department as d " +
                            "where d.Name = @Name";
-            return GenFetchOneItem(query, "@Name", data.GetDepartmentName(), "DepartmentID");
+            return GenFetchOneItem(query, "@Name", data.DepartmentName, "DepartmentID");
         }
 
-        private string FindShiftDetails(EmployeeDetails data)
+        private string FindShiftDetails(EmployeeData data)
         {
             string query = "select s.ShiftID " +
                            "from HumanResources.Shift as s " +
                            "where s.Name = @Name";
-            return GenFetchOneItem(query, "@Name", data.GetShiftName(), "ShiftID");
+            return GenFetchOneItem(query, "@Name", data.ShiftName, "ShiftID");
         }
 
         private string GenFetchOneItem(string query, string param, string data, string need)

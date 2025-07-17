@@ -53,7 +53,7 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
             ButtonInverter(signupButton); // Ensures that the button cannot be double clicked by accident
 
             SignUpForm signUpForm = new SignUpForm();
-            FormNavigationHelper.ShowFormAndHideCurren(this, signUpForm);
+            FormNavigationHelper.ShowFormAndHideCurrent(this, signUpForm);
 
             ButtonInverter(signupButton);
         }

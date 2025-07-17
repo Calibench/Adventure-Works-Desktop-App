@@ -1,4 +1,4 @@
-﻿namespace Adventure_Works_Desktop_App
+﻿namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
 {
     partial class EmployeeInfoForm
     {
@@ -45,10 +45,10 @@
             this.shiftLabel = new System.Windows.Forms.Label();
             this.yearlySalaryLabel = new System.Windows.Forms.Label();
             this.employeeInfoGroupBox = new System.Windows.Forms.GroupBox();
+            this.editButton = new System.Windows.Forms.Button();
             this.searchLabel = new System.Windows.Forms.Label();
             this.searchComboBox = new System.Windows.Forms.ComboBox();
             this.backButton = new System.Windows.Forms.Button();
-            this.editButton = new System.Windows.Forms.Button();
             this.employeeInfoGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -241,6 +241,17 @@
             this.employeeInfoGroupBox.TabStop = false;
             this.employeeInfoGroupBox.Text = "Employee Information";
             // 
+            // editButton
+            // 
+            this.editButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editButton.Location = new System.Drawing.Point(733, 340);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(75, 23);
+            this.editButton.TabIndex = 20;
+            this.editButton.Text = "Edit";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.EditEmployeeInformation);
+            // 
             // searchLabel
             // 
             this.searchLabel.AutoSize = true;
@@ -264,6 +275,7 @@
             // 
             // backButton
             // 
+            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.backButton.Location = new System.Drawing.Point(751, 31);
             this.backButton.Name = "backButton";
@@ -271,18 +283,6 @@
             this.backButton.TabIndex = 19;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
-            // 
-            // editButton
-            // 
-            this.editButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editButton.Location = new System.Drawing.Point(733, 340);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(75, 23);
-            this.editButton.TabIndex = 20;
-            this.editButton.Text = "Edit";
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.EditEmployeeInformation);
             // 
             // EmployeeInfoForm
             // 

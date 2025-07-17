@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App.Globals
+namespace Adventure_Works_Desktop_App.Globals.DataClasses
 {
     /// <summary>
     /// Account Data is used to store account data. Is used in Login and Signup. 
@@ -36,7 +36,7 @@ namespace Adventure_Works_Desktop_App.Globals
         }
 
         /// <summary>
-        /// A constructor to ensure all portions of Account Data is filled. Mainly used for Signup.
+        /// A constructor to ensure all portions of Account Data is filled.
         /// </summary>
         /// <param name="firstName">A given user's first name</param>
         /// <param name="lastName">A given user's last name</param>

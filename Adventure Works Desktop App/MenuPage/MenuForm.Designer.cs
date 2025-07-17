@@ -35,11 +35,12 @@
             this.addReviewButton = new System.Windows.Forms.Button();
             this.salesInfoButton = new System.Windows.Forms.Button();
             this.viewStoreDetailsButton = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // employeeInfoButton
             // 
-            this.employeeInfoButton.Location = new System.Drawing.Point(378, 165);
+            this.employeeInfoButton.Location = new System.Drawing.Point(378, 150);
             this.employeeInfoButton.Name = "employeeInfoButton";
             this.employeeInfoButton.Size = new System.Drawing.Size(83, 23);
             this.employeeInfoButton.TabIndex = 1;
@@ -51,7 +52,7 @@
             // 
             this.menuTitleLabel.AutoSize = true;
             this.menuTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.menuTitleLabel.Location = new System.Drawing.Point(386, 137);
+            this.menuTitleLabel.Location = new System.Drawing.Point(386, 122);
             this.menuTitleLabel.Name = "menuTitleLabel";
             this.menuTitleLabel.Size = new System.Drawing.Size(66, 25);
             this.menuTitleLabel.TabIndex = 0;
@@ -59,7 +60,7 @@
             // 
             // productsInfoButton
             // 
-            this.productsInfoButton.Location = new System.Drawing.Point(378, 194);
+            this.productsInfoButton.Location = new System.Drawing.Point(378, 179);
             this.productsInfoButton.Name = "productsInfoButton";
             this.productsInfoButton.Size = new System.Drawing.Size(83, 23);
             this.productsInfoButton.TabIndex = 2;
@@ -79,7 +80,7 @@
             // 
             // addReviewButton
             // 
-            this.addReviewButton.Location = new System.Drawing.Point(378, 223);
+            this.addReviewButton.Location = new System.Drawing.Point(378, 208);
             this.addReviewButton.Name = "addReviewButton";
             this.addReviewButton.Size = new System.Drawing.Size(83, 23);
             this.addReviewButton.TabIndex = 4;
@@ -89,7 +90,7 @@
             // 
             // salesInfoButton
             // 
-            this.salesInfoButton.Location = new System.Drawing.Point(378, 252);
+            this.salesInfoButton.Location = new System.Drawing.Point(378, 237);
             this.salesInfoButton.Name = "salesInfoButton";
             this.salesInfoButton.Size = new System.Drawing.Size(83, 23);
             this.salesInfoButton.TabIndex = 5;
@@ -99,7 +100,7 @@
             // 
             // viewStoreDetailsButton
             // 
-            this.viewStoreDetailsButton.Location = new System.Drawing.Point(378, 281);
+            this.viewStoreDetailsButton.Location = new System.Drawing.Point(378, 266);
             this.viewStoreDetailsButton.Name = "viewStoreDetailsButton";
             this.viewStoreDetailsButton.Size = new System.Drawing.Size(83, 23);
             this.viewStoreDetailsButton.TabIndex = 6;
@@ -107,11 +108,22 @@
             this.viewStoreDetailsButton.UseVisualStyleBackColor = true;
             this.viewStoreDetailsButton.Click += new System.EventHandler(this.viewStoreDetailsButton_Click);
             // 
+            // exitButton
+            // 
+            this.exitButton.Location = new System.Drawing.Point(378, 295);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(83, 23);
+            this.exitButton.TabIndex = 7;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 441);
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.viewStoreDetailsButton);
             this.Controls.Add(this.salesInfoButton);
             this.Controls.Add(this.addReviewButton);
@@ -139,5 +151,6 @@
         private System.Windows.Forms.Button addReviewButton;
         private System.Windows.Forms.Button salesInfoButton;
         private System.Windows.Forms.Button viewStoreDetailsButton;
+        private System.Windows.Forms.Button exitButton;
     }
 }

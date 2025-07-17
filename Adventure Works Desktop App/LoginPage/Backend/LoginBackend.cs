@@ -1,4 +1,4 @@
-﻿using Adventure_Works_Desktop_App.Globals;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -73,7 +73,6 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
                     }
                 }
             }
-
             return data;
         }
     }

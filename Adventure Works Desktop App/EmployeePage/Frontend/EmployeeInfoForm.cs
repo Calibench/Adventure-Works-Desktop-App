@@ -1,85 +1,77 @@
-﻿using Adventure_Works_Desktop_App.EmployeePage.Frontend;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using Adventure_Works_Desktop_App.EmployeePage.Backend;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Adventure_Works_Desktop_App.Globals;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
 {
     public partial class EmployeeInfoForm : Form
     {
-        public bool backButtonPressed = false;
-        private string username;
-        public EmployeeInfoForm(String username)
+        // Global Variables
+        private string displayName;
+        private EmployeeInfoBackend backend = new EmployeeInfoBackend();
+
+        /// <summary>
+        /// Constructor to initialize the form and to get the username to display
+        /// </summary>
+        /// <param name="displayName">The display name that was gotten through the login form</param>
+        public EmployeeInfoForm(string displayName)
         {
             InitializeComponent();
-            this.username = username;
+            this.displayName = displayName;
+        }
+
+        // Event Driven Methods
+        private void InitialLoadForm(object sender, EventArgs e)
+        {
+            usernameLabel.Text = string.Format(Properties.Resources.LoggedInAs, displayName);
+            editButton.Visible = false;
+
+            // Populates the ComboBox with ID's
+            backend = new EmployeeInfoBackend();
+            backend.UpdateComoboBox(searchComboBox);
         }
 
         private void searchComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EmployeeInfoSearch backend = new EmployeeInfoSearch(searchComboBox, true);
-            UpdateFrontEnd(backend.GetEmployeeData());
-        }
-
-        private void PopulateComboBox()
-        {
-            EmployeeInfoSearch combobox = new EmployeeInfoSearch(searchComboBox, false);
-        }
-
-        private void UpdateFrontEnd(EmployeeDetails emp)
-        {
-            businessEntityIDLabel.Text = $"ID: {emp.GetBusinessEntityID()}";
-            firstNameLabel.Text = $"First Name: {emp.GetFirstName()}";
-            middleInitialLabel.Text = $"Middle Initial: {emp.GetMiddleName()}";
-            lastNameLabel.Text = $"Last Name: {emp.GetLastName()}";
-            jobTitleLabel.Text = $"Job Title: {emp.GetJobTitle()}";
-            birthDateLabel.Text = $"Birth Date: {emp.GetBirthDate()}";
-            maritalStatusLabel.Text = $"Marital Status: {emp.GetMaritalStatus()}";
-            genderLabel.Text = $"Gender: {emp.GetGender()}";
-            hireDateLabel.Text = $"Hire Date: {emp.GetHireDate()}";
-            vacationHoursLabel.Text = $"Vacation Hours: {emp.GetVacationHours()}";
-            sickLeaveHoursLabel.Text = $"Sick Leave Hours: {emp.GetSickLeaveHours()}";
-            departmentNameLabel.Text = $"Department Name: {emp.GetDepartmentName()}";
-            departmentGroupLabel.Text = $"Department Group: {emp.GetDepartmentGroupName()}";
-            shiftLabel.Text = $"Shift: {emp.GetShiftName()}";
-            yearlySalaryLabel.Text = $"Yearly Salary: {emp.GetYearlySalary()}";
-            editButton.Visible = true;
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            backButtonPressed = true;
-            this.Close();
-        }
-
-        private void InitialLoadForm(object sender, EventArgs e)
-        {
-            usernameLabel.Text = $"Logged in: {username}";
-            editButton.Visible = false;
-            PopulateComboBox();
+            EmployeeData eData = backend.GetData(searchComboBox.Text);
+            UpdateFrontEnd(eData);
         }
 
         private void EditEmployeeInformation(object sender, EventArgs e)
         {
-            EmployeeInfoSearch backend = new EmployeeInfoSearch(searchComboBox, true);
-            EmployeeDetails data = backend.GetEmployeeData();
+            EmployeeData eData = backend.GetData(searchComboBox.Text);
 
-            var frm = new EditEmployeeInformationForm(data);
-            frm.Location = this.Location;
-            this.Hide();
-            frm.ShowDialog();
-            if (frm.submitButtonPressed)
-            {
-                UpdateFrontEnd(frm.data);
-            }
-            this.Show();
+            EditEmployeeInformationForm editEmployeeForm = new EditEmployeeInformationForm(eData);
+            FormNavigationHelper.ShowFormAndHideCurrent(this, editEmployeeForm);
+            
+            UpdateFrontEnd(editEmployeeForm.data);
+        }
+
+        // Helper Methods
+        /// <summary>
+        /// Updates labels to show the selected or updated data
+        /// </summary>
+        /// <param name="emp">Employee data to use to update the labels</param>
+        private void UpdateFrontEnd(EmployeeData emp)
+        {
+            businessEntityIDLabel.Text = $"ID: {emp.BusinessEntityID}";
+            firstNameLabel.Text = $"First Name: {emp.FirstName}";
+            middleInitialLabel.Text = $"Middle Initial: {emp.MiddleName}";
+            lastNameLabel.Text = $"Last Name: {emp.LastName}";
+            jobTitleLabel.Text = $"Job Title: {emp.JobTitle}";
+            birthDateLabel.Text = $"Birth Date: {emp.BirthDate}";
+            maritalStatusLabel.Text = $"Marital Status: {emp.MaritalStatus}";
+            genderLabel.Text = $"Gender: {emp.Gender}";
+            hireDateLabel.Text = $"Hire Date: {emp.HireDate}";
+            vacationHoursLabel.Text = $"Vacation Hours: {emp.VacationHours}";
+            sickLeaveHoursLabel.Text = $"Sick Leave Hours: {emp.SickLeaveHours}";
+            departmentNameLabel.Text = $"Department Name: {emp.DepartmentName}";
+            departmentGroupLabel.Text = $"Department Group: {emp.DepartmentGroupName}";
+            shiftLabel.Text = $"Shift: {emp.ShiftName}";
+            yearlySalaryLabel.Text = $"Yearly Salary: {emp.YearlySalary}";
+            editButton.Visible = true;
         }
     }
 }

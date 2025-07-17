@@ -1,4 +1,5 @@
-﻿using Adventure_Works_Desktop_App.EmployeePage.Backend;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using Adventure_Works_Desktop_App.EmployeePage.Backend;
 using System;
 using System.Windows.Forms;
 
@@ -7,18 +8,13 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
     public partial class EditEmployeeInformationForm : Form
     {
         public bool submitButtonPressed = false;
-        public EmployeeDetails data;
+        public EmployeeData data;
         EditEmployeeBackend backend;
-        public EditEmployeeInformationForm(EmployeeDetails data)
+        public EditEmployeeInformationForm(EmployeeData data)
         {
             InitializeComponent();
             this.data = data;
             backend = new EditEmployeeBackend(idLabel.Text);
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void submitButton_Click(object sender, EventArgs e)
@@ -46,8 +42,6 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
             }
 
             this.data = PackageData();
-
-            this.Close();
         }
 
         private bool ValidComboBoxes(ComboBox combobox, string message)
@@ -69,12 +63,12 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
 
         private void LoadEmployeeData()
         {
-            idLabel.Text = data.GetBusinessEntityID();
-            firstNameTextBox.Text = data.GetFirstName();
-            middleNameTextBox.Text = data.GetMiddleName();
-            lastNameTextBox.Text = data.GetLastName();
+            idLabel.Text = data.BusinessEntityID;
+            firstNameTextBox.Text = data.FirstName;
+            middleNameTextBox.Text = data.MiddleName;
+            lastNameTextBox.Text = data.LastName;
 
-            if (data.GetGender() == "F")
+            if (data.Gender == "F")
             {
                 femaleRadioButton.Checked = true;
             }
@@ -83,9 +77,9 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
                 MaleRadioButton.Checked = true;
             }
 
-            birthDateTextBox.Text = data.GetBirthDate();
+            birthDateTextBox.Text = data.BirthDate;
 
-            if (data.GetMaritalStatus() == "M")
+            if (data.MaritalStatus == "M")
             {
                 marriedRadioButton.Checked = true;
             }
@@ -94,24 +88,24 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
                 singleRadioButton.Checked = true;
             }
 
-            jobTitleComboBox.Text = data.GetJobTitle();
+            jobTitleComboBox.Text = data.JobTitle;
 
-            deptNameComboBox.Text = data.GetDepartmentName();
+            deptNameComboBox.Text = data.DepartmentName;
 
-            deptGroupComboBox.Text = data.GetDepartmentGroupName();
+            deptGroupComboBox.Text = data.DepartmentGroupName;
 
-            shiftComboBox.Text = data.GetShiftName();
+            shiftComboBox.Text = data.ShiftName;
 
-            vacationHoursNumericUpDown.Value = Convert.ToInt32(data.GetVacationHours());
+            vacationHoursNumericUpDown.Value = Convert.ToInt32(data.VacationHours);
 
-            sickLeaveHoursNumericUpDown.Value = Convert.ToInt32(data.GetSickLeaveHours());
+            sickLeaveHoursNumericUpDown.Value = Convert.ToInt32(data.SickLeaveHours);
 
-            hireDateTextBox.Text = data.GetHireDate();
+            hireDateTextBox.Text = data.HireDate;
 
-            yearlySalaryNumericUpDown.Value = decimal.Parse(data.GetYearlySalary());
+            yearlySalaryNumericUpDown.Value = decimal.Parse(data.YearlySalary);
         }
 
-        private EmployeeDetails PackageData()
+        private EmployeeData PackageData()
         {
             string married = "";
             string gender = "";
@@ -135,7 +129,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
             }
 
 
-            EmployeeDetails temp = new EmployeeDetails(
+            EmployeeData temp = new EmployeeData(
                 idLabel.Text, firstNameTextBox.Text, middleNameTextBox.Text, lastNameTextBox.Text,
                 jobTitleComboBox.Text, birthDateTextBox.Text, married, gender, hireDateTextBox.Text, $"{vacationHoursNumericUpDown.Value}",
                 $"{sickLeaveHoursNumericUpDown.Value}", deptNameComboBox.Text, deptGroupComboBox.Text, shiftComboBox.Text,

@@ -78,8 +78,8 @@
     <Compile Include="Globals\FormNavigatorHelper.cs" />
     <Compile Include="Globals\ListViewColumnSorter.cs" />
     <Compile Include="ProductPage\Backend\CustomerReviewData.cs" />
-    <Compile Include="EmployeePage\Backend\EmployeeDetails.cs" />
-    <Compile Include="EmployeePage\Backend\EmployeeInfoSearch.cs" />
+    <Compile Include="Globals\DataClasses\EmployeeData.cs" />
+    <Compile Include="EmployeePage\Backend\EmployeeInfoBackend.cs" />
     <Compile Include="EmployeePage\Frontend\EmployeeInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>

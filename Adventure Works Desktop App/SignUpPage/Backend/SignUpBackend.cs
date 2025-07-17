@@ -1,5 +1,4 @@
-﻿using Adventure_Works_Desktop_App.Globals;
-using System;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;

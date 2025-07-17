@@ -1,4 +1,4 @@
-﻿using Adventure_Works_Desktop_App.Globals;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using Adventure_Works_Desktop_App.SignUpPage.Backend;
 using System;
 using System.Windows.Forms;

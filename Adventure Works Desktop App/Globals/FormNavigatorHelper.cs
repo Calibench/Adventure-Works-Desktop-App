@@ -17,10 +17,24 @@ namespace Adventure_Works_Desktop_App.Globals
             currentForm.Close();
         }
 
-        public static void ShowFormAndHideCurren(Form currentForm, Form nextForm)
+        public static void ShowFormAndHideCurrent(Form currentForm, Form nextForm)
         {
             HideAndShow(currentForm, nextForm);
             currentForm.Show();
+        }
+
+        public static void ShowFormAndBackButton(Form currentForm, Form nextForm)
+        {
+            HideAndShow(currentForm, nextForm);
+
+            if ((nextForm.DialogResult == DialogResult.Cancel)) // When closing a form it triggers a Cancel - so don't make the backbutton same
+            {
+                Application.Exit();
+            }
+            else 
+            {
+                currentForm.Show();
+            }
         }
     }
 }

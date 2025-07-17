@@ -59,5 +59,23 @@ namespace Adventure_Works_Desktop_App.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logged in as: {0}.
+        /// </summary>
+        internal static string LoggedInAs {
+            get {
+                return ResourceManager.GetString("LoggedInAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome, {0}.
+        /// </summary>
+        internal static string WelcomeUpdate {
+            get {
+                return ResourceManager.GetString("WelcomeUpdate", resourceCulture);
+            }
+        }
     }
 }
