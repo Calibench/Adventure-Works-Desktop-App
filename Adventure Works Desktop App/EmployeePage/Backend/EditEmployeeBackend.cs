@@ -41,7 +41,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                            "join HumanResources.EmployeeDepartmentHistory as edh on e.BusinessEntityID = edh.BusinessEntityID " +
                            "join HumanResources.Department as d on edh.DepartmentID = d.DepartmentID " +
                            "where d.Name = @DeptName";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand queryStatus = new SqlCommand(query, connection);
@@ -61,7 +61,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         private void FillItemsName(ComboBox combobox, string groupName)
         {
             string query = "select name from HumanResources.Department where GroupName = @GroupName";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand queryStatus = new SqlCommand(query, connection);
@@ -92,7 +92,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
 
         private void GenComboFill(ComboBox combobox, string query, string columnHeader)
         {
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand queryStatus = new SqlCommand(query, connection);
@@ -120,7 +120,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                            "set JobTitle=@JobTitle, BirthDate=@BirthDate, MaritalStatus=@MaritalStatus, Gender=@Gender, " +
                            "HireDate=@HireDate, VacationHours=@VacationHours, SickLeaveHours=@SickLeaveHours " +
                            "where BusinessEntityID = @ID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -141,7 +141,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             string query = "update Person.Person " +
                            "set FirstName=@FirstName, MiddleName=@MiddleName, LastName=@LastName " +
                            "where BusinessEntityID = @ID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -163,7 +163,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                            "set DepartmentID=@DepartmentID, ShiftID=@ShiftID " +
                            "where BusinessEntityID = @ID";
 
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -192,7 +192,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
 
             string query = "insert into HumanResources.EmployeePayHistory (BusinessEntityID, RateChangeDate, Rate, PayFrequency, ModifiedDate)" +
                            "values (@BusinessEntityID, @RateChangeDate, @NewRate, @PayFrequency, @ModifiedDate)";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -208,7 +208,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         private bool CheckSalaryChange(string salaryRate, EmployeeDetails data)
         {
             string query = "select Rate from HumanResources.EmployeePayHistory where BusinessEntityID = @ID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -249,7 +249,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
 
         private string GenFetchOneItem(string query, string param, string data, string need)
         {
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand queryStatus = new SqlCommand(query, connection);

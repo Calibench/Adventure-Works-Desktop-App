@@ -24,7 +24,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             string query = "select Email from Person.Login where DisplayName = @DisplayName";
 
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand queryStatus = new SqlCommand(query, con);
@@ -42,7 +42,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             string query = "select DisplayName from Person.Login where DisplayName = @DisplayName";
 
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand(query, con);
@@ -65,7 +65,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             string query = "insert into Production.ProductReview (ProductID, ReviewerName, ReviewDate, EmailAddress, Rating, Comments, ModifiedDate) " +
                 "values (@ProductID, @ReviewerName, @ReviewDate, @EmailAddress, @Rating, @Comments, @ModifiedDate)";
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, con))

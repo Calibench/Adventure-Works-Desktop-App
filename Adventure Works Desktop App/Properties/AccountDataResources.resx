@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InvalidMessageFirstName" xml:space="preserve">
-    <value>Invalid first name\nOnly: English alphabet, (.-') and between 2-50 characters</value>
+    <value>Invalid first name
+Only: English alphabet, (.-') and between 2-50 characters</value>
     <comment>ACCOUNT_DATA: Used when first name is invalid during signup</comment>
   </data>
   <data name="TitleSignupFailed" xml:space="preserve">
@@ -126,7 +127,8 @@
     <comment>ACCOUNT_DATA: Used as a title for the sign up being invalid</comment>
   </data>
   <data name="InvalidMessageLastName" xml:space="preserve">
-    <value>Invalid last name\nOnly: English alphabet, (.-') and between 2-50 characters</value>
+    <value>Invalid last name
+Only: English alphabet, (.-') and between 2-50 characters</value>
     <comment>ACCOUNT_DATA: Used when last name is invalid during signup</comment>
   </data>
   <data name="RegexForDisplayName" xml:space="preserve">
@@ -146,19 +148,29 @@
     <comment>ACCOUNT_DATA: Used to filter out a password - (https://ihateregex.io/expr/password/)</comment>
   </data>
   <data name="InvalidMessageUsername" xml:space="preserve">
-    <value>Invalid Username\nOnly: Letters, Numbers, Underscores, Hyphens\nMust start with a letter</value>
+    <value>Invalid Username
+Only: Letters, Numbers, Underscores, Hyphens
+Must start with a letter</value>
     <comment>ACCOUNT_DATA: Used when username is invalid during signup</comment>
   </data>
   <data name="InvalidMessageDisplayName" xml:space="preserve">
-    <value>Invalid Display Name\nOnly: Letters, Numbers, Underscores, Hyphens\nMust start with a letter</value>
+    <value>Invalid Display Name
+Only: Letters, Numbers, Underscores, Hyphens
+Must start with a letter</value>
     <comment>ACCOUNT_DATA: Used when username is invalid during signup</comment>
   </data>
   <data name="InvalidMessagePassword" xml:space="preserve">
-    <value>Password must contain:\n-One uppercase letter\n-One lowercase letter\n-One number\n-One special character\n-Be at least 5 characters long</value>
+    <value>Password must contain:
+-One uppercase letter
+-One lowercase letter
+-One number
+-One special character
+-Be at least 5 characters long</value>
     <comment>ACCOUNT_DATA: Used when password is invalid during signup</comment>
   </data>
   <data name="InvalidMessageEmail" xml:space="preserve">
-    <value>Email address not accepted.\nPlease enter a different one.</value>
+    <value>Email address not accepted.
+Please enter a different one.</value>
     <comment>ACCOUNT_DATA: Used when email is invalid during signup</comment>
   </data>
 </root>

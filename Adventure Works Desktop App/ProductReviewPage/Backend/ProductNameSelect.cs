@@ -21,7 +21,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
                            "join Production.ProductSubcategory as ps on p.ProductSubcategoryID = ps.ProductSubcategoryID " +
                            "join Production.ProductCategory as pc on ps.ProductCategoryID = pc.ProductCategoryID " +
                            "where ListPrice <> 0.00";
-            using (SqlConnection connect = new SqlConnection(con.GetConnectionString()))
+            using (SqlConnection connect = new SqlConnection(con.ConnectionString))
             {
                 connect.Open();
                 SqlCommand queryStatus = new SqlCommand(query, connect);

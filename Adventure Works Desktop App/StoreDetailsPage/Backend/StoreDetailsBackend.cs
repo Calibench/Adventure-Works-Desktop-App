@@ -33,7 +33,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         public void GetSpecificData()
         {
             string query = "execute dbo.uspSearchStoreByID @BusinessEntityID = @ID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -48,7 +48,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         private void GetAllAddressData()
         {
             string query = "select * from sales.vStoreWithAddresses order by BusinessEntityID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -76,7 +76,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         {
 
             string query = "select * from sales.vStoreWithContacts order by BusinessEntityID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -107,7 +107,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         {
 
             string query = "select * from sales.vStoreWithDemographics order by BusinessEntityID";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -164,7 +164,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
 
         private void SortedByStore(string query, string param)
         {
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);

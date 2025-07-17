@@ -73,7 +73,7 @@
     <Compile Include="EmployeePage\Frontend\EditEmployeeInformationForm.Designer.cs">
       <DependentUpon>EditEmployeeInformationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Globals\AccountData.cs" />
+    <Compile Include="Globals\DataClasses\AccountData.cs" />
     <Compile Include="Globals\Connection.cs" />
     <Compile Include="Globals\FormNavigatorHelper.cs" />
     <Compile Include="Globals\ListViewColumnSorter.cs" />

@@ -34,7 +34,7 @@ namespace Adventure_Works_Desktop_App
             string query = "SELECT e.BusinessEntityID FROM HumanResources.Employee as e " +
                            "JOIN person.person AS p ON e.businessentityid = p.businessentityid " +
                            "ORDER BY e.BusinessEntityID ASC;";
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 connection.Open();
                 SqlCommand queryStatus = new SqlCommand(query, connection);
@@ -51,7 +51,7 @@ namespace Adventure_Works_Desktop_App
 
         public EmployeeDetails GetData(string businessEntityID)
         {
-            using (SqlConnection connection = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(connect.ConnectionString))
             {
                 try
                 {

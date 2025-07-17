@@ -51,7 +51,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
             // testing using SqlCommand's built in StoredProcedure func.
             // string query = "execute dbo.uspGetSalesPersonData @ID = @userID";
 
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("uspGetSalesPersonData", con))
@@ -105,7 +105,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
 
             string query = "select * from sales.SalesTerritory where Name = @Name";
 
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, con))
@@ -142,7 +142,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
 
         private string GenQuery(string query, string need, string param, string data)
         {
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand(query, con);

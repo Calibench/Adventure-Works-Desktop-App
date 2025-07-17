@@ -61,7 +61,9 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Display Name\nOnly: Letters, Numbers, Underscores, Hyphens\nMust start with a letter.
+        ///   Looks up a localized string similar to Invalid Display Name
+        ///Only: Letters, Numbers, Underscores, Hyphens
+        ///Must start with a letter.
         /// </summary>
         internal static string InvalidMessageDisplayName {
             get {
@@ -70,7 +72,8 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email address not accepted.\nPlease enter a different one..
+        ///   Looks up a localized string similar to Email address not accepted.
+        ///Please enter a different one..
         /// </summary>
         internal static string InvalidMessageEmail {
             get {
@@ -79,7 +82,8 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid first name\nOnly: English alphabet, (.-&apos;) and between 2-50 characters.
+        ///   Looks up a localized string similar to Invalid first name
+        ///Only: English alphabet, (.-&apos;) and between 2-50 characters.
         /// </summary>
         internal static string InvalidMessageFirstName {
             get {
@@ -88,7 +92,8 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid last name\nOnly: English alphabet, (.-&apos;) and between 2-50 characters.
+        ///   Looks up a localized string similar to Invalid last name
+        ///Only: English alphabet, (.-&apos;) and between 2-50 characters.
         /// </summary>
         internal static string InvalidMessageLastName {
             get {
@@ -97,7 +102,12 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password must contain:\n-One uppercase letter\n-One lowercase letter\n-One number\n-One special character\n-Be at least 5 characters long.
+        ///   Looks up a localized string similar to Password must contain:
+        ///-One uppercase letter
+        ///-One lowercase letter
+        ///-One number
+        ///-One special character
+        ///-Be at least 5 characters long.
         /// </summary>
         internal static string InvalidMessagePassword {
             get {
@@ -106,7 +116,9 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Username\nOnly: Letters, Numbers, Underscores, Hyphens\nMust start with a letter.
+        ///   Looks up a localized string similar to Invalid Username
+        ///Only: Letters, Numbers, Underscores, Hyphens
+        ///Must start with a letter.
         /// </summary>
         internal static string InvalidMessageUsername {
             get {

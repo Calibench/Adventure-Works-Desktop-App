@@ -39,7 +39,7 @@ namespace Adventure_Works_Desktop_App
         {
             string query = "select productID, ReviewerName, format(ReviewDate, 'yyyy-MM-dd') as ReviewDate, Rating, Comments " +
                            "from Production.ProductReview;";
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand queryStatus = new SqlCommand(query, con);
@@ -58,7 +58,7 @@ namespace Adventure_Works_Desktop_App
         {
             string query = $"execute dbo.ProductSearchLang @CultureID = {cultureID};";
 
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand queryStatus = new SqlCommand(query, con);
@@ -77,7 +77,7 @@ namespace Adventure_Works_Desktop_App
         private string GetCultureID(string cultureName)
         {
             string query = $"execute dbo.uspGetCultureID @CultureName = {cultureName}";
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand queryStatus = new SqlCommand(query, con);
@@ -115,7 +115,7 @@ namespace Adventure_Works_Desktop_App
                     MessageBox.Show("ERROR: Procedure does not exist in GetCategories() - ProductInfoBackend.cs");
                     return categories;
             }
-            using (SqlConnection con = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
                 SqlCommand queryStatus = new SqlCommand(query, con);

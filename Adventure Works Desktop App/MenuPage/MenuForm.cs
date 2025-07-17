@@ -4,7 +4,7 @@ using Adventure_Works_Desktop_App.StoreDetailsPage.Frontend;
 using System;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.MenuPage
 {
     public partial class MenuForm : Form
     {

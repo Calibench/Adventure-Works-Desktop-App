@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Adventure_Works_Desktop_App
 {
-    internal class Connection
+    public class Connection
     {
-        private string connectionString = "Server=LocalHost\\SQLDEVELOPER;Initial Catalog=AdventureWorks2017;Integrated Security=True;TrustServerCertificate=True;";
-        
-        public string GetConnectionString()
-        { 
-            return connectionString;
-        }
+        private const string connectionString = "Server=LocalHost\\SQLDEVELOPER;Initial Catalog=AdventureWorks2017;Integrated Security=True;TrustServerCertificate=True;";
+        public string ConnectionString
+        { get { return connectionString; } }
     }
 }

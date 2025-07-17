@@ -22,7 +22,7 @@ namespace Adventure_Works_Desktop_App
             String query = "select Name " +
                            "from Production.Culture " +
                            "where CultureID <> '';";
-            using (SqlConnection con = new SqlConnection(connect.GetConnectionString()))
+            using (SqlConnection con = new SqlConnection(connect.ConnectionString))
             {
                 con.Open();
                 SqlCommand queryStatus = new SqlCommand(query, con);

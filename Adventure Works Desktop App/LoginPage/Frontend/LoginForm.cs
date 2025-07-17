@@ -1,4 +1,6 @@
-﻿using Adventure_Works_Desktop_App.SignUpPage.Frontend;
+﻿using Adventure_Works_Desktop_App.LoginPage.Backend;
+using Adventure_Works_Desktop_App.SignUpPage.Frontend;
+using Adventure_Works_Desktop_App.MenuPage;
 using Adventure_Works_Desktop_App.Globals;
 using System;
 using System.Windows.Forms;
@@ -7,17 +9,20 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
 {
     public partial class LoginForm : Form
     {
-        enum PasswordProtect
+        // Class Global Variables
+        private enum PasswordProtect
         { 
             invisiblePassword = '●',
             visiblePassword = '\0'
         }
 
+        // Constructor
         public LoginForm()
         {
             InitializeComponent();
         }
 
+        // Event Driven Methods
         private void loginButton_Click(object sender, EventArgs e)
         {
             ButtonInverter(loginButton); // Ensures that the button cannot be double clicked by accident
@@ -29,33 +34,6 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
             }
 
             Login();
-        }
-
-        private void Login()
-        {
-            try
-            {
-                LoginBackend backend = new LoginBackend();
-                if (backend.ValidateCredentials(usernameTextBox.Text, passwordTextBox.Text))
-                {
-                    // For accessing these message strings go to Properties -> Resources.resx in Solutions Explorer
-                    MessageBox.Show(string.Format(Properties.LoginFormResources.SuccessMessageLogin, backend.accountData.DisplayName));
-
-                    MenuForm menuForm = new MenuForm(backend.accountData.DisplayName);
-                    FormNavigationHelper.ShowFormAndCloseCurrent(this, menuForm);
-                }
-                else
-                {
-                    MessageBox.Show(Properties.LoginFormResources.InvalidMessageCredentials, Properties.LoginFormResources.TitleFailedLogin,
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Properties.LoginFormResources.ErrorMessageLogin + ex, Properties.LoginFormResources.TitleError,
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            ButtonInverter(loginButton);
         }
 
         private void showPasswordCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -88,6 +66,37 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
         private void usernameInvalidLabel_Click(object sender, EventArgs e)
         {
             ClearFocusTextBox(usernameTextBox, usernameInvalidLabel);
+        }
+
+        // Helper Methods
+        /// <summary>
+        /// Login handler
+        /// </summary>
+        private void Login()
+        {
+            try
+            {
+                LoginBackend backend = new LoginBackend();
+                if (backend.ValidateCredentials(usernameTextBox.Text, passwordTextBox.Text))
+                {
+                    // For accessing these message strings go to Properties -> Resources.resx in Solutions Explorer
+                    MessageBox.Show(string.Format(Properties.LoginFormResources.SuccessMessageLogin, backend.accountData.DisplayName));
+
+                    MenuForm menuForm = new MenuForm(backend.accountData.DisplayName);
+                    FormNavigationHelper.ShowFormAndCloseCurrent(this, menuForm);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.LoginFormResources.InvalidMessageCredentials, Properties.LoginFormResources.TitleFailedLogin,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Properties.LoginFormResources.ErrorMessageLogin + ex, Properties.LoginFormResources.TitleError,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            ButtonInverter(loginButton);
         }
 
         /// <summary>

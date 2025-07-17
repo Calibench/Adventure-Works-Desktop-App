@@ -14,7 +14,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
 
         public void UpdateStoreAddress(StoreAddressData addressData)
         {
-            using (var conn = new SqlConnection(connection.GetConnectionString()))
+            using (var conn = new SqlConnection(connection.ConnectionString))
             {
                 conn.Open();
 
@@ -68,7 +68,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
 
         public void UpdateStoreContact(StoreContactsData contactData)
         {
-            using (var conn = new SqlConnection(connection.GetConnectionString()))
+            using (var conn = new SqlConnection(connection.ConnectionString))
             {
                 conn.Open();
 
@@ -136,7 +136,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         public bool ValidPhoneNumberType(string phoneNumberType)
         {
             string query = "select Name from Person.PhoneNumberType";
-            using (SqlConnection conn = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);

@@ -3,7 +3,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.LoginPage.Backend
 {
     public class LoginBackend
     {
@@ -23,23 +23,16 @@ namespace Adventure_Works_Desktop_App
             {
                 return false;
             }
-            
-            string displayName = GetDisplayName(inputUsername, inputPassword);
-            
-            if (displayName.Equals("ERROR"))
-            {
-                return false;
-            }
 
-            accountData.DisplayName = displayName;
+            accountData.DisplayName = GetDisplayName(inputUsername, inputPassword);
 
             return true; 
         }
 
         private string GetDisplayName(string username, string password)
         {
-            string query = $"select dbo.ufnGetDisplayName(@Username, @Password)";
-            using (SqlConnection conn = new SqlConnection(connection.GetConnectionString()))
+            string query = "select dbo.ufnGetDisplayName(@Username, @Password)";
+            using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -60,7 +53,7 @@ namespace Adventure_Works_Desktop_App
         {
             AccountData data = new AccountData();
 
-            using (SqlConnection conn = new SqlConnection(connection.GetConnectionString()))
+            using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
             {
                 conn.Open();
                 
