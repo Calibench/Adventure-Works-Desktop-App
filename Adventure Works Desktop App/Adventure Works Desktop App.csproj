@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE3A38F4-D94D-4AA7-876F-E2F3AE7E817F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Adventure_Works_Desktop_App</RootNamespace>
+    <AssemblyName>Adventure Works Desktop App</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EmployeePage\Backend\EditEmployeeBackend.cs" />
+    <Compile Include="EmployeePage\Frontend\EditEmployeeInformationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeePage\Frontend\EditEmployeeInformationForm.Designer.cs">
+      <DependentUpon>EditEmployeeInformationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Globals\AccountData.cs" />
+    <Compile Include="Globals\Connection.cs" />
+    <Compile Include="Globals\FormNavigatorHelper.cs" />
+    <Compile Include="Globals\ListViewColumnSorter.cs" />
+    <Compile Include="ProductPage\Backend\CustomerReviewData.cs" />
+    <Compile Include="EmployeePage\Backend\EmployeeDetails.cs" />
+    <Compile Include="EmployeePage\Backend\EmployeeInfoSearch.cs" />
+    <Compile Include="EmployeePage\Frontend\EmployeeInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeePage\Frontend\EmployeeInfoForm.Designer.cs">
+      <DependentUpon>EmployeeInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductPage\Frontend\LanguageProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductPage\Frontend\LanguageProductForm.Designer.cs">
+      <DependentUpon>LanguageProductForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductPage\Backend\ProductLanguageSelect.cs" />
+    <Compile Include="MenuPage\MenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuPage\MenuForm.Designer.cs">
+      <DependentUpon>MenuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductPage\Backend\ProductData.cs" />
+    <Compile Include="ProductPage\Backend\ProductInfoBackend.cs" />
+    <Compile Include="ProductPage\Frontend\ProductInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductPage\Frontend\ProductInfoForm.Designer.cs">
+      <DependentUpon>ProductInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductReviewPage\Backend\ProductNameSelect.cs" />
+    <Compile Include="ProductReviewPage\Backend\ReviewProductBackend.cs" />
+    <Compile Include="ProductReviewPage\Backend\ReviewProductData.cs" />
+    <Compile Include="ProductReviewPage\Frontend\ChangeProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductReviewPage\Frontend\ChangeProductForm.Designer.cs">
+      <DependentUpon>ChangeProductForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductReviewPage\Frontend\ReviewProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductReviewPage\Frontend\ReviewProductForm.Designer.cs">
+      <DependentUpon>ReviewProductForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesPersonPage\Backend\RegionData.cs" />
+    <Compile Include="SalesPersonPage\Backend\SalesPersonBackend.cs" />
+    <Compile Include="SalesPersonPage\Backend\SalesPersonData.cs" />
+    <Compile Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.Designer.cs">
+      <DependentUpon>ChangeRegionByNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesPersonPage\Frontend\ChangeSalesPersonByIDForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesPersonPage\Frontend\ChangeSalesPersonByIDForm.Designer.cs">
+      <DependentUpon>ChangeSalesPersonByIDForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesPersonPage\Frontend\SalesPersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesPersonPage\Frontend\SalesPersonForm.Designer.cs">
+      <DependentUpon>SalesPersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpPage\Backend\SignUpBackend.cs" />
+    <Compile Include="SignUpPage\Frontend\SignUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignUpPage\Frontend\SignUpForm.Designer.cs">
+      <DependentUpon>SignUpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPage\Backend\LoginBackend.cs" />
+    <Compile Include="LoginPage\Frontend\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginPage\Frontend\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Globals\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoreDetailsPage\Backend\StoreAddressData.cs" />
+    <Compile Include="StoreDetailsPage\Backend\StoreContactsData.cs" />
+    <Compile Include="StoreDetailsPage\Backend\StoreDemographicsData.cs" />
+    <Compile Include="StoreDetailsPage\Backend\StoreDetailsBackend.cs" />
+    <Compile Include="StoreDetailsPage\Backend\StoreDetailsEditBackend.cs" />
+    <Compile Include="StoreDetailsPage\Frontend\StoreDetailListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StoreDetailsPage\Frontend\StoreDetailListForm.Designer.cs">
+      <DependentUpon>StoreDetailListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StoreDetailsPage\Frontend\StoreDetailsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StoreDetailsPage\Frontend\StoreDetailsEditForm.Designer.cs">
+      <DependentUpon>StoreDetailsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StoreDetailsPage\Frontend\StoreDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StoreDetailsPage\Frontend\StoreDetailsForm.Designer.cs">
+      <DependentUpon>StoreDetailsForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="EmployeePage\Frontend\EditEmployeeInformationForm.resx">
+      <DependentUpon>EditEmployeeInformationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeePage\Frontend\EmployeeInfoForm.resx">
+      <DependentUpon>EmployeeInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductPage\Frontend\LanguageProductForm.resx">
+      <DependentUpon>LanguageProductForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuPage\MenuForm.resx">
+      <DependentUpon>MenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductPage\Frontend\ProductInfoForm.resx">
+      <DependentUpon>ProductInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductReviewPage\Frontend\ChangeProductForm.resx">
+      <DependentUpon>ChangeProductForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductReviewPage\Frontend\ReviewProductForm.resx">
+      <DependentUpon>ReviewProductForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.resx">
+      <DependentUpon>ChangeRegionByNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesPersonPage\Frontend\ChangeSalesPersonByIDForm.resx">
+      <DependentUpon>ChangeSalesPersonByIDForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesPersonPage\Frontend\SalesPersonForm.resx">
+      <DependentUpon>SalesPersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignUpPage\Frontend\SignUpForm.resx">
+      <DependentUpon>SignUpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginPage\Frontend\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="StoreDetailsPage\Frontend\StoreDetailListForm.resx">
+      <DependentUpon>StoreDetailListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StoreDetailsPage\Frontend\StoreDetailsForm.resx">
+      <DependentUpon>StoreDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
