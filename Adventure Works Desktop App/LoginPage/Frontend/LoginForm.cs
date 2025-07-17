@@ -39,20 +39,20 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
                 if (backend.ValidateCredentials(usernameTextBox.Text, passwordTextBox.Text))
                 {
                     // For accessing these message strings go to Properties -> Resources.resx in Solutions Explorer
-                    MessageBox.Show(string.Format(Properties.Resources.LoginSuccessMessage, backend.accountData.DisplayName));
+                    MessageBox.Show(string.Format(Properties.LoginFormResources.SuccessMessageLogin, backend.accountData.DisplayName));
 
                     MenuForm menuForm = new MenuForm(backend.accountData.DisplayName);
                     FormNavigationHelper.ShowFormAndCloseCurrent(this, menuForm);
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.InvalidCredentialsMessage, Properties.Resources.LoginFailedTitle,
+                    MessageBox.Show(Properties.LoginFormResources.InvalidMessageCredentials, Properties.LoginFormResources.TitleFailedLogin,
                                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resources.LoginErrorMessage + ex, Properties.Resources.ErrorTitle,
+                MessageBox.Show(Properties.LoginFormResources.ErrorMessageLogin + ex, Properties.LoginFormResources.TitleError,
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

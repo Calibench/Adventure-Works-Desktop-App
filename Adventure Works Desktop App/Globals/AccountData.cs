@@ -63,7 +63,7 @@ namespace Adventure_Works_Desktop_App.Globals
         /// <returns>Returns a <see cref="bool"> on whether the data is a valid Account Data</returns>
         public bool ValidateData()
         {
-            if (!ValidateName() || !ValidateUsernameDisplayName() || !ValidatePassword() || !ValidateEmail())
+            if (!ValidateUsernameDisplayName() || !ValidateName() || !ValidatePassword() || !ValidateEmail())
             {
                 return false;
             }
@@ -77,8 +77,7 @@ namespace Adventure_Works_Desktop_App.Globals
         private bool ValidateName()
         {
             const int minLength = 2;
-            // a valid string "tyler.'- ross"
-            string regexString = "^[a-zA-Z ,-]{2,50}$";
+            string regexString = Properties.AccountDataResources.RegexForName;
             Regex reg = new Regex(regexString);
             if ((reg.IsMatch(FirstName) && reg.IsMatch(LastName)) && (FirstName.Length >= minLength && LastName.Length >= minLength))
             {
@@ -86,11 +85,13 @@ namespace Adventure_Works_Desktop_App.Globals
             }
             else if (!reg.IsMatch(FirstName) || !reg.IsMatch(LastName))
             {
-                MessageBox.Show($"{FirstName} is an invalid first name.\nOnly:(a-z | -) and between 2-50 characters");
+                MessageBox.Show(Properties.AccountDataResources.InvalidMessageFirstName, Properties.AccountDataResources.TitleSignupFailed,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else 
             {
-                MessageBox.Show($"{LastName} is an invalid last name.\nOnly:(a-z | -) and between 2-50 characters");
+                MessageBox.Show(Properties.AccountDataResources.InvalidMessageLastName, Properties.AccountDataResources.TitleSignupFailed,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
                 return false;
         }
@@ -101,7 +102,7 @@ namespace Adventure_Works_Desktop_App.Globals
         /// <returns>Returns a <see cref="bool"> on whether the username and displayname is valid</returns>
         private bool ValidateUsernameDisplayName()
         {
-            string regexString = "^[a-zA-Z][a-zA-Z0-9_-]{3,15}$";
+            string regexString = Properties.AccountDataResources.RegexForDisplayName;
 
             Regex reg = new Regex(regexString);
             if (reg.IsMatch(Username) && reg.IsMatch(DisplayName))
@@ -110,11 +111,13 @@ namespace Adventure_Works_Desktop_App.Globals
             }
             else if (!reg.IsMatch(Username))
             {
-                MessageBox.Show($"Invalid Username.\nOnly:(Letters, Numbers, Underscore, Hyphens)\nMust start with a letter");
+                MessageBox.Show(Properties.AccountDataResources.InvalidMessageUsername, Properties.AccountDataResources.TitleSignupFailed,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show($"Invalid Display Name.\nOnly:(Letters, Numbers, Underscore, Hyphens)\nMust start with a letter");
+                MessageBox.Show(Properties.AccountDataResources.InvalidMessageDisplayName, Properties.AccountDataResources.TitleSignupFailed,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }
@@ -125,8 +128,7 @@ namespace Adventure_Works_Desktop_App.Globals
         /// <returns>Returns a <see cref="bool"> on whether the password is valid</returns>
         private bool ValidatePassword()
         {
-            // regex = (https://ihateregex.io/expr/password/) (5-50 characters long)
-            string regexString = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{5,50}$";
+            string regexString = Properties.AccountDataResources.RegexForPassword;
             Regex reg = new Regex(regexString);
             if (reg.IsMatch(Password))
             {
@@ -134,8 +136,8 @@ namespace Adventure_Works_Desktop_App.Globals
             }
             else
             {
-                MessageBox.Show("Password must contain:\none uppercase letter\none lowercase letter" +
-                    "\none number\none special character\nbe at least 5 characters long");
+                MessageBox.Show(Properties.AccountDataResources.InvalidMessagePassword, Properties.AccountDataResources.TitleSignupFailed,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }
@@ -146,7 +148,7 @@ namespace Adventure_Works_Desktop_App.Globals
         /// <returns>Returns a <see cref="bool"> on whether the email is valid</returns>
         private bool ValidateEmail()
         {
-            string regexString = "[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+";
+            string regexString = Properties.AccountDataResources.RegexForEmail;
             Regex reg = new Regex(regexString);
             if (reg.IsMatch(Email))
             {
@@ -154,7 +156,8 @@ namespace Adventure_Works_Desktop_App.Globals
             }
             else
             {
-                MessageBox.Show("Email address not accepted.\nPlease enter a different one.");
+                MessageBox.Show(Properties.AccountDataResources.InvalidMessageEmail, Properties.AccountDataResources.TitleSignupFailed,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }
