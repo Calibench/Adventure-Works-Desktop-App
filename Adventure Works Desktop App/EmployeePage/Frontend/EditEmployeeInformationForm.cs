@@ -1,5 +1,5 @@
-﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
-using Adventure_Works_Desktop_App.EmployeePage.Backend;
+﻿using Adventure_Works_Desktop_App.EmployeePage.Backend;
+using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
 using System.Windows.Forms;
 
@@ -7,68 +7,62 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
 {
     public partial class EditEmployeeInformationForm : Form
     {
-        public bool submitButtonPressed = false;
-        public EmployeeData data;
-        EditEmployeeBackend backend;
-        public EditEmployeeInformationForm(EmployeeData data)
+        private EmployeeData eData;
+        private EditEmployeeBackend backend;
+        private bool initial;
+
+        public EditEmployeeInformationForm(EmployeeData eData)
         {
             InitializeComponent();
-            this.data = data;
-            backend = new EditEmployeeBackend(idLabel.Text);
+            this.eData = eData;
+            backend = new EditEmployeeBackend();
         }
 
-        private void submitButton_Click(object sender, EventArgs e)
-        {
-            submitButtonPressed = true;
-
-            if (ValidComboBoxes(deptGroupComboBox, "Please enter a valid Department Group"))
-            {
-                return;
-            }
-
-            if (ValidComboBoxes(deptNameComboBox, "Please enter a valid Department Name"))
-            {
-                return;
-            }
-
-            if (ValidComboBoxes(jobTitleComboBox, "Please enter a valid Job Title"))
-            {
-                return;
-            }
-
-            if (ValidComboBoxes(shiftComboBox, "Please enter a valid Shift"))
-            {
-                return;
-            }
-
-            this.data = PackageData();
-        }
-
-        private bool ValidComboBoxes(ComboBox combobox, string message)
-        {
-            if (!combobox.Items.Contains(combobox.Text))
-            {
-                combobox.Text = "Select New Item";
-                MessageBox.Show(message);
-                return true;
-            }
-            return false;
-        }
-
+        // Event Driven Methods
         private void InitialLoadForm(object sender, EventArgs e)
         {
+            initial = true;
             LoadEmployeeData();
             AddItemsToComboBoxes();
         }
 
+        private void submitButton_Click(object sender, EventArgs e)
+        {
+            PackageData();
+        }
+
+        private void deptGroupComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Will do nothing upon first load
+            if (this.initial)
+            {
+                return;
+            }
+            AddItemsDeptName();
+        }
+
+        private void deptNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Will do nothing upon first load
+            if (this.initial)
+            {
+                return;
+            }
+            AddItemsJobTitle();
+        }
+
+        // Helper Methods
+        /// <summary>
+        /// Loads data from eData to the necessary fields in the frontend
+        /// </summary>
         private void LoadEmployeeData()
         {
-            idLabel.Text = data.BusinessEntityID;
-            firstNameTextBox.Text = data.FirstName;
-            middleNameTextBox.Text = data.MiddleName;
-            lastNameTextBox.Text = data.LastName;
+            idLabel.Text = eData.BusinessEntityID;
+            firstNameTextBox.Text = eData.FirstName;
+            middleNameTextBox.Text = eData.MiddleName;
+            lastNameTextBox.Text = eData.LastName;
 
-            if (data.Gender == "F")
+            if (eData.Gender == "F")
             {
                 femaleRadioButton.Checked = true;
             }
@@ -77,9 +71,9 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
                 MaleRadioButton.Checked = true;
             }
 
-            birthDateTextBox.Text = data.BirthDate;
+            birthDateTextBox.Text = eData.BirthDate;
 
-            if (data.MaritalStatus == "M")
+            if (eData.MaritalStatus == "M")
             {
                 marriedRadioButton.Checked = true;
             }
@@ -88,24 +82,21 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
                 singleRadioButton.Checked = true;
             }
 
-            jobTitleComboBox.Text = data.JobTitle;
-
-            deptNameComboBox.Text = data.DepartmentName;
-
-            deptGroupComboBox.Text = data.DepartmentGroupName;
-
-            shiftComboBox.Text = data.ShiftName;
-
-            vacationHoursNumericUpDown.Value = Convert.ToInt32(data.VacationHours);
-
-            sickLeaveHoursNumericUpDown.Value = Convert.ToInt32(data.SickLeaveHours);
-
-            hireDateTextBox.Text = data.HireDate;
-
-            yearlySalaryNumericUpDown.Value = decimal.Parse(data.YearlySalary);
+            jobTitleComboBox.Text = eData.JobTitle;
+            deptNameComboBox.Text = eData.DepartmentName;
+            deptGroupComboBox.Text = eData.DepartmentGroupName;
+            shiftComboBox.Text = eData.ShiftName;
+            vacationHoursNumericUpDown.Value = Convert.ToInt32(eData.VacationHours);
+            sickLeaveHoursNumericUpDown.Value = Convert.ToInt32(eData.SickLeaveHours);
+            hireDateTextBox.Text = eData.HireDate;
+            yearlySalaryNumericUpDown.Value = decimal.Parse(eData.YearlySalary);
         }
 
-        private EmployeeData PackageData()
+        /// <summary>
+        /// Packages the data from the frontend gui to send to the backend for processing to DB.
+        /// </summary>
+        /// <returns>Returns an employee data object to store globally.</returns>
+        private void PackageData()
         {
             string married = "";
             string gender = "";
@@ -129,59 +120,89 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
             }
 
 
-            EmployeeData temp = new EmployeeData(
+            EmployeeData packagedData = new EmployeeData(
                 idLabel.Text, firstNameTextBox.Text, middleNameTextBox.Text, lastNameTextBox.Text,
-                jobTitleComboBox.Text, birthDateTextBox.Text, married, gender, hireDateTextBox.Text, $"{vacationHoursNumericUpDown.Value}",
-                $"{sickLeaveHoursNumericUpDown.Value}", deptNameComboBox.Text, deptGroupComboBox.Text, shiftComboBox.Text,
-                $"{yearlySalaryNumericUpDown.Value}"
+                jobTitleComboBox.Text, birthDateTextBox.Text, married, gender, hireDateTextBox.Text, vacationHoursNumericUpDown.Value.ToString(),
+                sickLeaveHoursNumericUpDown.Value.ToString(), deptNameComboBox.Text, deptGroupComboBox.Text, shiftComboBox.Text,
+                yearlySalaryNumericUpDown.Value.ToString()
                 );
 
             // update db with new employee data
-            backend.PushToSql( temp );
-            
-            return temp;
+            backend.PushToSql(packagedData);
         }
 
+        /// <summary>
+        /// Initial ComboBox Updater. Wraps the AddItems* methods.
+        /// </summary>
         private void AddItemsToComboBoxes()
         {
-            // jobtitle, deptname, deptgroup, shift
-            AddItemsJobTitle();
-            AddItemsDeptName();
             AddItemsDeptGroup();
+            AddItemsDeptName();
+            AddItemsJobTitle();
             AddItemsShift();
+
+            this.initial = false;
         }
 
+        /// <summary>
+        /// Calls the backend to fill the job titles combobox based off of the department that is currently selected
+        /// </summary>
         private void AddItemsJobTitle()
         {
-            backend.FillItems(jobTitleComboBox, "Job", deptNameComboBox.Text);
+            backend.FillItemsJobTitle(jobTitleComboBox, deptNameComboBox.Text);
+            SelectInitialItem(jobTitleComboBox, eData.JobTitle);
         }
 
+        /// <summary>
+        /// Calls the backend to fill the department names combobox based off of the group that is currently selected
+        /// </summary>
         private void AddItemsDeptName()
         { 
-            backend.FillItems(deptNameComboBox, "Name", deptGroupComboBox.Text);
+            backend.FillItemsDepartmentName(deptNameComboBox, deptGroupComboBox.Text);
+            SelectInitialItem(deptNameComboBox, eData.DepartmentName);
         }
 
+        /// <summary>
+        /// Calls the backend to fill the department group combobox with the group names from the database
+        /// </summary>
         private void AddItemsDeptGroup()
         {
-            backend.FillItems(deptGroupComboBox, "Group", "");
+            backend.FillItemsGroup(deptGroupComboBox);
+            SelectInitialItem(deptGroupComboBox, eData.DepartmentGroupName);
         }
 
+        /// <summary>
+        /// Calls the backend to fill the shift combobox with the shift names from the database
+        /// </summary>
         private void AddItemsShift()
         {
-            backend.FillItems(shiftComboBox, "Shift", "");
+            backend.FillItemsShift(shiftComboBox);
+            SelectInitialItem(shiftComboBox, eData.ShiftName);
         }
 
-        private void deptGroupComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Selects the index of the one that matches the eData. Additionally handles if it is the initial startup of the form's comboboxes.
+        /// </summary>
+        /// <param name="comboBox">combobox to sort through and check the items</param>
+        /// <param name="data">data that is from eData.</param>
+        private void SelectInitialItem(ComboBox comboBox, string data)
         {
-            AddItemsDeptName();
-            deptNameComboBox.SelectedIndex = 0;
-        }
-
-        private void deptNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-            AddItemsJobTitle();
-            jobTitleComboBox.SelectedIndex = 0;
+            if (initial)
+            {
+                int index = 0;
+                foreach (string item in comboBox.Items)
+                {
+                    if (item.Equals(data))
+                    {
+                        comboBox.SelectedIndex = index;
+                    }
+                    index++;
+                }
+            }
+            else
+            {
+                comboBox.SelectedIndex = 0;
+            }
         }
     }
 }

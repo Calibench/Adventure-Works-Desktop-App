@@ -1,32 +1,21 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
-using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Adventure_Works_Desktop_App.EmployeePage.Backend
 {
-    internal class EmployeeInfoBackend
+    /// <summary>
+    /// This backend handle the employee info page that displays data about an employee to the user.
+    /// </summary>
+    public class EmployeeInfoBackend
     {
         Connection connect = new Connection();
-        private EmployeeData Emp
-        { get; set; }
 
-        public EmployeeInfoBackend()//ComboBox comboBox, bool search)
-        {
-            //if (search)
-            //{
-            //    // pass combobox to the GetData() (bussinessentityid)
-            //    Emp = GetData(comboBox.Text);
-            //}
-            //else
-            //{
-            //    // combobox update
-            //    UpdateComoboBox(comboBox);
-            //}
-        }
-
-        // done
+        /// <summary>
+        /// Gets employee ID's and populates them into a given combobox.
+        /// </summary>
+        /// <param name="comboBox">Combobox that is needs to be populated.</param>
         public void UpdateComoboBox(ComboBox comboBox)
         {
             using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
@@ -48,6 +37,11 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
             }
         }
 
+        /// <summary>
+        /// Given an employee ID, return data on the employee.
+        /// </summary>
+        /// <param name="businessEntityID">The employee ID.</param>
+        /// <returns></returns>
         public EmployeeData GetData(string businessEntityID)
         {
             using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
@@ -83,13 +77,10 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                      }
                 }
             }
-            MessageBox.Show("Something went wrong in GetData() uspGetEmployeeData");
+            // If the reader cannot reach the server it will display this then close.
+            MessageBox.Show(Properties.Resources.ErrorMessageConnectionLost);
+            Application.Exit();
             return null;
-        }
-
-        public EmployeeData GetEmployeeData()
-        {
-            return Emp;
         }
     }
 }

@@ -5,11 +5,20 @@ using System.Data.SqlClient;
 
 namespace Adventure_Works_Desktop_App.LoginPage.Backend
 {
+    /// <summary>
+    /// The backend for the login page.
+    /// </summary>
     public class LoginBackend
     {
         private Connection connection = new Connection();
         public AccountData accountData;
 
+        /// <summary>
+        /// Validates the credentials match with one in the DB.
+        /// </summary>
+        /// <param name="inputUsername">User entered username</param>
+        /// <param name="inputPassword">User entered password</param>
+        /// <returns>A <see cref="bool"/> will be returned, True=it is in the system, False=it is not</returns>
         public bool ValidateCredentials(string inputUsername, string inputPassword)
         {
             accountData = GetLoginDB(inputUsername, inputPassword);
@@ -29,6 +38,13 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
             return true; 
         }
 
+        /// <summary>
+        /// Finds the displayname based on the username and password supplied by the user.
+        /// </summary>
+        /// <param name="username">User entered username</param>
+        /// <param name="password">User entered password</param>
+        /// <returns>The display name</returns>
+        /// <exception cref="Exception">Unable to connect to the DB</exception>
         private string GetDisplayName(string username, string password)
         {
             string query = "select dbo.ufnGetDisplayName(@Username, @Password)";
@@ -46,9 +62,16 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
                     }
                 }
             }
-            throw new Exception(Properties.LoginBackendResources.ExceptionCannotConnectToDB);
+            throw new Exception(Properties.LoginPageResources.ExceptionCannotConnectToDB);
         }
 
+        /// <summary>
+        /// Finds out whether or not the login exists in the database.
+        /// </summary>
+        /// <param name="username">user entered username</param>
+        /// <param name="password">user entered password</param>
+        /// <returns>Data if the username and password is found</returns>
+        /// <exception cref="Exception">Unable to connect to the DB</exception>
         private AccountData GetLoginDB(string username, string password)
         {
             AccountData data = new AccountData();
@@ -69,11 +92,12 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
                         {
                             data.Username = reader["Username"].ToString();
                             data.Password = reader["Password"].ToString();
+                            return data;
                         }
                     }
                 }
             }
-            return data;
+            throw new Exception(Properties.LoginPageResources.ExceptionCannotConnectToDB);
         }
     }
 }

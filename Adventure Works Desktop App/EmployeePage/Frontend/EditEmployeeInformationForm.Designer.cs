@@ -192,7 +192,7 @@
             // 
             // jobTitleComboBox
             // 
-            this.jobTitleComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.jobTitleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.jobTitleComboBox.FormattingEnabled = true;
             this.jobTitleComboBox.Location = new System.Drawing.Point(11, 22);
             this.jobTitleComboBox.Name = "jobTitleComboBox";
@@ -298,6 +298,7 @@
             // 
             // deptNameComboBox
             // 
+            this.deptNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.deptNameComboBox.FormattingEnabled = true;
             this.deptNameComboBox.Location = new System.Drawing.Point(11, 22);
             this.deptNameComboBox.Name = "deptNameComboBox";
@@ -318,6 +319,7 @@
             // 
             // deptGroupComboBox
             // 
+            this.deptGroupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.deptGroupComboBox.FormattingEnabled = true;
             this.deptGroupComboBox.Location = new System.Drawing.Point(11, 22);
             this.deptGroupComboBox.Name = "deptGroupComboBox";
@@ -338,6 +340,7 @@
             // 
             // shiftComboBox
             // 
+            this.shiftComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.shiftComboBox.FormattingEnabled = true;
             this.shiftComboBox.Location = new System.Drawing.Point(11, 22);
             this.shiftComboBox.Name = "shiftComboBox";

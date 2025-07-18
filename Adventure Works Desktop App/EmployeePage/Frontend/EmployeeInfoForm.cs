@@ -45,8 +45,8 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
 
             EditEmployeeInformationForm editEmployeeForm = new EditEmployeeInformationForm(eData);
             FormNavigationHelper.ShowFormAndHideCurrent(this, editEmployeeForm);
-            
-            UpdateFrontEnd(editEmployeeForm.data);
+
+            searchComboBox_SelectedIndexChanged(sender, e);
         }
 
         // Helper Methods

@@ -61,6 +61,16 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to retrieve or update data due to lost connection with server.
+        ///Application will now close..
+        /// </summary>
+        internal static string ErrorMessageConnectionLost {
+            get {
+                return ResourceManager.GetString("ErrorMessageConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logged in as: {0}.
         /// </summary>
         internal static string LoggedInAs {

@@ -127,15 +127,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AccountDataResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\LoginBackendResources.Designer.cs">
+    <Compile Include="Properties\LoginPageResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LoginBackendResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\LoginFormResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LoginFormResources.resx</DependentUpon>
+      <DependentUpon>LoginPageResources.resx</DependentUpon>
     </Compile>
     <Compile Include="SalesPersonPage\Backend\RegionData.cs" />
     <Compile Include="SalesPersonPage\Backend\SalesPersonBackend.cs" />
@@ -222,13 +217,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AccountDataResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\LoginBackendResources.resx">
+    <EmbeddedResource Include="Properties\LoginPageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LoginBackendResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\LoginFormResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LoginFormResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>LoginPageResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.resx">
       <DependentUpon>ChangeRegionByNameForm.cs</DependentUpon>
