@@ -8,7 +8,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
     /// <summary>
     /// The backend for the login page.
     /// </summary>
-    public class LoginBackend
+    internal class LoginBackend
     {
         private Connection connection = new Connection();
         public AccountData accountData;

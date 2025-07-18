@@ -9,7 +9,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// <summary>
     /// Handles the backend of the edit employee page
     /// </summary>
-    public class EditEmployeeBackend
+    internal class EditEmployeeBackend
     {
         private Connection connect = new Connection();
         

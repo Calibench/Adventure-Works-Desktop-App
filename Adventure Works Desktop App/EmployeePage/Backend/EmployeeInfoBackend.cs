@@ -8,7 +8,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// <summary>
     /// This backend handle the employee info page that displays data about an employee to the user.
     /// </summary>
-    public class EmployeeInfoBackend
+    internal class EmployeeInfoBackend
     {
         Connection connect = new Connection();
 

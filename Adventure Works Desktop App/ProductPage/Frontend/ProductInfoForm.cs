@@ -1,41 +1,38 @@
-﻿using System;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using Adventure_Works_Desktop_App.ProductPage.BackEnd;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Common;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
 {
     public partial class ProductInfoForm : Form
     {
-        public bool backButtonPressed = false;
         private string username;
-        public ProductInfoForm(String username)
+        private enum ProductDetailsUpdate
+        {
+            PrimaryCategoryComboBox = 1,
+            SubCategoryComboBox,
+            ProductComboBox,
+            UpdateProductDetails
+        }
+
+        public ProductInfoForm(string username)
         {
             InitializeComponent();
             this.username = username;
         }
 
         // Start Event Handler Section
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            backButtonPressed = true;
-            this.Close();
-        }
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             subCategoryComboBox.Enabled = true;
             productComboBox.Enabled = true;
             subCategoryComboBox.Items.Clear();
             productComboBox.Items.Clear();
-            UpdateProducts(2);
+            UpdateProducts(ProductDetailsUpdate.SubCategoryComboBox);
             subCategoryComboBox.Text = GetFirst(subCategoryComboBox); // replace this with the first in the list use a func
             productComboBox.Text = GetFirst(productComboBox); // replace this with the first in the list use a func
         }
@@ -43,13 +40,13 @@ namespace Adventure_Works_Desktop_App
         private void subCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             productComboBox.Items.Clear();
-            UpdateProducts(3);
+            UpdateProducts(ProductDetailsUpdate.ProductComboBox);
             productComboBox.Text = GetFirst(productComboBox); // replace this with the first in the list use a func
         }
 
         private void productComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateProducts(4);
+            UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);
         }
         // End Event Handler Section
 
@@ -63,7 +60,7 @@ namespace Adventure_Works_Desktop_App
             if (langWin.backButton && categoryComboBox.Text != "")
             {
                 cultureIDLabel.Text = langWin.GetSelectedLanguage();
-                UpdateProducts(4);
+                UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);
             }
             else 
             {
@@ -94,7 +91,7 @@ namespace Adventure_Works_Desktop_App
         /// Wrapper to update front end details
         /// </summary>
         /// <param name="numProductDetailsUpdate">1=update primcatcombo, 2=update subcatcombo, 3=update productcombo, 4=update product details</param>
-        private void UpdateProducts(int numProductDetailsUpdate)
+        private void UpdateProducts(ProductDetailsUpdate numProductDetailsUpdate)
         {
             // to do the reviews, use this container (customerReviewPanel) encapsulate it with a groupbox
             ProductInfoBackend backend = new ProductInfoBackend(cultureIDLabel.Text);
@@ -104,24 +101,24 @@ namespace Adventure_Works_Desktop_App
         }
 
         // Start of Product Details
-        private void ProductDetailsProcedureUpdate(ProductInfoBackend backend, int procedure)
+        private void ProductDetailsProcedureUpdate(ProductInfoBackend backend, ProductDetailsUpdate procedure)
         {
             switch (procedure)
             {
                 // update primary combobox - this is upon initial enter of the form
-                case 1:
-                    UpdateComboBox(backend.GetCategories(1, "Nothing"), categoryComboBox);
+                case ProductDetailsUpdate.PrimaryCategoryComboBox:
+                    UpdateComboBox(backend.GetCategories(ProductInfoBackend.Procedure.Category, "Nothing"), categoryComboBox);
                     break;
                 // update secondary combobox - when category combobox gets a select update choices for secondary combobox
-                case 2:
-                    UpdateComboBox(backend.GetCategories(2, categoryComboBox.Text), subCategoryComboBox);
+                case ProductDetailsUpdate.SubCategoryComboBox:
+                    UpdateComboBox(backend.GetCategories(ProductInfoBackend.Procedure.SubCategory, categoryComboBox.Text), subCategoryComboBox);
                     break;
                 // update product combobox - when secondary combobox gets a select update choices for product combobox
-                case 3:
-                    UpdateComboBox(backend.GetCategories(3, subCategoryComboBox.Text), productComboBox);
+                case ProductDetailsUpdate.ProductComboBox:
+                    UpdateComboBox(backend.GetCategories(ProductInfoBackend.Procedure.ProductName, subCategoryComboBox.Text), productComboBox);
                     break;
                 // update product details to match the select product name from the product combobox
-                case 4:
+                case ProductDetailsUpdate.UpdateProductDetails:
                     UpdateProductDetails(backend.GetProductData(cultureIDLabel.Text, productComboBox.Text));
                     break;
             }
@@ -251,7 +248,7 @@ namespace Adventure_Works_Desktop_App
         }
         // End of Customer Reviews
 
-        // Helper Functions:
+        // Helper Methods:
         /// <summary>
         /// Helper function to rid of extra spaces between words (used in comments, as in db double spaces are apparent).
         /// </summary>
@@ -259,18 +256,6 @@ namespace Adventure_Works_Desktop_App
         /// <returns></returns>
         public static string TrimSpacesBetweenString(string s)
         {
-            //var mystring = s.Split(new string[] { " " }, StringSplitOptions.None);
-            //string result = string.Empty;
-            //foreach (var mstr in mystring)
-            //{
-            //    var ss = mstr.Trim();
-            //    if (!string.IsNullOrEmpty(ss))
-            //    {
-            //        result = result + ss + " ";
-            //    }
-            //}
-            //return result.Trim();
-
             return Regex.Replace(s, @"\s{2,}", " ");
         }
 
@@ -289,7 +274,7 @@ namespace Adventure_Works_Desktop_App
             usernameLabel.Text = $"Logged in: {username}";
             subCategoryComboBox.Enabled = false;
             productComboBox.Enabled = false;
-            UpdateProducts(1);
+            UpdateProducts(ProductDetailsUpdate.PrimaryCategoryComboBox);
         }
     }
 }

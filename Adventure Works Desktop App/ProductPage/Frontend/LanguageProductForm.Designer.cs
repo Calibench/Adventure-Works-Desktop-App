@@ -1,4 +1,4 @@
-﻿namespace Adventure_Works_Desktop_App
+﻿namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
 {
     partial class LanguageProductForm
     {

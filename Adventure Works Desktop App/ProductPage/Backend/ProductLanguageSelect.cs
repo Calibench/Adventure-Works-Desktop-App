@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
 {
     internal class ProductLanguageSelect
     {

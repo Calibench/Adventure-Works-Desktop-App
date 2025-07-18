@@ -77,7 +77,7 @@
     <Compile Include="Globals\Connection.cs" />
     <Compile Include="Globals\FormNavigatorHelper.cs" />
     <Compile Include="Globals\ListViewColumnSorter.cs" />
-    <Compile Include="ProductPage\Backend\CustomerReviewData.cs" />
+    <Compile Include="Globals\DataClasses\CustomerReviewData.cs" />
     <Compile Include="Globals\DataClasses\EmployeeData.cs" />
     <Compile Include="EmployeePage\Backend\EmployeeInfoBackend.cs" />
     <Compile Include="EmployeePage\Frontend\EmployeeInfoForm.cs">
@@ -99,7 +99,7 @@
     <Compile Include="MenuPage\MenuForm.Designer.cs">
       <DependentUpon>MenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductPage\Backend\ProductData.cs" />
+    <Compile Include="Globals\DataClasses\ProductData.cs" />
     <Compile Include="ProductPage\Backend\ProductInfoBackend.cs" />
     <Compile Include="ProductPage\Frontend\ProductInfoForm.cs">
       <SubType>Form</SubType>

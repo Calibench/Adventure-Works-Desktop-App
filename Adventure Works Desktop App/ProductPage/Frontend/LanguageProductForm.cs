@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Adventure_Works_Desktop_App.ProductPage.BackEnd;
+using System;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
 {
     public partial class LanguageProductForm : Form
     {

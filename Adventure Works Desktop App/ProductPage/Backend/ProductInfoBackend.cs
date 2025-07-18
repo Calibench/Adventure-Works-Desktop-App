@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App
+namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
 {
     internal class ProductInfoBackend
     {
         private Connection connection = new Connection();
         private List<CustomerReviewData> customerData;
         private List<ProductData> productData;
+
+        public enum Procedure
+        {
+            Category = 1,
+            SubCategory,
+            ProductName
+        }
 
         public List<ProductData> ProductData
         {
@@ -93,21 +98,21 @@ namespace Adventure_Works_Desktop_App
         /// <summary>
         /// This gets the appropriate procedure's combobox data
         /// </summary>
-        /// <param name="procedure">1=category,2=subcategory,3=productname</param>
+        /// <param name="procedure">category, subcategory, productname</param>
         /// <returns></returns>
-        public List<string> GetCategories(int procedure, string category)
+        public List<string> GetCategories(Procedure procedure, string category)
         {
             List<string> categories = new List<string>();
             string query;
             switch (procedure)
             {
-                case 1:
+                case Procedure.Category:
                     query = "select Name from Production.ProductCategory";
                     break;
-                case 2:
+                case Procedure.SubCategory:
                     query = $"execute dbo.uspGetSubcategory @Category = @CategoryParam";
                     break;
-                case 3:
+                case Procedure.ProductName:
                     query = $"execute dbo.uspGetProductName @SubCategory = @CategoryParam";
                     break;
                 default:
