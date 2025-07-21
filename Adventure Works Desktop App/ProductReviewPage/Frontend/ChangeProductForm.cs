@@ -13,8 +13,6 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Frontend
 {
     public partial class ChangeProductForm : Form
     {
-        public bool backButton = false;
-
         public List<string> productIDs = new List<string>();
 
         // I am aware that this form is essentially the same as the LanguageSelect one for product details (LanguageProductForm)
@@ -35,12 +33,6 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Frontend
         public string GetProductID()
         { 
             return productIDs.ElementAt(productComboBox.SelectedIndex).ToString();
-        }
-
-        private void selectButton_Click(object sender, EventArgs e)
-        {
-            backButton = true;
-            this.Close();
         }
     }
 }

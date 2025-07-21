@@ -1,4 +1,4 @@
-﻿namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
+﻿namespace Adventure_Works_Desktop_App.ProductPage.Frontend
 {
     partial class ProductInfoForm
     {

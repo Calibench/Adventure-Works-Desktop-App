@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
 {

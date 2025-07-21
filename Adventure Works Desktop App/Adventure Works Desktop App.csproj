@@ -92,7 +92,7 @@
     <Compile Include="ProductPage\Frontend\LanguageProductForm.Designer.cs">
       <DependentUpon>LanguageProductForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductPage\Backend\ProductLanguageSelect.cs" />
+    <Compile Include="ProductPage\Backend\ProductLanguageBackend.cs" />
     <Compile Include="MenuPage\MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,7 +109,7 @@
     </Compile>
     <Compile Include="ProductReviewPage\Backend\ProductNameSelect.cs" />
     <Compile Include="ProductReviewPage\Backend\ReviewProductBackend.cs" />
-    <Compile Include="ProductReviewPage\Backend\ReviewProductData.cs" />
+    <Compile Include="Globals\DataClasses\ReviewProductData.cs" />
     <Compile Include="ProductReviewPage\Frontend\ChangeProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LoginPageResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\ProductReviewResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductReviewResources.resx</DependentUpon>
     </Compile>
     <Compile Include="SalesPersonPage\Backend\RegionData.cs" />
     <Compile Include="SalesPersonPage\Backend\SalesPersonBackend.cs" />
@@ -220,6 +225,10 @@
     <EmbeddedResource Include="Properties\LoginPageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LoginPageResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\ProductReviewResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductReviewResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.resx">
       <DependentUpon>ChangeRegionByNameForm.cs</DependentUpon>

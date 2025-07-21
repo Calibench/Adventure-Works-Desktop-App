@@ -3,7 +3,7 @@ using Adventure_Works_Desktop_App.EmployeePage.Frontend;
 using Adventure_Works_Desktop_App.ProductReviewPage.Frontend;
 using Adventure_Works_Desktop_App.SalesPersonPage.Frontend;
 using Adventure_Works_Desktop_App.StoreDetailsPage.Frontend;
-using Adventure_Works_Desktop_App.ProductPage.FrontEnd;
+using Adventure_Works_Desktop_App.ProductPage.Frontend;
 using System;
 using System.Windows.Forms;
 

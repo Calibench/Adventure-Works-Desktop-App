@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
+namespace Adventure_Works_Desktop_App.ProductPage.Backend
 {
     internal class ProductInfoBackend
     {

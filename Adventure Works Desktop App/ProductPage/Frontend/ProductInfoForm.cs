@@ -1,12 +1,12 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
-using Adventure_Works_Desktop_App.ProductPage.BackEnd;
+using Adventure_Works_Desktop_App.ProductPage.Backend;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
+namespace Adventure_Works_Desktop_App.ProductPage.Frontend
 {
     public partial class ProductInfoForm : Form
     {

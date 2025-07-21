@@ -44,6 +44,7 @@
             // 
             // productComboBox
             // 
+            this.productComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productComboBox.FormattingEnabled = true;
             this.productComboBox.Location = new System.Drawing.Point(12, 65);
             this.productComboBox.Name = "productComboBox";
@@ -52,13 +53,13 @@
             // 
             // selectButton
             // 
+            this.selectButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.selectButton.Location = new System.Drawing.Point(102, 94);
             this.selectButton.Name = "selectButton";
             this.selectButton.Size = new System.Drawing.Size(75, 23);
             this.selectButton.TabIndex = 2;
             this.selectButton.Text = "Select";
             this.selectButton.UseVisualStyleBackColor = true;
-            this.selectButton.Click += new System.EventHandler(this.selectButton_Click);
             // 
             // ChangeProductForm
             // 

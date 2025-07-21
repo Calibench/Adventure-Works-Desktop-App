@@ -2,12 +2,12 @@
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
+namespace Adventure_Works_Desktop_App.ProductPage.Backend
 {
-    internal class ProductLanguageSelect
+    internal class ProductLanguageBackend
     {
         Connection connect = new Connection();
-        public ProductLanguageSelect(ComboBox comboBox) 
+        public ProductLanguageBackend(ComboBox comboBox) 
         {
             RetrieveLanguages(comboBox);
         }
