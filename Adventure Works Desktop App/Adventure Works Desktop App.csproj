@@ -107,7 +107,7 @@
     <Compile Include="ProductPage\Frontend\ProductInfoForm.Designer.cs">
       <DependentUpon>ProductInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductReviewPage\Backend\ProductNameSelect.cs" />
+    <Compile Include="ProductReviewPage\Backend\ChangeProductBackend.cs" />
     <Compile Include="ProductReviewPage\Backend\ReviewProductBackend.cs" />
     <Compile Include="Globals\DataClasses\ReviewProductData.cs" />
     <Compile Include="ProductReviewPage\Frontend\ChangeProductForm.cs">

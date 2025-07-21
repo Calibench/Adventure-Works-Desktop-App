@@ -137,4 +137,16 @@
     <value>Successfully submitted the review</value>
     <comment>When the user successfully submits a review</comment>
   </data>
+  <data name="UnableToGetDisplayName" xml:space="preserve">
+    <value>Unable to find the display name.</value>
+    <comment>Database is either no accessible or does not contain this display name.</comment>
+  </data>
+  <data name="UnableToGetEmail" xml:space="preserve">
+    <value>Unable to find user email.</value>
+    <comment>Unable to make a connection or find the email address within the database</comment>
+  </data>
+  <data name="UnableToGetProducts" xml:space="preserve">
+    <value>Unable to populate product combobox.</value>
+    <comment>Error message when not able to populate the products combobox from the DB.</comment>
+  </data>
 </root>

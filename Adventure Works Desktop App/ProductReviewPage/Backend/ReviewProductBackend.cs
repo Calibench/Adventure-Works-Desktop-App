@@ -1,5 +1,7 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System.Data.SqlClient;
+using System;
+using System.Data;
 
 namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
 {
@@ -8,61 +10,84 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         Connection connection = new Connection();
         public ReviewProductBackend(string productID, int rating, string reviewName, string comments)
         {
-            string displayName = GetCaseSensitiveUsername(TrimUsername(reviewName));
+            string displayName = GetCaseSensitiveDisplayName(TrimUsername(reviewName));
             ReviewProductData rpd = new ReviewProductData(productID, rating, displayName, comments, GetEmailAddress(displayName));
             SubmitReview(rpd);
         }
 
+        /// <summary>
+        /// Retrieves the email address associated with the specified display name.
+        /// </summary>
+        /// <param name="displayName">The display name of the user whose email address is to be retrieved. Cannot be null or empty.</param>
+        /// <returns>The email address of the user if found.</returns>
+        /// <exception cref="ArgumentException">Thrown if the email address cannot be retrieved for the specified display name.</exception>
         private string GetEmailAddress(string displayName)
         {
-            string query = "select Email from Person.Login where DisplayName = @DisplayName";
-
             using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
-                SqlCommand queryStatus = new SqlCommand(query, con);
-                queryStatus.Parameters.AddWithValue("@DisplayName", displayName);
-                SqlDataReader reader = queryStatus.ExecuteReader();
-                while (reader.Read())
+                using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetUserEmail(@DisplayName)", con))
                 {
-                    return $"{reader["Email"]}";
-                }
+                    cmd.Parameters.AddWithValue("@DisplayName", displayName);
+                    var result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return result.ToString();
+                    }
+                } 
             }
-            return "";
+            throw new ArgumentException(Properties.ProductReviewResources.UnableToGetEmail, displayName);
         }
 
-        private string GetCaseSensitiveUsername(string reviewName)
+        /// <summary>
+        /// Retrieves the case-sensitive display name corresponding to the specified review name.
+        /// </summary>
+        /// <param name="reviewName">The review name for which to retrieve the case-sensitive username. Cannot be null or empty.</param>
+        /// <returns>The case-sensitive display name if found; otherwise, throws an exception.</returns>
+        /// <exception cref="ArgumentException">Thrown if the case-sensitive username cannot be retrieved for the specified <paramref name="reviewName"/>.</exception>
+        private string GetCaseSensitiveDisplayName(string reviewName)
         {
-            string query = "select DisplayName from Person.Login where DisplayName = @DisplayName";
-
             using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@DisplayName", reviewName);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetCaseSensitiveDisplayName(@DisplayName)", con))
                 {
-                    return $"{reader["DisplayName"]}";
+                    cmd.Parameters.AddWithValue("@DisplayName", reviewName);
+                    var result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return result.ToString();
+                    }
                 }
             }
-            return "";
+            throw new ArgumentException(Properties.ProductReviewResources.UnableToGetDisplayName, reviewName);
         }
 
+        /// <summary>
+        /// Trims the specified username by removing any prefix up to and including the first colon.
+        /// </summary>
+        /// <param name="reviewName">The username string to be trimmed. Must contain a colon followed by at least one character.</param>
+        /// <returns>The trimmed username, starting from the character immediately after the first colon.</returns>
         private string TrimUsername(string reviewName)
         {
             return reviewName.Substring(reviewName.IndexOf(":") + 2);
         }
 
+        /// <summary>
+        /// Submits a new product review to the database.
+        /// </summary>
+        /// <remarks>This method uses a stored procedure to insert a new review into the database. Ensure
+        /// that all fields in <paramref name="rpd"/> are populated correctly before calling this method.</remarks>
+        /// <param name="rpd">The data for the product review, including product ID, reviewer name, review date, email address, rating,
+        /// comments, and modified date.</param>
         private void SubmitReview(ReviewProductData rpd)
         {
-            string query = "insert into Production.ProductReview (ProductID, ReviewerName, ReviewDate, EmailAddress, Rating, Comments, ModifiedDate) " +
-                "values (@ProductID, @ReviewerName, @ReviewDate, @EmailAddress, @Rating, @Comments, @ModifiedDate)";
             using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewReview", con))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ProductID", rpd.ProductID);
                     cmd.Parameters.AddWithValue("@ReviewerName", rpd.ReviewerName);
                     cmd.Parameters.AddWithValue("@ReviewDate", rpd.ReviewDate);

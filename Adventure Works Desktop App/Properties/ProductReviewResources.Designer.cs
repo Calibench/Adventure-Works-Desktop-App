@@ -104,5 +104,32 @@ namespace Adventure_Works_Desktop_App.Properties {
                 return ResourceManager.GetString("SuccessfulSubmit", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to find the display name..
+        /// </summary>
+        internal static string UnableToGetDisplayName {
+            get {
+                return ResourceManager.GetString("UnableToGetDisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to find user email..
+        /// </summary>
+        internal static string UnableToGetEmail {
+            get {
+                return ResourceManager.GetString("UnableToGetEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to populate product combobox..
+        /// </summary>
+        internal static string UnableToGetProducts {
+            get {
+                return ResourceManager.GetString("UnableToGetProducts", resourceCulture);
+            }
+        }
     }
 }
