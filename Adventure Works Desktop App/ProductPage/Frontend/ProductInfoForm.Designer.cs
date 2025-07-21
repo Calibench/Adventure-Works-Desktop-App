@@ -114,6 +114,7 @@
             // categoryComboBox
             // 
             this.categoryComboBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.categoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryComboBox.FormattingEnabled = true;
             this.categoryComboBox.Location = new System.Drawing.Point(0, 22);
             this.categoryComboBox.Name = "categoryComboBox";
@@ -124,6 +125,7 @@
             // subCategoryComboBox
             // 
             this.subCategoryComboBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.subCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.subCategoryComboBox.FormattingEnabled = true;
             this.subCategoryComboBox.Location = new System.Drawing.Point(0, 22);
             this.subCategoryComboBox.Name = "subCategoryComboBox";
@@ -144,6 +146,7 @@
             // productComboBox
             // 
             this.productComboBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.productComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productComboBox.DropDownWidth = 300;
             this.productComboBox.FormattingEnabled = true;
             this.productComboBox.Location = new System.Drawing.Point(0, 22);
@@ -541,7 +544,7 @@
             // productID
             // 
             this.productID.AutoSize = true;
-            this.productID.Location = new System.Drawing.Point(576, 28);
+            this.productID.Location = new System.Drawing.Point(471, 61);
             this.productID.Name = "productID";
             this.productID.Size = new System.Drawing.Size(25, 13);
             this.productID.TabIndex = 0;

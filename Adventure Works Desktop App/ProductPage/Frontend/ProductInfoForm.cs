@@ -25,7 +25,15 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             this.username = username;
         }
 
-        // Start Event Handler Section
+        private void InitialFormLoad(object sender, EventArgs e)
+        {
+            usernameLabel.Text = $"Logged in: {username}";
+            subCategoryComboBox.Enabled = false;
+            productComboBox.Enabled = false;
+            UpdateProducts(ProductDetailsUpdate.PrimaryCategoryComboBox);
+        }
+
+        // Event Section
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             subCategoryComboBox.Enabled = true;
@@ -33,22 +41,21 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             subCategoryComboBox.Items.Clear();
             productComboBox.Items.Clear();
             UpdateProducts(ProductDetailsUpdate.SubCategoryComboBox);
-            subCategoryComboBox.Text = GetFirst(subCategoryComboBox); // replace this with the first in the list use a func
-            productComboBox.Text = GetFirst(productComboBox); // replace this with the first in the list use a func
+            subCategoryComboBox.Text = GetFirst(subCategoryComboBox); // gets first in the combobox
+            productComboBox.Text = GetFirst(productComboBox); // gets first in the combobox
         }
 
         private void subCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             productComboBox.Items.Clear();
             UpdateProducts(ProductDetailsUpdate.ProductComboBox);
-            productComboBox.Text = GetFirst(productComboBox); // replace this with the first in the list use a func
+            productComboBox.Text = GetFirst(productComboBox); // gets first in the combobox
         }
 
         private void productComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);
         }
-        // End Event Handler Section
 
         // Start Lang Section
         private void LanguageLabelClicked(object sender, EventArgs e)
@@ -83,6 +90,8 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
         }
         // End Lang Section
 
+        // End Event Section
+
         /// <summary>
         /// Wrapper to update front end details
         /// </summary>
@@ -97,6 +106,14 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
         }
 
         // Start of Product Details
+        /// <summary>
+        /// Updates the product details UI components based on the specified update procedure.
+        /// </summary>
+        /// <remarks>This method handles different update scenarios for product details, such as updating
+        /// category and product comboboxes or refreshing product details based on user selections. It ensures that the
+        /// UI reflects the current state of product information as provided by the backend.</remarks>
+        /// <param name="backend">The backend service providing product information and categories.</param>
+        /// <param name="procedure">The specific update procedure to execute, determining which UI component to update.</param>
         private void ProductDetailsProcedureUpdate(ProductInfoBackend backend, ProductDetailsUpdate procedure)
         {
             switch (procedure)
@@ -120,6 +137,10 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             }
         }
 
+        /// <summary>
+        /// Updates the products info that is being displayed.
+        /// </summary>
+        /// <param name="prodData">Product data being parsed to update text</param>
         private void UpdateProductDetails(ProductData prodData)
         {
             productNNSGroupBox.Visible = true;
@@ -137,6 +158,15 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             profitValueLabel.Text = prodData.MarginProfit;
         }
 
+        /// <summary>
+        /// Updates the specified <see cref="ComboBox"/> by adding items from the provided list that are not already
+        /// present.
+        /// </summary>
+        /// <remarks>This method iterates through the <paramref name="dataList"/> and adds each item to
+        /// the <paramref name="combobox"/> only if it is not already present in the <see cref="ComboBox.Items"/>
+        /// collection.</remarks>
+        /// <param name="dataList">A list of strings representing the items to be added to the <paramref name="combobox"/>.</param>
+        /// <param name="combobox">The <see cref="ComboBox"/> to be updated with new items from <paramref name="dataList"/>.</param>
         private void UpdateComboBox(List<string> dataList, ComboBox combobox)
         {
             foreach(string data in dataList)
@@ -147,10 +177,16 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
                 }    
             }
         }
+        // --End of Product Details--
 
-        // End of Product Details
-
-        // Start of Customer Reviews
+        // --Start of Customer Reviews--
+        /// <summary>
+        /// Updates the customer review panel with the provided customer review data.
+        /// </summary>
+        /// <remarks>This method clears the existing reviews from the customer review panel and populates
+        /// it with reviews that match the current product ID</remarks>
+        /// <param name="customerData">A list of <see cref="CustomerReviewData"/> objects representing customer reviews to be displayed. Only
+        /// reviews matching the current product ID are considered.</param>
         private void CustomerReviewUpdate(List<CustomerReviewData> customerData)
         {
             // clear panel before updating
@@ -167,46 +203,59 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             AddReview(customerReviewDatas.Count, customerReviewDatas.ToArray());
         }
 
+        /// <summary>
+        /// Adds a review to the Customer Review Group Box Section.
+        /// </summary>
+        /// <param name="numReviews">The number of reviews to go through</param>
+        /// <param name="customerReview">Customer review data</param>
         private void AddReview(int numReviews, CustomerReviewData[] customerReview)
         {
-            // default box to get loc
+            // Default box to get loc
             GroupBox initialGroupBox = new GroupBox();
             
-            // if there are no reviews then dont update
+            // If there are no reviews then dont update
             if (numReviews == 0)
             {
                 return;
             }
-            // else create the first review
-            else
-            {
-                initialGroupBox = CreateCustomerGroupBox(initialGroupBox, customerReview[0].CustomerName, 
-                                  new Point(initialGroupBox.Location.X, initialGroupBox.Location.Y), 5, 0);
-                customerReviewPanel.Controls.Add(initialGroupBox);
-                FillDataInCustomerReview(initialGroupBox, customerReview[0]);
-            }
+
+            // Create the first review
+            initialGroupBox = CreateCustomerGroupBox(initialGroupBox, customerReview[0].CustomerName, 
+                                                    new Point(initialGroupBox.Location.X, initialGroupBox.Location.Y), 5, 0);
+            customerReviewPanel.Controls.Add(initialGroupBox);
+            FillDataInCustomerReview(initialGroupBox, customerReview[0]);
             
-            // stores the location of the current indexed groupbox (this is so they can be spaced)
+            // Stores the location of the current indexed groupbox (this is so they can be spaced)
             Point currLocation = new Point(initialGroupBox.Location.X, initialGroupBox.Location.Y);
 
-            // add additional reviews if necessary
+            // Add additional reviews if necessary
             for (int i = 1; i < numReviews; i++)
             {
                 GroupBox groupboxAdditionalCustomer = new GroupBox();
-                groupboxAdditionalCustomer = CreateCustomerGroupBox(groupboxAdditionalCustomer, customerReview[i].CustomerName, currLocation, 0, 100);
+                groupboxAdditionalCustomer = CreateCustomerGroupBox(groupboxAdditionalCustomer, customerReview[i].CustomerName, 
+                                                                    currLocation, 0, 100);
                 customerReviewPanel.Controls.Add(groupboxAdditionalCustomer);
                 FillDataInCustomerReview(groupboxAdditionalCustomer, customerReview[i]);
                 currLocation = new Point(groupboxAdditionalCustomer.Location.X, groupboxAdditionalCustomer.Location.Y);
             }
         }
 
-        private GroupBox CreateCustomerGroupBox(GroupBox groupBox, string text, Point currLocation, int x, int y)
+        /// <summary>
+        /// Individual customer review boxes
+        /// </summary>
+        /// <param name="groupBox">Groupbox to hold all customer reviews</param>
+        /// <param name="customerName">Customer name to be the title of the groupbox</param>
+        /// <param name="currLocation">Used to track current location</param>
+        /// <param name="x">x-axis spacing</param>
+        /// <param name="y">y-axis spacing</param>
+        /// <returns>Newly created customer review</returns>
+        private GroupBox CreateCustomerGroupBox(GroupBox groupBox, string customerName, Point currLocation, int x, int y)
         {
             // following the same font as the form is currently using
             Font smallFont = new Font(customerReviewGroupBox.Font.Name, 8);
             Size sizeOfGroupBox = new Size(410, 100);
 
-            groupBox.Text = text;
+            groupBox.Text = customerName;
             groupBox.Font = smallFont;
             groupBox.Size = sizeOfGroupBox;
             groupBox.BringToFront();
@@ -215,6 +264,11 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             return groupBox;
         }
 
+        /// <summary>
+        /// Creates a customer review and fills in the necessary data.
+        /// </summary>
+        /// <param name="groupBox">Customer Review GroupBox, this is a unique box per customer review</param>
+        /// <param name="customerReview">Data needing to be populated</param>
         private void FillDataInCustomerReview(GroupBox groupBox, CustomerReviewData customerReview)
         {
             // now add data inside the groupbox
@@ -242,9 +296,9 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             commentRichTextBox.BringToFront();
             groupBox.Controls.Add(commentRichTextBox);
         }
-        // End of Customer Reviews
+        // --End of Customer Reviews--
 
-        // Helper Methods:
+        // Helper Methods
         /// <summary>
         /// Helper function to rid of extra spaces between words (used in comments, as in db double spaces are apparent).
         /// </summary>
@@ -263,14 +317,6 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
         private string GetFirst(ComboBox combo)
         {
             return combo.Items[0].ToString();
-        }
-
-        private void InitialFormLoad(object sender, EventArgs e)
-        {
-            usernameLabel.Text = $"Logged in: {username}";
-            subCategoryComboBox.Enabled = false;
-            productComboBox.Enabled = false;
-            UpdateProducts(ProductDetailsUpdate.PrimaryCategoryComboBox);
         }
     }
 }

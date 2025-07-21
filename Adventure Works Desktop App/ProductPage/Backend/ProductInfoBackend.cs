@@ -1,5 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -41,19 +42,22 @@ namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
         // Put this data into the CustomerReviewData (productID, customerName, date, rating, comment)
         private void SearchReview()
         {
-            string query = "select productID, ReviewerName, format(ReviewDate, 'yyyy-MM-dd') as ReviewDate, Rating, Comments " +
-                           "from Production.ProductReview;";
             using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
-                SqlCommand queryStatus = new SqlCommand(query, con);
-                SqlDataReader reader = queryStatus.ExecuteReader();
-                while (reader.Read())
+                using(SqlCommand cmd = new SqlCommand("dbo.uspGetCustomerReviews", con))
                 {
-                    CustomerReviewData tempCustomerData = new CustomerReviewData($"{reader["productID"]}", $"{reader["ReviewerName"]}",
-                                                                            $"{reader["ReviewDate"]}", Convert.ToInt16(reader["Rating"]),
-                                                                            $"{reader["Comments"]}");
-                    customerData.Add(tempCustomerData);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            CustomerReviewData tempCustomerData = new CustomerReviewData($"{reader["productID"]}", $"{reader["ReviewerName"]}",
+                                                                                    $"{reader["ReviewDate"]}", Convert.ToInt16(reader["Rating"]),
+                                                                                    $"{reader["Comments"]}");
+                            customerData.Add(tempCustomerData);
+                        }
+                    }
                 }
             }
         }
