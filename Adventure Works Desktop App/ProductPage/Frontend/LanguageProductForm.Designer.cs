@@ -53,6 +53,7 @@
             // 
             // selectButton
             // 
+            this.selectButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.selectButton.Location = new System.Drawing.Point(76, 49);
             this.selectButton.Margin = new System.Windows.Forms.Padding(1);
             this.selectButton.Name = "selectButton";
@@ -61,7 +62,6 @@
             this.selectButton.TabIndex = 2;
             this.selectButton.Text = "Select";
             this.selectButton.UseVisualStyleBackColor = true;
-            this.selectButton.Click += new System.EventHandler(this.selectButton_Click);
             // 
             // LanguageProductForm
             // 

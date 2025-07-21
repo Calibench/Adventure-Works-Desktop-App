@@ -31,6 +31,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             subCategoryComboBox.Enabled = false;
             productComboBox.Enabled = false;
             UpdateProducts(ProductDetailsUpdate.PrimaryCategoryComboBox);
+            cultureNameLabel.Visible = false;
         }
 
         // Event Section
@@ -43,6 +44,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             UpdateProducts(ProductDetailsUpdate.SubCategoryComboBox);
             subCategoryComboBox.Text = GetFirst(subCategoryComboBox); // gets first in the combobox
             productComboBox.Text = GetFirst(productComboBox); // gets first in the combobox
+            cultureNameLabel.Visible = true;
         }
 
         private void subCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,7 +66,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             var langWin = new LanguageProductForm(cultureNameLabel.Text);
             langWin.ShowDialog();
             // checks if the back button was pressed instead of the window was just closed
-            if (langWin.backButton && categoryComboBox.Text != "")
+            if (langWin.DialogResult == DialogResult.OK && categoryComboBox.Text != "")
             {
                 cultureNameLabel.Text = langWin.GetSelectedLanguage();
                 UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);

@@ -6,7 +6,6 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
 {
     public partial class LanguageProductForm : Form
     {
-        public bool backButton = false;
         public LanguageProductForm(string cultureID)
         {
             InitializeComponent();
@@ -17,12 +16,6 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
         public string GetSelectedLanguage()
         {
             return languageComboBox.Text;
-        }
-
-        private void selectButton_Click(object sender, EventArgs e)
-        {
-            backButton = true;
-            this.Close();
         }
     }
 }
