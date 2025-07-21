@@ -14,20 +14,22 @@ namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
 
         private void RetrieveLanguages(ComboBox comboBox)
         {
-            String query = "select Name " +
-                           "from Production.Culture " +
-                           "where CultureID <> '';";
+            // no spanish due to no product description about it.
             using (SqlConnection con = new SqlConnection(connect.ConnectionString))
             {
                 con.Open();
-                SqlCommand queryStatus = new SqlCommand(query, con);
-                SqlDataReader reader = queryStatus.ExecuteReader();
-                comboBox.Items.Clear();
-                while (reader.Read())
+                using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllNotSpanishLanguages", con))
                 {
-                    string language = $"{reader["Name"]}";
-                    comboBox.Items.Add(language);
-                }
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        comboBox.Items.Clear();
+                        while (reader.Read())
+                        {
+                            comboBox.Items.Add(reader["Name"].ToString());
+                        }
+                    }
+                }   
             }
         }
     }

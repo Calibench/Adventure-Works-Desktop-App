@@ -39,7 +39,7 @@
             this.backButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.cultureIDLabel = new System.Windows.Forms.Label();
+            this.cultureNameLabel = new System.Windows.Forms.Label();
             this.langToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.productNNSGroupBox = new System.Windows.Forms.GroupBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -222,21 +222,21 @@
             this.splitContainer2.TabIndex = 0;
             this.splitContainer2.TabStop = false;
             // 
-            // cultureIDLabel
+            // cultureNameLabel
             // 
-            this.cultureIDLabel.AccessibleDescription = "";
-            this.cultureIDLabel.AccessibleName = "";
-            this.cultureIDLabel.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.cultureIDLabel.AutoSize = true;
-            this.cultureIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cultureIDLabel.Location = new System.Drawing.Point(33, 9);
-            this.cultureIDLabel.Name = "cultureIDLabel";
-            this.cultureIDLabel.Size = new System.Drawing.Size(41, 13);
-            this.cultureIDLabel.TabIndex = 1;
-            this.cultureIDLabel.Text = "English";
-            this.cultureIDLabel.Click += new System.EventHandler(this.LanguageLabelClicked);
-            this.cultureIDLabel.MouseEnter += new System.EventHandler(this.LanguageLabelEnter);
-            this.cultureIDLabel.MouseLeave += new System.EventHandler(this.LanguageLabelLeave);
+            this.cultureNameLabel.AccessibleDescription = "";
+            this.cultureNameLabel.AccessibleName = "";
+            this.cultureNameLabel.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.cultureNameLabel.AutoSize = true;
+            this.cultureNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cultureNameLabel.Location = new System.Drawing.Point(33, 9);
+            this.cultureNameLabel.Name = "cultureNameLabel";
+            this.cultureNameLabel.Size = new System.Drawing.Size(41, 13);
+            this.cultureNameLabel.TabIndex = 1;
+            this.cultureNameLabel.Text = "English";
+            this.cultureNameLabel.Click += new System.EventHandler(this.LanguageLabelClicked);
+            this.cultureNameLabel.MouseEnter += new System.EventHandler(this.LanguageLabelEnter);
+            this.cultureNameLabel.MouseLeave += new System.EventHandler(this.LanguageLabelLeave);
             // 
             // productNNSGroupBox
             // 
@@ -555,7 +555,7 @@
             this.ClientSize = new System.Drawing.Size(838, 441);
             this.Controls.Add(this.productID);
             this.Controls.Add(this.productNNSGroupBox);
-            this.Controls.Add(this.cultureIDLabel);
+            this.Controls.Add(this.cultureNameLabel);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.usernameLabel);
             this.Controls.Add(this.backButton);
@@ -622,7 +622,7 @@
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.Label cultureIDLabel;
+        private System.Windows.Forms.Label cultureNameLabel;
         private System.Windows.Forms.ToolTip langToolTip;
         private System.Windows.Forms.GroupBox productNNSGroupBox;
         private System.Windows.Forms.SplitContainer splitContainer3;

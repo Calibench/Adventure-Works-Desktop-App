@@ -54,17 +54,13 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
         private void LanguageLabelClicked(object sender, EventArgs e)
         {
             // open a box that allows user to select the language of choice (this will then filter the sql query to that language through cultureID)
-            var langWin = new LanguageProductForm(cultureIDLabel.Text);
+            var langWin = new LanguageProductForm(cultureNameLabel.Text);
             langWin.ShowDialog();
             // checks if the back button was pressed instead of the window was just closed
             if (langWin.backButton && categoryComboBox.Text != "")
             {
-                cultureIDLabel.Text = langWin.GetSelectedLanguage();
+                cultureNameLabel.Text = langWin.GetSelectedLanguage();
                 UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);
-            }
-            else 
-            {
-                cultureIDLabel.Text = langWin.GetSelectedLanguage();
             }
         }
 
@@ -73,15 +69,15 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
             // allow tooltip to appear
             langToolTip.Active = true;
             // underline the text for the language when hovered
-            cultureIDLabel.Font = new Font(cultureIDLabel.Font.Name, cultureIDLabel.Font.SizeInPoints, FontStyle.Underline);
+            cultureNameLabel.Font = new Font(cultureNameLabel.Font.Name, cultureNameLabel.Font.SizeInPoints, FontStyle.Underline);
             // tooltip to display
-            langToolTip.SetToolTip(cultureIDLabel, "Click to change description language for products");
+            langToolTip.SetToolTip(cultureNameLabel, "Click to change description language for products");
         }
 
         private void LanguageLabelLeave(object sender, EventArgs e)
         {
             // changes font back to normal
-            cultureIDLabel.Font = new Font(cultureIDLabel.Font.Name, cultureIDLabel.Font.SizeInPoints, FontStyle.Regular);
+            cultureNameLabel.Font = new Font(cultureNameLabel.Font.Name, cultureNameLabel.Font.SizeInPoints, FontStyle.Regular);
             // disabling the tooltip prevents ghosting
             langToolTip.Active = false;
         }
@@ -94,7 +90,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
         private void UpdateProducts(ProductDetailsUpdate numProductDetailsUpdate)
         {
             // to do the reviews, use this container (customerReviewPanel) encapsulate it with a groupbox
-            ProductInfoBackend backend = new ProductInfoBackend(cultureIDLabel.Text);
+            ProductInfoBackend backend = new ProductInfoBackend(cultureNameLabel.Text);
             
             ProductDetailsProcedureUpdate(backend, numProductDetailsUpdate);
             CustomerReviewUpdate(backend.CustomerData);
@@ -119,7 +115,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.FrontEnd
                     break;
                 // update product details to match the select product name from the product combobox
                 case ProductDetailsUpdate.UpdateProductDetails:
-                    UpdateProductDetails(backend.GetProductData(cultureIDLabel.Text, productComboBox.Text));
+                    UpdateProductDetails(backend.GetProductData(cultureNameLabel.Text, productComboBox.Text));
                     break;
             }
         }

@@ -35,8 +35,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
             customerData = new List<CustomerReviewData>();
             productData = new List<ProductData>();
             SearchReview();
-            string cultureID = GetCultureID(cultureName);
-            SearchProduct(cultureID);
+            SearchProduct(cultureName);
         }
 
         // Put this data into the CustomerReviewData (productID, customerName, date, rating, comment)
@@ -59,39 +58,27 @@ namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
             }
         }
 
-        private void SearchProduct(string cultureID)
+        private void SearchProduct(string cultureName)
         {
-            string query = $"execute dbo.ProductSearchLang @CultureID = {cultureID};";
-
             using (SqlConnection con = new SqlConnection(connection.ConnectionString))
             {
                 con.Open();
-                SqlCommand queryStatus = new SqlCommand(query, con);
-                SqlDataReader reader = queryStatus.ExecuteReader();
-                while (reader.Read())
+                using (SqlCommand cmd = new SqlCommand("dbo.ProductSearchLang", con))
                 {
-                    ProductData tempProductData = new ProductData($"{reader["Product_Catagory"]}", $"{reader["Product_SubCategory"]}",
-                        $"{reader["ProductID"]}", $"{reader["ProductNumber"]}", $"{reader["Product_Name"]}",
-                        $"{reader["ListPrice"]}", $"{reader["StandardCost"]}", $"{reader["Margin_Profit"]}", $"{reader["Size"]}",
-                        $"{reader["Color"]}", $"{reader["Weight"]}", $"{reader["Description"]}", $"{reader["Culture_Name"]}");
-                    productData.Add(tempProductData);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@cultureName", cultureName);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ProductData tempProductData = new ProductData($"{reader["Product_Catagory"]}", $"{reader["Product_SubCategory"]}",
+                                $"{reader["ProductID"]}", $"{reader["ProductNumber"]}", $"{reader["Product_Name"]}",
+                                $"{reader["ListPrice"]}", $"{reader["StandardCost"]}", $"{reader["Margin_Profit"]}", $"{reader["Size"]}",
+                                $"{reader["Color"]}", $"{reader["Weight"]}", $"{reader["Description"]}", $"{reader["Culture_Name"]}");
+                            productData.Add(tempProductData);
+                        }
+                    }
                 }
-            }
-        }
-
-        private string GetCultureID(string cultureName)
-        {
-            string query = $"execute dbo.uspGetCultureID @CultureName = {cultureName}";
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
-            {
-                con.Open();
-                SqlCommand queryStatus = new SqlCommand(query, con);
-                SqlDataReader reader = queryStatus.ExecuteReader();
-                while (reader.Read())
-                {
-                    return $"{reader["CultureID"]}";
-                }
-                return "error";
             }
         }
 
@@ -143,6 +130,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.BackEnd
                     return data;
                 }
             }
+            MessageBox.Show("NO DATA");
             return null;
         }
     }
