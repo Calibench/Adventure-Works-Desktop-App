@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
+﻿namespace Adventure_Works_Desktop_App.Globals.DataClasses
 {
     internal class SalesPersonData
     {
@@ -27,10 +20,5 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
         {get;set;}
         public RegionData RegionData
         {get;set;}
-
-        public SalesPersonData()
-        {
-            // used for ease of initialization
-        }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Adventure_Works_Desktop_App.LoginPage.Backend
 {
@@ -35,6 +36,12 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
 
             accountData.DisplayName = GetDisplayName(inputUsername, inputPassword);
 
+            if (accountData.DisplayName == null)
+            {
+                MessageBox.Show("Not able to login, application will now close. ");
+                Application.Exit();
+            }
+
             return true; 
         }
 
@@ -47,22 +54,28 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <exception cref="Exception">Unable to connect to the DB</exception>
         private string GetDisplayName(string username, string password)
         {
-            string query = "select dbo.ufnGetDisplayName(@Username, @Password)";
-            using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    cmd.Parameters.AddWithValue("@Password", password);
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetDisplayName(@Username, @Password)", conn))
                     {
-                        return result.ToString();
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@Password", password);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return result.ToString();
+                        }
                     }
                 }
             }
-            throw new Exception(Properties.LoginPageResources.ExceptionCannotConnectToDB);
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetDisplayName.", ex);
+            }
+            return null; 
         }
 
         /// <summary>
@@ -75,29 +88,35 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         private AccountData GetLoginDB(string username, string password)
         {
             AccountData data = new AccountData();
-
-            using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
+            try
             {
-                conn.Open();
-                
-                using (SqlCommand cmd = new SqlCommand("dbo.uspGetUsernamePassword", conn))
+                using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    cmd.Parameters.AddWithValue("@Password", password);
-                    
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetUsernamePassword", conn))
                     {
-                        while (reader.Read())
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@Password", password);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            data.Username = reader["Username"].ToString();
-                            data.Password = reader["Password"].ToString();
+                            while (reader.Read())
+                            {
+                                data.Username = reader["Username"].ToString();
+                                data.Password = reader["Password"].ToString();
+                                return data;
+                            }
                             return data;
                         }
                     }
                 }
             }
-            throw new Exception(Properties.LoginPageResources.ExceptionCannotConnectToDB);
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetLoginDB.", ex);
+            }
         }
     }
 }

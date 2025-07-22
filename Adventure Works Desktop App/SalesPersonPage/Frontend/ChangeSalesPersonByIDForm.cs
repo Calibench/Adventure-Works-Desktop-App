@@ -1,6 +1,7 @@
 ﻿using System;
 using Adventure_Works_Desktop_App.SalesPersonPage.Backend;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
 {
@@ -12,7 +13,6 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
             get { return selectedID; }
         }
 
-        public bool submitPressed = false;
         private SalesPersonBackend backend = new SalesPersonBackend();
 
         public ChangeSalesPersonByIDForm(string formName, string title)
@@ -20,6 +20,12 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
             InitializeComponent();
             this.Text = formName;
             enterIDLabel.Text = title;
+        }
+
+        private void InitialFormLoad(object sender, EventArgs e)
+        {
+            enterIDLabel.Left = (panel1.Width / 2) - (enterIDLabel.Width / 2);
+            enterIDLabel.Top = (panel1.Height / 2) - (enterIDLabel.Height / 2);
         }
 
         private void submitButton_Click(object sender, EventArgs e)
@@ -31,36 +37,28 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
         {
             if (this.Text == "Name")
             {
-                if (backend.ValidateName(idTextBox.Text))
+                if (backend.ValidateName(id))
                 {
-                    selectedID = backend.Id;
-                    submitPressed = true;
-                    this.Close();
+                    this.selectedID = backend.Id;
+                    DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBox.Show("Could not find Sales Person");
+                    MessageBox.Show("Could not find Sales Person\nPlease try again.");
                 }
             }
             else
             {
-                if (backend.ValidateID(idTextBox.Text))
+                if (backend.ValidateID(id))
                 {
-                    selectedID = idTextBox.Text;
-                    submitPressed = true;
-                    this.Close();
+                    this.selectedID = id;
+                    DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBox.Show("Could not find find ID");
+                    MessageBox.Show("Could not find find ID\nPlease try again.");
                 }
             }
-        }
-
-        private void InitialFormLoad(object sender, EventArgs e)
-        {
-            enterIDLabel.Left = (panel1.Width / 2) - (enterIDLabel.Width / 2);
-            enterIDLabel.Top = (panel1.Height / 2) - (enterIDLabel.Height / 2);
         }
     }
 }

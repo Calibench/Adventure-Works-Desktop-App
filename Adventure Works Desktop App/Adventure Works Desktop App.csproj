@@ -137,9 +137,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductReviewResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SalesPersonPage\Backend\RegionData.cs" />
+    <Compile Include="Globals\DataClasses\RegionData.cs" />
     <Compile Include="SalesPersonPage\Backend\SalesPersonBackend.cs" />
-    <Compile Include="SalesPersonPage\Backend\SalesPersonData.cs" />
+    <Compile Include="Globals\DataClasses\SalesPersonData.cs" />
     <Compile Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.cs">
       <SubType>Form</SubType>
     </Compile>

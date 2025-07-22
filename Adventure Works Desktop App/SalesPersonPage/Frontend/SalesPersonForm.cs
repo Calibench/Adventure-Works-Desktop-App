@@ -1,4 +1,5 @@
 ﻿using Adventure_Works_Desktop_App.SalesPersonPage.Backend;
+using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
 using System.Windows.Forms;
 
@@ -6,13 +7,20 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
 {
     public partial class SalesPersonForm : Form
     {
-        public bool backButtonPressed = false;
         private string username;
         private SalesPersonBackend backend = new SalesPersonBackend();
+        
         public SalesPersonForm(string username)
         {
             InitializeComponent();
             this.username = username;
+        }
+
+        private void InitialFormLoad(object sender, EventArgs e)
+        {
+            usernameLabel.Text = $"Logged in: {username}";
+            salesPersonGroupBox.Visible = false;
+            regionSalesGroupBox.Visible = false;
         }
 
         private void ChangeSalesPersonByID(object sender, EventArgs e)
@@ -34,30 +42,19 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
             // Get data through region_name
             var frm = new ChangeRegionByNameForm();
             frm.ShowDialog();
-            if (frm.submitPressed)
+
+            if (frm.DialogResult == DialogResult.OK)
             {
                 regionRegionNameValueLabel.Text = frm.regionName;
                 ShowSpecificRegionData();
             }
         }
 
-        private void InitialFormLoad(object sender, EventArgs e)
-        {
-            usernameLabel.Text = $"Logged in: {username}";
-            salesPersonGroupBox.Visible = false;
-            regionSalesGroupBox.Visible = false;
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            ExitBackToMenu();
-        }
-
         // helper methods
-        private void ExitBackToMenu()
+        private void ExitBackToMenu(object sender, EventArgs e)
         {
-            backButtonPressed = true;
-            this.Close();
+            // This is for the menuStrip exit method
+            this.DialogResult = DialogResult.Abort;
         }
 
         private void SelectSalesPerson(string formName, string title)
@@ -66,19 +63,33 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
             frm.Location = this.Location;
             frm.ShowDialog();
 
-            if (frm.submitPressed)
+            if (frm.DialogResult == DialogResult.OK)
             {
                 idValueLabel.Text = frm.SelectedID;
                 ShowSalesData();
             }
         }
 
+        /// <summary>
+        /// Centers a specified control within a given group box.
+        /// </summary>
+        /// <remarks>This method adjusts the position of the control so that it is centered both
+        /// horizontally and vertically within the specified group box.</remarks>
+        /// <param name="groupbox">The <see cref="GroupBox"/> within which the control will be centered.</param>
+        /// <param name="control">The <see cref="Control"/> to be centered inside the group box.</param>
         private void CenterTextGroupBox(GroupBox groupbox, Control control)
         {
             control.Left = (groupbox.Width / 2) - (control.Width / 2);
             control.Top = (groupbox.Height / 2) - (control.Height / 2);
         }
 
+        /// <summary>
+        /// Displays detailed sales data for a specific region.
+        /// </summary>
+        /// <remarks>This method retrieves and displays sales data for a region specified by the <see
+        /// cref="regionRegionNameValueLabel"/>. It updates various UI elements with the retrieved data, including
+        /// territory ID, continent, region code, and sales figures for the current and previous year. The method also
+        /// adjusts the visibility of relevant UI components to focus on regional sales data.</remarks>
         private void ShowSpecificRegionData()
         {
             RegionData data = new RegionData();
@@ -98,6 +109,13 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
             salesPersonGroupBox.Visible = false;
         }
 
+        /// <summary>
+        /// Displays the sales data for a salesperson and their associated region.
+        /// </summary>
+        /// <remarks>This method retrieves sales data for a specific salesperson using their ID and
+        /// updates the UI with the relevant information, including personal details, sales performance, and regional
+        /// sales data. It also adjusts the visibility of certain UI elements based on the presence of sales quota
+        /// data.</remarks>
         private void ShowSalesData()
         {
             // with id assign data to value labels

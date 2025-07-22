@@ -46,14 +46,14 @@
             // 
             // idTextBox
             // 
-            this.idTextBox.Location = new System.Drawing.Point(56, 60);
+            this.idTextBox.Location = new System.Drawing.Point(54, 67);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(100, 20);
             this.idTextBox.TabIndex = 1;
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(69, 92);
+            this.submitButton.Location = new System.Drawing.Point(67, 99);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(75, 23);
             this.submitButton.TabIndex = 2;
@@ -64,7 +64,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.enterIDLabel);
-            this.panel1.Location = new System.Drawing.Point(5, 21);
+            this.panel1.Location = new System.Drawing.Point(3, 28);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(202, 33);
             this.panel1.TabIndex = 3;

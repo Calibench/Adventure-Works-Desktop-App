@@ -382,7 +382,7 @@
             this.exitToolStripMenuItem.ShortcutKeyDisplayString = "E";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.backButton_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitBackToMenu);
             // 
             // toolStripMenuItem1
             // 
@@ -485,6 +485,7 @@
             // 
             // backButton
             // 
+            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.backButton.Location = new System.Drawing.Point(51, 16);
             this.backButton.MaximumSize = new System.Drawing.Size(75, 23);
             this.backButton.Name = "backButton";
@@ -492,7 +493,6 @@
             this.backButton.TabIndex = 1;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // territoryIDLabel
             // 
