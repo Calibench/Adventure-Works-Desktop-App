@@ -42,24 +42,31 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         /// review date, rating, and comments.</remarks>
         private void SearchReview()
         {
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+            try
             {
-                con.Open();
-                using(SqlCommand cmd = new SqlCommand("dbo.uspGetCustomerReviews", con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetCustomerReviews", con))
                     {
-                        while (reader.Read())
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            CustomerReviewData tempCustomerData = new CustomerReviewData(
-                                reader["productID"].ToString(), reader["ReviewerName"].ToString(),
-                                reader["ReviewDate"].ToString(), Convert.ToInt16(reader["Rating"]),
-                                reader["Comments"].ToString());
-                            customerData.Add(tempCustomerData);
+                            while (reader.Read())
+                            {
+                                CustomerReviewData tempCustomerData = new CustomerReviewData(
+                                    reader["productID"].ToString(), reader["ReviewerName"].ToString(),
+                                    reader["ReviewDate"].ToString(), Convert.ToInt16(reader["Rating"]),
+                                    reader["Comments"].ToString());
+                                customerData.Add(tempCustomerData);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in SearchReview.", ex);
             }
         }
 
@@ -71,27 +78,34 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         /// <param name="cultureName">The name of the culture used to filter the product data. This parameter cannot be null or empty.</param>
         private void SearchProduct(string cultureName)
         {
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspProductSearchLang", con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@cultureName", cultureName);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspProductSearchLang", con))
                     {
-                        while (reader.Read())
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@cultureName", cultureName);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            ProductData tempProductData = new ProductData(
-                                reader["Product_Catagory"].ToString(), reader["Product_SubCategory"].ToString(),
-                                reader["ProductID"].ToString(), reader["ProductNumber"].ToString(), reader["Product_Name"].ToString(),
-                                reader["ListPrice"].ToString(), reader["StandardCost"].ToString(), reader["Margin_Profit"].ToString(), 
-                                reader["Size"].ToString(), reader["Color"].ToString(), reader["Weight"].ToString(), 
-                                reader["Description"].ToString(), reader["Culture_Name"].ToString());
-                            productData.Add(tempProductData);
+                            while (reader.Read())
+                            {
+                                ProductData tempProductData = new ProductData(
+                                    reader["Product_Catagory"].ToString(), reader["Product_SubCategory"].ToString(),
+                                    reader["ProductID"].ToString(), reader["ProductNumber"].ToString(), reader["Product_Name"].ToString(),
+                                    reader["ListPrice"].ToString(), reader["StandardCost"].ToString(), reader["Margin_Profit"].ToString(),
+                                    reader["Size"].ToString(), reader["Color"].ToString(), reader["Weight"].ToString(),
+                                    reader["Description"].ToString(), reader["Culture_Name"].ToString());
+                                productData.Add(tempProductData);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in SearchProduct.", ex);
             }
         }
 
@@ -129,33 +143,40 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
                 default:
                     throw new ArgumentException("Invalid procedure type.", nameof(procedure));
             }
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.CommandType = commandType;
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.CommandType = commandType;
 
-                    if (procedure == Procedure.SubCategory)
-                    {
-                        cmd.Parameters.AddWithValue("@Category", category);
-                    }
-                    else if (procedure == Procedure.ProductName)
-                    {
-                        cmd.Parameters.AddWithValue("@SubCategory", category);
-                    }
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
+                        if (procedure == Procedure.SubCategory)
                         {
-                            categories.Add(reader["Name"].ToString());
+                            cmd.Parameters.AddWithValue("@Category", category);
                         }
+                        else if (procedure == Procedure.ProductName)
+                        {
+                            cmd.Parameters.AddWithValue("@SubCategory", category);
+                        }
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                categories.Add(reader["Name"].ToString());
+                            }
+                        }
+                        return categories;
                     }
-                    return categories;
-                }   
+                }
             }
-            throw new Exception("--Unable to connect to DB--");
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetCategories.", ex);
+            }
         }
 
         /// <summary>

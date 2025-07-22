@@ -38,7 +38,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
 
             if (accountData.DisplayName == null)
             {
-                MessageBox.Show("Not able to login, application will now close. ");
+                MessageBox.Show("Not able to login, application will now close.");
                 Application.Exit();
             }
 

@@ -14,28 +14,34 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         // But this is just a practice project. (Similiar class - ProductLanguageSelect)
         public void PopulateComboBox(ComboBox comboBox, List<string> productIDs)
         {
-            using (SqlConnection connect = new SqlConnection(con.ConnectionString))
+            try
             {
-                connect.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllProducts", connect))
+                using (SqlConnection connect = new SqlConnection(con.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    connect.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllProducts", connect))
                     {
-                        comboBox.Items.Clear();
-                        productIDs.Clear();
-                        while (reader.Read())
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string language = reader["Name"].ToString();
-                            string productID = reader["ProductID"].ToString();
-                            productIDs.Add(productID);
-                            comboBox.Items.Add(language);
+                            comboBox.Items.Clear();
+                            productIDs.Clear();
+                            while (reader.Read())
+                            {
+                                string language = reader["Name"].ToString();
+                                string productID = reader["ProductID"].ToString();
+                                productIDs.Add(productID);
+                                comboBox.Items.Add(language);
+                            }
+                            return;
                         }
-                        return;
                     }
                 }
             }
-            throw new ArgumentException(Properties.ProductReviewResources.UnableToGetProducts, comboBox.Name);
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in PopulateComboBox.", ex);
+            }
         }
     }
 }

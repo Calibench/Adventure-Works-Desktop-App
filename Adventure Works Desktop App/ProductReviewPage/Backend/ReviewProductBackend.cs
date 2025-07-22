@@ -23,20 +23,26 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         /// <exception cref="ArgumentException">Thrown if the email address cannot be retrieved for the specified display name.</exception>
         private string GetEmailAddress(string displayName)
         {
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetUserEmail(@DisplayName)", con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@DisplayName", displayName);
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetUserEmail(@DisplayName)", con))
                     {
-                        return result.ToString();
+                        cmd.Parameters.AddWithValue("@DisplayName", displayName);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return result.ToString();
+                        }
                     }
-                } 
+                }
             }
-            throw new ArgumentException(Properties.ProductReviewResources.UnableToGetEmail, displayName);
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetEmailAddress.", ex);
+            }
         }
 
         /// <summary>
@@ -47,20 +53,27 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         /// <exception cref="ArgumentException">Thrown if the case-sensitive username cannot be retrieved for the specified <paramref name="reviewName"/>.</exception>
         private string GetCaseSensitiveDisplayName(string reviewName)
         {
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetCaseSensitiveDisplayName(@DisplayName)", con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@DisplayName", reviewName);
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetCaseSensitiveDisplayName(@DisplayName)", con))
                     {
-                        return result.ToString();
+                        cmd.Parameters.AddWithValue("@DisplayName", reviewName);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return result.ToString();
+                        }
                     }
                 }
             }
-            throw new ArgumentException(Properties.ProductReviewResources.UnableToGetDisplayName, reviewName);
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetCaseSensitiveDisplaName.", ex);
+            }
+            return null;
         }
 
         /// <summary>
@@ -82,21 +95,28 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         /// comments, and modified date.</param>
         private void SubmitReview(ReviewProductData rpd)
         {
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewReview", con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ProductID", rpd.ProductID);
-                    cmd.Parameters.AddWithValue("@ReviewerName", rpd.ReviewerName);
-                    cmd.Parameters.AddWithValue("@ReviewDate", rpd.ReviewDate);
-                    cmd.Parameters.AddWithValue("@EmailAddress", rpd.EmailAddress);
-                    cmd.Parameters.AddWithValue("@Rating", rpd.Rating);
-                    cmd.Parameters.AddWithValue("@Comments", rpd.Comments);
-                    cmd.Parameters.AddWithValue("@ModifiedDate", rpd.ModifiedDate);
-                    cmd.ExecuteNonQuery();
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewReview", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ProductID", rpd.ProductID);
+                        cmd.Parameters.AddWithValue("@ReviewerName", rpd.ReviewerName);
+                        cmd.Parameters.AddWithValue("@ReviewDate", rpd.ReviewDate);
+                        cmd.Parameters.AddWithValue("@EmailAddress", rpd.EmailAddress);
+                        cmd.Parameters.AddWithValue("@Rating", rpd.Rating);
+                        cmd.Parameters.AddWithValue("@Comments", rpd.Comments);
+                        cmd.Parameters.AddWithValue("@ModifiedDate", rpd.ModifiedDate);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in SubmitReview.", ex);
             }
         }
     }

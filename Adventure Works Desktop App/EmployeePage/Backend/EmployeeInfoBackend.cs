@@ -1,4 +1,5 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -18,22 +19,29 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="comboBox">Combobox that is needs to be populated.</param>
         public void UpdateComoboBox(ComboBox comboBox)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllEmployeeIDs", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllEmployeeIDs", conn))
                     {
-                        comboBox.Items.Clear();
-                        while (reader.Read())
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string businessEntityID = reader["businessEntityID"].ToString();
-                            comboBox.Items.Add(businessEntityID);
+                            comboBox.Items.Clear();
+                            while (reader.Read())
+                            {
+                                string businessEntityID = reader["businessEntityID"].ToString();
+                                comboBox.Items.Add(businessEntityID);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in UpdateComboBox.", ex);
             }
         }
 
@@ -44,40 +52,46 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <returns></returns>
         public EmployeeData GetData(string businessEntityID)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspGetEmployeeData", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                     cmd.CommandType = CommandType.StoredProcedure;
-                     cmd.Parameters.AddWithValue("@BusinessEntityID", businessEntityID);
-                     using (SqlDataReader reader = cmd.ExecuteReader())
-                     {
-                         if (reader.Read())
-                         {
-                             return new EmployeeData
-                                 (
-                                  reader["BusinessEntityID"].ToString(),
-                                  reader["FirstName"].ToString(), 
-                                  reader["MiddleName"].ToString(), 
-                                  reader["LastName"].ToString(),
-                                  reader["JobTitle"].ToString(), 
-                                  reader["BirthDate"].ToString(), 
-                                  reader["MaritalStatus"].ToString(),
-                                  reader["Gender"].ToString(), 
-                                  reader["HireDate"].ToString(), 
-                                  reader["VacationHours"].ToString(),
-                                  reader["SickLeaveHours"].ToString(), 
-                                  reader["dep_name"].ToString(), 
-                                  reader["dep_groupname"].ToString(),
-                                  reader["shift_name"].ToString(), 
-                                  reader["Yearly_Salary"].ToString()
-                                 );
-                         }
-                     }
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetEmployeeData", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@BusinessEntityID", businessEntityID);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return new EmployeeData
+                                    (
+                                     reader["BusinessEntityID"].ToString(),
+                                     reader["FirstName"].ToString(),
+                                     reader["MiddleName"].ToString(),
+                                     reader["LastName"].ToString(),
+                                     reader["JobTitle"].ToString(),
+                                     reader["BirthDate"].ToString(),
+                                     reader["MaritalStatus"].ToString(),
+                                     reader["Gender"].ToString(),
+                                     reader["HireDate"].ToString(),
+                                     reader["VacationHours"].ToString(),
+                                     reader["SickLeaveHours"].ToString(),
+                                     reader["dep_name"].ToString(),
+                                     reader["dep_groupname"].ToString(),
+                                     reader["shift_name"].ToString(),
+                                     reader["Yearly_Salary"].ToString()
+                                    );
+                            }
+                        }
+                    }
                 }
             }
-            // If the reader cannot reach the server it will display this then close.
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetData.", ex);
+            }
             MessageBox.Show(Properties.Resources.ErrorMessageConnectionLost);
             Application.Exit();
             return null;

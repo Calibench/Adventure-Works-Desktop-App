@@ -62,28 +62,34 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <exception cref="Exception">Connection to database is inaccessible</exception>
         private void GenStoredProc(ComboBox combobox, string query, string param, string name, string columnHeader)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    if (param != null && name != null)
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue(param, name);
-                    }
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        combobox.Items.Clear();
-                        while (reader.Read())
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        if (param != null && name != null)
                         {
-                            combobox.Items.Add(reader[columnHeader].ToString());
+                            cmd.Parameters.AddWithValue(param, name);
                         }
-                        return;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            combobox.Items.Clear();
+                            while (reader.Read())
+                            {
+                                combobox.Items.Add(reader[columnHeader].ToString());
+                            }
+                            return;
+                        }
                     }
                 }
             }
-            throw new Exception("Error with Fetching Item " + query);
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GenStoredProc.", ex);
+            }
         }
 
         /// <summary>
@@ -105,25 +111,31 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <exception cref="Exception">Cannot connect to the DB</exception>
         private void UpdateBasicEmployeeInfo(EmployeeData data)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeData", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                    cmd.Parameters.AddWithValue("@JobTitle", data.JobTitle);
-                    cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
-                    cmd.Parameters.AddWithValue("@MaritalStatus", data.MaritalStatus);
-                    cmd.Parameters.AddWithValue("@Gender", data.Gender);
-                    cmd.Parameters.AddWithValue("@HireDate", data.HireDate);
-                    cmd.Parameters.AddWithValue("@VacationHours", data.VacationHours);
-                    cmd.Parameters.AddWithValue("@SickLeaveHours", data.SickLeaveHours);
-                    cmd.ExecuteNonQuery();
-                    return;
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeData", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
+                        cmd.Parameters.AddWithValue("@JobTitle", data.JobTitle);
+                        cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
+                        cmd.Parameters.AddWithValue("@MaritalStatus", data.MaritalStatus);
+                        cmd.Parameters.AddWithValue("@Gender", data.Gender);
+                        cmd.Parameters.AddWithValue("@HireDate", data.HireDate);
+                        cmd.Parameters.AddWithValue("@VacationHours", data.VacationHours);
+                        cmd.Parameters.AddWithValue("@SickLeaveHours", data.SickLeaveHours);
+                        cmd.ExecuteNonQuery();
+                        return;
+                    }
                 }
             }
-            throw new Exception("--Cannot Update Employee Info--");
+            catch(SqlException ex) 
+            {
+                throw new InvalidOperationException("Database access failed in UpdateBasicEmployeeInfo.", ex);
+            }
         }
 
         /// <summary>
@@ -133,21 +145,27 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <exception cref="Exception">Cannot connect to the DB</exception>
         private void UpdateBasicPersonInfo(EmployeeData data)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspUpdatePersonEmployeeName", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
-                    cmd.Parameters.AddWithValue("@MiddleName", data.MiddleName);
-                    cmd.Parameters.AddWithValue("@LastName", data.LastName);
-                    cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                    cmd.ExecuteNonQuery();
-                    return;
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspUpdatePersonEmployeeName", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
+                        cmd.Parameters.AddWithValue("@MiddleName", data.MiddleName);
+                        cmd.Parameters.AddWithValue("@LastName", data.LastName);
+                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
+                        cmd.ExecuteNonQuery();
+                        return;
+                    }
                 }
             }
-            throw new Exception("--Cannot Update Employee Name Info--");
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in UpdateBasicPersonInfo.", ex);
+            }
         }
 
         /// <summary>
@@ -157,20 +175,26 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <exception cref="Exception">Cannot connect to the DB</exception>
         private void UpdateEmployeeDepartmentHistory(EmployeeData data)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeDepartmentHistory", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@DepartmentID", FindDepartmentDetail(data));
-                    cmd.Parameters.AddWithValue("@ShiftID", FindShiftDetails(data));
-                    cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                    cmd.ExecuteNonQuery();
-                    return;
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeDepartmentHistory", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@DepartmentID", FindDepartmentDetail(data));
+                        cmd.Parameters.AddWithValue("@ShiftID", FindShiftDetails(data));
+                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
+                        cmd.ExecuteNonQuery();
+                        return;
+                    }
                 }
             }
-            throw new Exception("--Cannot Update Employee Department History--");
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in UpdateEmployeeDepartmentHistory.", ex);
+            }
         }
 
         /// <summary>
@@ -192,21 +216,27 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                 return;
             }
 
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspInsertEmployeeNewPay", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                    cmd.Parameters.AddWithValue("@RateChangeDate", DateTime.Now.ToString());
-                    cmd.Parameters.AddWithValue("@NewRate", salaryRate);
-                    cmd.Parameters.AddWithValue("@PayFrequency", GetPayFreq(data));
-                    cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now.ToString());
-                    cmd.ExecuteNonQuery();
-                    return;
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspInsertEmployeeNewPay", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
+                        cmd.Parameters.AddWithValue("@RateChangeDate", DateTime.Now.ToString());
+                        cmd.Parameters.AddWithValue("@NewRate", salaryRate);
+                        cmd.Parameters.AddWithValue("@PayFrequency", GetPayFreq(data));
+                        cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now.ToString());
+                        cmd.ExecuteNonQuery();
+                        return;
+                    }
                 }
             }
-            throw new Exception("--Cannot Insert New Pay For Employee--");
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetSalesPersonData.", ex);
+            }
         }
 
         /// <summary>
@@ -218,25 +248,31 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <exception cref="Exception">Employee cannot be found | DB Error</exception>
         private bool CheckSalaryChange(string salaryRate, EmployeeData data)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetEmployeePayRate(@BusinessEntityID)", conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetEmployeePayRate(@BusinessEntityID)", conn))
                     {
-                        if (result.ToString().Equals(salaryRate))
+                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
                         {
-                            return false;
+                            if (result.ToString().Equals(salaryRate))
+                            {
+                                return false;
+                            }
+                            return true;
                         }
-                        return true;
+                        throw new Exception("--Cannot Find Employee In The System--");
                     }
-                    throw new Exception("--Cannot Find Employee In The System--");
                 }
             }
-            throw new Exception("--Cannot Check Employee Salary--");
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in CheckSalaryChange.", ex);
+            }
         }
 
         /// <summary>
@@ -291,20 +327,27 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <exception cref="ArgumentException">Unable to access DB</exception>
         private string GenFetchOneItem(string query, string param, string data)
         {
-            using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue(param, data);
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        return result.ToString();
+                        cmd.Parameters.AddWithValue(param, data);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return result.ToString();
+                        }
                     }
                 }
             }
-            throw new ArgumentException("Error with Fetching Item", nameof(query));
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GenFetchOneItem.", ex);
+            }
+            return null;
         }
     }
 }

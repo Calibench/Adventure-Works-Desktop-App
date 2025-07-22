@@ -1,4 +1,5 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
@@ -17,18 +18,25 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         /// <returns>Returns a <see cref="bool">, of whether the username is currently in use or not.</cref></returns>
         public bool CheckUnique(AccountData data)
         {
-            using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("select ufnCheckUserName @GivenUsername", conn))
+                using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@GivenUsername", data.Username);
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("select ufnCheckUserName @GivenUsername", conn))
                     {
-                        return false; // it is not unique
+                        cmd.Parameters.AddWithValue("@GivenUsername", data.Username);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return false; // it is not unique
+                        }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in CheckUnique.", ex);
             }
             return true; // it is unique
         }
@@ -39,20 +47,27 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         /// <param name="data">Data that is being sent to the DB.</param>
         public void SignUp(AccountData data)
         {
-            using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewAccount", con))
+                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
-                    cmd.Parameters.AddWithValue("@LastName", data.LastName);
-                    cmd.Parameters.AddWithValue("@Username", data.Username);
-                    cmd.Parameters.AddWithValue("@Password", data.Password);
-                    cmd.Parameters.AddWithValue("@DisplayName", data.DisplayName);
-                    cmd.Parameters.AddWithValue("@Email", data.Email);
-                    cmd.ExecuteNonQuery();
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewAccount", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", data.LastName);
+                        cmd.Parameters.AddWithValue("@Username", data.Username);
+                        cmd.Parameters.AddWithValue("@Password", data.Password);
+                        cmd.Parameters.AddWithValue("@DisplayName", data.DisplayName);
+                        cmd.Parameters.AddWithValue("@Email", data.Email);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in SignUp.", ex);
             }
         }
 

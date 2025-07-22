@@ -21,21 +21,28 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         /// <param name="comboBox">The <see cref="ComboBox"/> to populate with language names.</param>
         private void RetrieveLanguages(ComboBox comboBox)
         {
-            using (SqlConnection con = new SqlConnection(connect.ConnectionString))
+            try
             {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllNotSpanishLanguages", con))
+                using (SqlConnection con = new SqlConnection(connect.ConnectionString))
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllNotSpanishLanguages", con))
                     {
-                        comboBox.Items.Clear();
-                        while (reader.Read())
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            comboBox.Items.Add(reader["Name"].ToString());
+                            comboBox.Items.Clear();
+                            while (reader.Read())
+                            {
+                                comboBox.Items.Add(reader["Name"].ToString());
+                            }
                         }
                     }
-                }   
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in RetrieveLanguages.", ex);
             }
         }
     }
