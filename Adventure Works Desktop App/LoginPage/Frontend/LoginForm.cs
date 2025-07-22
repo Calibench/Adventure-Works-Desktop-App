@@ -96,7 +96,7 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
                 MessageBox.Show(Properties.LoginPageResources.ErrorMessageLogin + ex, Properties.LoginPageResources.TitleError,
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            ButtonInverter(loginButton);
+            ButtonInverter(loginButton); // Allow the button to be clicked again
         }
 
         /// <summary>
@@ -120,9 +120,12 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
         }
 
         /// <summary>
-        /// Checks if the login fields are empty.
+        /// Validates the login fields to ensure that both username and password are provided.
         /// </summary>
-        /// <returns>A <see cref="bool"> that will either deny login or continue validation.</returns>
+        /// <remarks>If the username field is empty, the username invalid label is made visible.
+        /// Similarly, if the password field is empty, the password invalid label is made visible.</remarks>
+        /// <returns><see langword="true"/> if both the username and password fields are filled; otherwise, <see
+        /// langword="false"/>.</returns>
         private bool CheckLoginFields()
         {
             if (usernameTextBox.Text.Equals(""))
