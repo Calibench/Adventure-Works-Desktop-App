@@ -15,6 +15,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         public List<StoreAddressData> addressDataSingle;
         public List<StoreContactsData> contactsDataSingle;
         public List<StoreDemographicsData> demographicsDataSingle;
+
         private string id;
 
         public StoreDetailsBackend()

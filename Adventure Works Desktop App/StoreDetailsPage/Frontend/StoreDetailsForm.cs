@@ -32,6 +32,13 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             None
         }
 
+        enum SelectedTab
+        {
+            AddressTab,
+            ContactTab,
+            DemograhpicTab
+        }
+
         public StoreDetailsForm(string username, string id, bool editor)
         {
             InitializeComponent();
@@ -213,13 +220,6 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             }
 
             PopulateData(false, AddressChoice.None, conChoice);
-        }
-
-        enum SelectedTab
-        {
-            AddressTab,
-            ContactTab,
-            DemograhpicTab
         }
 
         private void changeButton_Click(object sender, EventArgs e)
