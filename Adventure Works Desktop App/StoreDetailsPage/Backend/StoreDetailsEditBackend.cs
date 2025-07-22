@@ -1,8 +1,8 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -16,6 +16,11 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
             valid = 0
         }
 
+        /// <summary>
+        /// Updates the store address given address data.
+        /// </summary>
+        /// <param name="addressData">Address data to submit to the database and update.</param>
+        /// <exception cref="InvalidOperationException">Database could not be connected to.</exception>
         public void UpdateStoreAddress(StoreAddressData addressData)
         {
             try
@@ -72,12 +77,12 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
                     using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateStoreAddressInfo", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@AddressLine", addressData.AddressLine1 ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@AltAddressLine", addressData.AddressLine2 ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Cit", addressData.City);
-                        cmd.Parameters.AddWithValue("@StateID", stateProvinceId);
-                        cmd.Parameters.AddWithValue("@PostCode", addressData.PostalCode);
-                        cmd.Parameters.AddWithValue("@AddID", addressId);
+                        cmd.Parameters.AddWithValue("@AddressLine1", addressData.AddressLine1 ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@AddressLine2", addressData.AddressLine2 ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@City", addressData.City);
+                        cmd.Parameters.AddWithValue("@StateProvinceID", stateProvinceId);
+                        cmd.Parameters.AddWithValue("@PostalCode", addressData.PostalCode);
+                        cmd.Parameters.AddWithValue("@AddressID", addressId);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -88,6 +93,16 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
             }
         }
 
+        /// <summary>
+        /// Updates the contact information for a store in the database.
+        /// </summary>
+        /// <remarks>This method updates the phone number type, phone number, email address, and email
+        /// promotion status for a store contact identified by the provided business entity ID. The method throws an
+        /// exception if the correct person ID cannot be found or if there is a failure in database access.</remarks>
+        /// <param name="contactData">The contact data containing the updated information for the store contact, including business entity ID,
+        /// phone number, email address, and promotion details.</param>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="InvalidOperationException">Thrown when database access fails during the update operation.</exception>
         public void UpdateStoreContact(StoreContactsData contactData)
         {
             try
@@ -114,7 +129,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
                                     Title = reader["Title"].ToString(),
                                     FirstName = reader["FirstName"].ToString(),
                                     MiddleName = reader["MiddleName"].ToString(),
-                                    LastName = reader["LastName"].ToString()                               
+                                    LastName = reader["LastName"].ToString()
                                 };
                                 contacts.Add(temp);
                             }
@@ -129,28 +144,36 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
 
                     int index = 0;
                     int correctPersonID = (int)Check.notValid;
-                    foreach (StoreContactsData data in contacts)
+                    try
                     {
-                        if (data.Title.Equals(contactData.Title) && data.FirstName.Equals(contactData.FirstName) &&
-                            data.MiddleName.Equals(contactData.MiddleName) && data.LastName.Equals(contactData.LastName))
+                        foreach (StoreContactsData data in contacts)
                         {
-                            correctPersonID = personID[index];
+                            if (data.Title.Equals(contactData.Title) && data.FirstName.Equals(contactData.FirstName) &&
+                                data.MiddleName.Equals(contactData.MiddleName) && data.LastName.Equals(contactData.LastName))
+                            {
+                                correctPersonID = personID[index];
+                            }
+                            index++;
                         }
-                        index++;
+                        if (correctPersonID == (int)Check.notValid)
+                        {
+                            MessageBox.Show("Not able to find person id, returning.");
+                            return;
+                        }
                     }
-                    if (correctPersonID == (int)Check.notValid)
+                    catch (Exception ex)
                     {
-                        throw new Exception("COULD NOT FIND CORRECT PERSONID");
+                        throw new Exception("COULD NOT FIND CORRECT PERSONID", ex);
                     }
+                    // GenPersonUpdateOneParam(SqlConnection conn, string query, string param1, int personID, string columnName)
+                    GenPersonUpdateOneParam(conn, "dbo.uspUpdatePersonPhoneNumberTypeID", $"{phoneNumberTypeID}", correctPersonID, "@ID");
 
-                    GenPersonUpdateOneParam(conn, "uspUpdatePersonPhoneNumberTypeID", $"{phoneNumberTypeID}", correctPersonID, "@PhoneNumberTypeID");
-
-                    GenPersonUpdateOneParam(conn, "uspUpdatePersonPhoneNumber", contactData.PhoneNumber, correctPersonID, "@PN");
+                    GenPersonUpdateOneParam(conn, "dbo.uspUpdatePersonPhoneNumber", contactData.PhoneNumber, correctPersonID, "@PhoneNumber");
 
                     //execute uspUpdatePersonEmailAddress @PersonID = @PID, @EmailAddress = @EA
-                    GenPersonUpdateOneParam(conn, "uspUpdatePersonEmailAddress", contactData.EmailAddress, correctPersonID, "@EA");
+                    GenPersonUpdateOneParam(conn, "dbo.uspUpdatePersonEmailAddress", contactData.EmailAddress, correctPersonID, "@EmailAddress");
 
-                    GenPersonUpdateOneParam(conn, "uspUpdatePersonEmailPromotion", contactData.EamilPromotion, correctPersonID, "@EP");
+                    GenPersonUpdateOneParam(conn, "dbo.uspUpdatePersonEmailPromotion", contactData.EamilPromotion, correctPersonID, "@EmailPromotion");
                 }
             }
             catch (SqlException ex)
@@ -159,6 +182,16 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified phone number type is valid by checking against the database.
+        /// </summary>
+        /// <remarks>This method queries the database to verify the existence of the provided phone number
+        /// type. Ensure that the database connection string is correctly configured in the application
+        /// settings.</remarks>
+        /// <param name="phoneNumberType">The phone number type to validate.</param>
+        /// <returns><see langword="true"/> if the specified phone number type exists in the database; otherwise, <see
+        /// langword="false"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
         public bool ValidPhoneNumberType(string phoneNumberType)
         {
             try
@@ -186,6 +219,14 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         }
 
         // Helper funcs
+        /// <summary>
+        /// Executes a SQL query to retrieve a single integer value from the specified column.
+        /// </summary>
+        /// <param name="conn">The <see cref="SqlConnection"/> to use for executing the query. Must be open and valid.</param>
+        /// <param name="query">The SQL query to execute. Should be a valid SQL statement that returns a single value.</param>
+        /// <param name="columnName">The name of the column from which to retrieve the integer value.</param>
+        /// <returns>The integer value from the specified column if the query succeeds and returns a result; otherwise, -1.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
         private int GetGenID(SqlConnection conn, string query, string columnName)
         {
             // single get func
@@ -208,6 +249,14 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
             return -1;
         }
 
+        /// <summary>
+        /// Executes a SQL query and retrieves a single value from the specified column.
+        /// </summary>
+        /// <param name="conn">The <see cref="SqlConnection"/> to use for executing the query. Must be open before calling this method.</param>
+        /// <param name="query">The SQL query to execute. The query should be structured to return a single value.</param>
+        /// <param name="columnName">The name of the column from which to retrieve the value. This is used as a parameter in the query.</param>
+        /// <returns>The value from the specified column as a string, or <see langword="null"/> if the query returns no results.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is an error accessing the database.</exception>
         private string GetGenCode(SqlConnection conn, string query, string columnName)
         {
             // single get func
@@ -230,15 +279,24 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
             return null;
         }
 
-        private void GenPersonUpdateOneParam(SqlConnection conn, string query, string param1, int personID, string columnName)
+        /// <summary>
+        /// Executes a stored procedure to update a specific column for a person in the database.
+        /// </summary>
+        /// <param name="conn">The <see cref="SqlConnection"/> to use for the database operation. Must be open before calling this method.</param>
+        /// <param name="query">The name of the stored procedure to execute.</param>
+        /// <param name="value">The new value to set for the specified column.</param>
+        /// <param name="personID">The ID of the person whose record is to be updated.</param>
+        /// <param name="columnName">The name of the column to update with the new value.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the database access fails.</exception>
+        private void GenPersonUpdateOneParam(SqlConnection conn, string query, string value, int personID, string columnName)
         {
             try
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue(columnName, param1);
-                    cmd.Parameters.AddWithValue("@PID", personID);
+                    cmd.Parameters.AddWithValue(columnName, value);
+                    cmd.Parameters.AddWithValue("@PersonID", personID);
                     cmd.ExecuteNonQuery();
                 }
             }

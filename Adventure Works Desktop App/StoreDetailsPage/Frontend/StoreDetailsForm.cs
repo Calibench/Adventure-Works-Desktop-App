@@ -87,7 +87,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
                         UpdateAddress((int)AddressChoice.Shipping);
                         return;
                     default:
-                        throw new ArgumentOutOfRangeException("ERROR WITH ADDRESS CHOICE: ER-72-83 " 
+                        throw new ArgumentOutOfRangeException("ERROR WITH ADDRESS CHOICE: ER-72-83 "
                                                               + addressTypeComboBox.SelectedIndex + " " + addressTypeComboBox.Text);
                 }
             }
@@ -105,7 +105,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
                         UpdateContact((int)ContactChoice.Purchasing_Manager);
                         return;
                     default:
-                        throw new ArgumentOutOfRangeException("ERROR WITH CONTACT CHOICE: ER-86-100 " 
+                        throw new ArgumentOutOfRangeException("ERROR WITH CONTACT CHOICE: ER-86-100 "
                                                               + contactTypeComboBox.SelectedIndex + " " + contactTypeComboBox.Text);
                 }
             }
@@ -216,7 +216,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         }
 
         enum SelectedTab
-        { 
+        {
             AddressTab,
             ContactTab,
             DemograhpicTab
@@ -237,7 +237,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
                 case (int)SelectedTab.DemograhpicTab:
                     break;
             }
-            
+
         }
 
         // editting data section
@@ -245,7 +245,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         {
             // ensure the save button is allowed
             saveDataButton.Visible = true;
-            
+
             // change read-only fields to be able to write 
             // (Address Tab)
             addressTextBox.ReadOnly = false;
@@ -282,7 +282,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         }
 
         private StoreAddressData PackageAddressData()
-        { 
+        {
             StoreAddressData temp = new StoreAddressData();
 
             temp.BusinessEntityID = addressBusinessIDTextBox.Text;
@@ -298,7 +298,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             return temp;
         }
 
-        private StoreContactsData PackageContactData() 
+        private StoreContactsData PackageContactData()
         {
             StoreContactsData temp = new StoreContactsData();
 
@@ -321,13 +321,13 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         private bool ValidateFields(StoreDetailsEditBackend editBackend)
         {
             if (!ValidateAddressFields())
-            { 
+            {
                 return false;
             }
             if (!ValidateContactFields(editBackend))
             {
                 return false;
-            } 
+            }
 
             return true;
         }
@@ -356,7 +356,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             // AddressType validation: match the selected type, not random text
             if (addressTypeComboBox.Text != addressTypeOriginal)
             {
-                MessageBox.Show("Address Type does not match the original. Please use the change button to update.", 
+                MessageBox.Show("Address Type does not match the original. Please use the change button to update.",
                     "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
@@ -420,7 +420,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             // ContactType validation: match the selected type, not random text
             if (contactTypeComboBox.Text != contactTypeOriginal)
             {
-                MessageBox.Show("Contact Type does not match the original. Please use the change button to update the contact details.", 
+                MessageBox.Show("Contact Type does not match the original. Please use the change button to update the contact details.",
                     "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }

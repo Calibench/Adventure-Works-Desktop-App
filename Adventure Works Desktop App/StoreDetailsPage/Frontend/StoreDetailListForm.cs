@@ -39,7 +39,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             this.storeListView.ListViewItemSorter = lvwColumnSorter;
         }
 
-        private void InitialFormLoad(object sender, System.EventArgs e)
+        private void InitialFormLoad(object sender, EventArgs e)
         {
             usernameLabel.Text = "Logged in: " + username;
             backend.GetAllStoreDetailList();

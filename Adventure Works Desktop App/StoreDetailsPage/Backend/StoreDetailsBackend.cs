@@ -1,8 +1,8 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
 {
@@ -17,7 +17,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         public List<StoreDemographicsData> demographicsDataSingle;
         private string id;
 
-        public StoreDetailsBackend() 
+        public StoreDetailsBackend()
         {
             addressData = new List<StoreAddressData>();
             contactsData = new List<StoreContactsData>();
@@ -129,7 +129,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
                                 contactsData.Add(temp);
                             }
                         }
-                    } 
+                    }
                 }
             }
             catch (SqlException ex)
@@ -169,7 +169,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
 
                                 demographicsData.Add(temp);
                             }
-                        } 
+                        }
                     }
                 }
             }
@@ -244,7 +244,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
             GetAllDemographicsData();
         }
 
-        private void AddData(bool specific, SqlDataReader reader, List<StoreAddressData> addData, 
+        private void AddData(bool specific, SqlDataReader reader, List<StoreAddressData> addData,
                             List<StoreContactsData> conData, List<StoreDemographicsData> demData)
         {
             while (reader.Read())
@@ -263,7 +263,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
                 tempAddress.PostalCode = reader["PostalCode"].ToString();
                 tempAddress.Country = reader["CountryRegionName"].ToString();
 
-                if (specific) 
+                if (specific)
                 {
                     tempContacts.BusinessEntityID = reader["BusinessEntityID"].ToString();
                     tempContacts.StoreName = reader["Name"].ToString();
