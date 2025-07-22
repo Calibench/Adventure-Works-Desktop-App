@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -74,7 +75,6 @@
       <DependentUpon>EditEmployeeInformationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals\DataClasses\AccountData.cs" />
-    <Compile Include="Globals\Connection.cs" />
     <Compile Include="Globals\FormNavigatorHelper.cs" />
     <Compile Include="Globals\ListViewColumnSorter.cs" />
     <Compile Include="Globals\DataClasses\CustomerReviewData.cs" />
@@ -174,9 +174,9 @@
     </Compile>
     <Compile Include="Globals\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoreDetailsPage\Backend\StoreAddressData.cs" />
-    <Compile Include="StoreDetailsPage\Backend\StoreContactsData.cs" />
-    <Compile Include="StoreDetailsPage\Backend\StoreDemographicsData.cs" />
+    <Compile Include="Globals\DataClasses\StoreAddressData.cs" />
+    <Compile Include="Globals\DataClasses\StoreContactsData.cs" />
+    <Compile Include="Globals\DataClasses\StoreDemographicsData.cs" />
     <Compile Include="StoreDetailsPage\Backend\StoreDetailsBackend.cs" />
     <Compile Include="StoreDetailsPage\Backend\StoreDetailsEditBackend.cs" />
     <Compile Include="StoreDetailsPage\Frontend\StoreDetailListForm.cs">

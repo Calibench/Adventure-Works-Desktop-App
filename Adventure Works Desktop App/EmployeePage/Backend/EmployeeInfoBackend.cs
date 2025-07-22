@@ -1,5 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -11,7 +12,6 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// </summary>
     internal class EmployeeInfoBackend
     {
-        Connection connect = new Connection();
 
         /// <summary>
         /// Gets employee ID's and populates them into a given combobox.
@@ -21,7 +21,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllEmployeeIDs", conn))
@@ -54,7 +54,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspGetEmployeeData", conn))

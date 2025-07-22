@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,7 +9,6 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
 {
     internal class ChangeProductBackend
     {
-        Connection con = new Connection();
 
         // I am aware you can make this a generic function and class that just populates the combobox selected and pass a string that holds a query.
         // But this is just a practice project. (Similiar class - ProductLanguageSelect)
@@ -16,7 +16,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             try
             {
-                using (SqlConnection connect = new SqlConnection(con.ConnectionString))
+                using (SqlConnection connect = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     connect.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllProducts", connect))

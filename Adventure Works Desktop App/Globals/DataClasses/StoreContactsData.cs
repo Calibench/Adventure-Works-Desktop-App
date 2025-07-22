@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
+﻿namespace Adventure_Works_Desktop_App.Globals.DataClasses
 {
     internal class StoreContactsData
     {
@@ -20,9 +14,5 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         public string PhoneNumberType { get; set; }
         public string EmailAddress { get; set; }
         public string EamilPromotion { get; set; }
-        public StoreContactsData() 
-        {
-            
-        }
     }
 }

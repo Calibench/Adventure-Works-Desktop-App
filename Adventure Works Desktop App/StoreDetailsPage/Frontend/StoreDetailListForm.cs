@@ -1,8 +1,8 @@
-﻿using Adventure_Works_Desktop_App.StoreDetailsPage.Backend;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using Adventure_Works_Desktop_App.StoreDetailsPage.Backend;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
 {
@@ -11,7 +11,22 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         private string username;
         private StoreDetailsBackend backend;
         private ListViewColumnSorter lvwColumnSorter;
-        public bool backButtonPressed = false;
+
+        private enum ColumnName
+        {
+            StoreName = 1,
+            City = 3,
+            Country = 6,
+            Year = 7
+        }
+
+        private enum ComboBoxChoice
+        {
+            StoreName,
+            City,
+            Country,
+            Year
+        }
 
         public StoreDetailListForm(string username)
         {
@@ -24,20 +39,20 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             this.storeListView.ListViewItemSorter = lvwColumnSorter;
         }
 
-        private void PopulateList() 
+        private void InitialFormLoad(object sender, System.EventArgs e)
         {
-            //storeListView.View = View.Details; // needed to edit the listView
+            usernameLabel.Text = "Logged in: " + username;
+            backend.GetAllStoreDetailList();
+            PopulateList();
 
-            //storeListView.Items.Clear(); // Ensures the list is cleared before adding to it
-            //string[] row1 = { "Text1", "Text2", "Text3", "Text4", "Text5", "Text6", "Text7", "Text8", "Text9", "Text10", "Text11" };
-            //string[] row2 = { "Scary", "Text2", "Text3", "Text4", "Text5", "Text6", "Text7", "Text8", "Text9", "Text10", "Text11" };
-            //var listViewItem1 = new ListViewItem(row1); // this is how you add via columns
-            //var listViewItem2 = new ListViewItem(row2); 
-            //storeListView.Items.Add(listViewItem1); // adding makes a new row everytime 
-            //storeListView.Items.Add(listViewItem2);
+            // Select first index for combobox (store name)
+            sortByListComboBox.SelectedIndex = 0;
+        }
 
-            storeListView.View = View.Details;
-            storeListView.Items.Clear();
+        private void PopulateList()
+        {
+            storeListView.View = View.Details; // needed to access and edit the list view
+            storeListView.Items.Clear(); // ensure that it is cleaned before adding data
             // Need [BusinessID, Store Name, AddressLine1, AddressLine2, City, State, PostalCode, Country], [Year, Specialty, BusinessType]
 
             var demographicsLookup = new Dictionary<string, StoreDemographicsData>();
@@ -48,7 +63,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             }
 
             int counter = 0;
-            countTextBox.Text = $"{counter}";
+            countTextBox.Text = counter.ToString();
 
             foreach (StoreAddressData data in backend.addressData)
             {
@@ -72,21 +87,11 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
                     demo.BusinessType
                 };
                 var listViewItem = new ListViewItem(row);
-                storeListView.Items.Add(listViewItem);
+                storeListView.Items.Add(listViewItem); // creates new rows
 
                 counter++;
-                countTextBox.Text = $"{counter}";
+                countTextBox.Text = counter.ToString();
             }
-        }
-
-        private void InitialFormLoad(object sender, System.EventArgs e)
-        {
-            usernameLabel.Text = "Logged in: " + username;
-            backend.GetAllStoreDetailList();
-            PopulateList();
-
-            // Select first index for combobox (store name)
-            sortByListComboBox.SelectedIndex = 0;
         }
 
         private void storeListView_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -130,14 +135,14 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         {
             switch (choice)
             {
-                case 0: // ComboBox select 1 (store name)
-                    return 1; // Store Name Column
-                case 1:// ComboBox select 2 (city)
-                    return 3; // City Column
-                case 2:// ComboBox select 3 (Country)
-                    return 6; // Country Column
-                case 3:// ComboBox select 4 (Year)
-                    return 7; // Year Column
+                case (int)ComboBoxChoice.StoreName:
+                    return (int)ColumnName.StoreName;
+                case (int)ComboBoxChoice.City:
+                    return (int)ColumnName.City;
+                case (int)ComboBoxChoice.Country:
+                    return (int)ColumnName.Country;
+                case (int)ComboBoxChoice.Year:
+                    return (int)ColumnName.Year;
                 default:
                     throw new ArgumentOutOfRangeException("choice error: " + choice);
             }
@@ -174,20 +179,16 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
 
             switch (sortByListComboBox.SelectedIndex)
             {
-                // Store Name
-                case 0:
+                case (int)ComboBoxChoice.StoreName:
                     backend.SortedByStoreName(quickSearchTextBox.Text);
                     break;
-                // City
-                case 1:
+                case (int)ComboBoxChoice.City:
                     backend.SortedByStoreCity(quickSearchTextBox.Text);
                     break;
-                // Country
-                case 2:
+                case (int)ComboBoxChoice.Country:
                     backend.SortedByStoreCountry(quickSearchTextBox.Text);
                     break;
-                // Year
-                case 3:
+                case (int)ComboBoxChoice.Year:
                     backend.SortedByStoreYear(quickSearchTextBox.Text);
                     break;
             }
@@ -199,8 +200,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
         {
             // This is used for when a row is clicked, need to get the selected item from ListView
 
-            ListView.SelectedListViewItemCollection selectedItems =
-            this.storeListView.SelectedItems;
+            ListView.SelectedListViewItemCollection selectedItems = this.storeListView.SelectedItems;
 
             foreach (ListViewItem item in selectedItems)
             {
@@ -211,12 +211,6 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
                 var frm = new StoreDetailsForm(username, item.SubItems[0].Text, editor);
                 frm.ShowDialog();
             }
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            backButtonPressed = true;
-            this.Close();
         }
 
         private void ContextWindowMouseDown(object sender, MouseEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -6,7 +7,6 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
 {
     internal class ProductLanguageBackend
     {
-        Connection connect = new Connection();
         public ProductLanguageBackend(ComboBox comboBox) 
         {
             RetrieveLanguages(comboBox);
@@ -23,7 +23,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllNotSpanishLanguages", con))

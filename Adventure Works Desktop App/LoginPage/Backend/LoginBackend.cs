@@ -1,5 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -11,15 +12,17 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
     /// </summary>
     internal class LoginBackend
     {
-        private Connection connection = new Connection();
         public AccountData accountData;
 
         /// <summary>
-        /// Validates the credentials match with one in the DB.
+        /// Validates the provided username and password against stored account data.
         /// </summary>
-        /// <param name="inputUsername">User entered username</param>
-        /// <param name="inputPassword">User entered password</param>
-        /// <returns>A <see cref="bool"/> will be returned, True=it is in the system, False=it is not</returns>
+        /// <remarks>If the credentials are invalid or the display name cannot be retrieved, the
+        /// application will display an error message and terminate.</remarks>
+        /// <param name="inputUsername">The username to validate. Cannot be null or empty.</param>
+        /// <param name="inputPassword">The password to validate. Cannot be null or empty.</param>
+        /// <returns><see langword="true"/> if the credentials are valid and the account data is successfully retrieved;
+        /// otherwise, <see langword="false"/>.</returns>
         public bool ValidateCredentials(string inputUsername, string inputPassword)
         {
             accountData = GetLoginDB(inputUsername, inputPassword);
@@ -42,7 +45,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
                 Application.Exit();
             }
 
-            return true; 
+            return true;
         }
 
         /// <summary>
@@ -56,7 +59,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetDisplayName(@Username, @Password)", conn))
@@ -75,7 +78,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
             {
                 throw new InvalidOperationException("Database access failed in GetDisplayName.", ex);
             }
-            return null; 
+            return null;
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
             AccountData data = new AccountData();
             try
             {
-                using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
 
@@ -100,7 +103,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
                         cmd.Parameters.AddWithValue("@Username", username);
                         cmd.Parameters.AddWithValue("@Password", password);
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {

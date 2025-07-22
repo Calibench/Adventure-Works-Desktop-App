@@ -1,13 +1,13 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System.Data.SqlClient;
 using System;
+using System.Configuration;
 using System.Data;
 
 namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
 {
     internal class SalesPersonBackend
     {
-        Connection connection = new Connection();
 
         private string id;
         public string Id
@@ -49,7 +49,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
             SalesPersonData salesPersonData = new SalesPersonData();
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("uspGetSalesPersonData", con))
@@ -115,7 +115,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("uspGetRegionData", con))
@@ -175,7 +175,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand(query, con))

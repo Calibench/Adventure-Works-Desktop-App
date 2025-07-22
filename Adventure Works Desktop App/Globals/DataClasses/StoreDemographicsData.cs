@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
+﻿namespace Adventure_Works_Desktop_App.Globals.DataClasses
 {
     internal class StoreDemographicsData
     {
@@ -20,9 +14,5 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Backend
         public string Brands { get; set; }
         public string Internet { get; set; }
         public string NumberOfEmployees { get; set; }
-        public StoreDemographicsData() 
-        {
-            
-        }
     }
 }

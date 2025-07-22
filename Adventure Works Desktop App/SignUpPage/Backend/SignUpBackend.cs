@@ -1,5 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
@@ -9,7 +10,6 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
 {
     public class SignUpBackend
     {
-        Connection connection = new Connection();
 
         /// <summary>
         /// Checks whether the username is already in use by comparing it to the login table.
@@ -20,7 +20,7 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("select ufnCheckUserName @GivenUsername", conn))
@@ -49,7 +49,7 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewAccount", con))

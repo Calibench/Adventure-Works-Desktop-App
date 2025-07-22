@@ -1,5 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -11,7 +12,6 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// </summary>
     internal class EditEmployeeBackend
     {
-        private Connection connect = new Connection();
         
         /// <summary>
         /// Fills the items in the job title combobox on the front end.
@@ -64,7 +64,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -113,7 +113,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeData", conn))
@@ -147,7 +147,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspUpdatePersonEmployeeName", conn))
@@ -177,7 +177,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeDepartmentHistory", conn))
@@ -218,7 +218,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspInsertEmployeeNewPay", conn))
@@ -250,7 +250,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetEmployeePayRate(@BusinessEntityID)", conn))
@@ -329,7 +329,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connect.ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))

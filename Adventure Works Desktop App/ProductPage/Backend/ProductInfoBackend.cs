@@ -1,5 +1,6 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,7 +10,6 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
 {
     internal class ProductInfoBackend
     {
-        private Connection connection = new Connection();
         private List<CustomerReviewData> customerData;
         private List<ProductData> productData;
 
@@ -44,7 +44,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspGetCustomerReviews", con))
@@ -80,7 +80,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspProductSearchLang", con))
@@ -146,7 +146,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand(query, con))

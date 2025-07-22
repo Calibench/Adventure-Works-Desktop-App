@@ -1,7 +1,7 @@
-﻿using Adventure_Works_Desktop_App.StoreDetailsPage.Backend;
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using Adventure_Works_Desktop_App.StoreDetailsPage.Backend;
 using System;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
 {

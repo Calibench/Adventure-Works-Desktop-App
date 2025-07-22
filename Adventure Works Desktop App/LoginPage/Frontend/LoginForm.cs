@@ -1,7 +1,7 @@
-﻿using Adventure_Works_Desktop_App.LoginPage.Backend;
-using Adventure_Works_Desktop_App.SignUpPage.Frontend;
+﻿using Adventure_Works_Desktop_App.Globals;
+using Adventure_Works_Desktop_App.LoginPage.Backend;
 using Adventure_Works_Desktop_App.MenuPage;
-using Adventure_Works_Desktop_App.Globals;
+using Adventure_Works_Desktop_App.SignUpPage.Frontend;
 using System;
 using System.Windows.Forms;
 
@@ -11,7 +11,7 @@ namespace Adventure_Works_Desktop_App.Login.FrontEnd
     {
         // Class Global Variables
         private enum PasswordProtect
-        { 
+        {
             invisiblePassword = '●',
             visiblePassword = '\0'
         }

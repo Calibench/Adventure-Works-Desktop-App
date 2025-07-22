@@ -1,13 +1,13 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System.Data.SqlClient;
 using System;
+using System.Configuration;
 using System.Data;
 
 namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
 {
     internal class ReviewProductBackend
     {
-        Connection connection = new Connection();
         public ReviewProductBackend(string productID, int rating, string reviewName, string comments)
         {
             string displayName = GetCaseSensitiveDisplayName(TrimUsername(reviewName));
@@ -25,7 +25,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetUserEmail(@DisplayName)", con))
@@ -43,6 +43,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
             {
                 throw new InvalidOperationException("Database access failed in GetEmailAddress.", ex);
             }
+            return null;
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetCaseSensitiveDisplayName(@DisplayName)", con))
@@ -97,7 +98,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connection.ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewReview", con))
