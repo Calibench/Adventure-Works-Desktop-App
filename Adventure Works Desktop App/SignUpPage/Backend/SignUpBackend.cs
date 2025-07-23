@@ -23,14 +23,15 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
                 using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("select ufnCheckUserName @GivenUsername", conn))
+                    using (SqlCommand cmd = new SqlCommand("SELECT dbo.ufnCheckUserName(@GivenUsername)", conn))
                     {
                         cmd.Parameters.AddWithValue("@GivenUsername", data.Username);
                         var result = cmd.ExecuteScalar();
-                        if (result != null)
+                        if (result != null && !string.IsNullOrWhiteSpace(result.ToString()))
                         {
                             return false; // it is not unique
                         }
+                        return true; // it is unique
                     }
                 }
             }
@@ -38,7 +39,6 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
             {
                 throw new InvalidOperationException("Database access failed in CheckUnique.", ex);
             }
-            return true; // it is unique
         }
 
         /// <summary>
@@ -47,6 +47,7 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         /// <param name="data">Data that is being sent to the DB.</param>
         public void SignUp(AccountData data)
         {
+            string id = "";
             try
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
@@ -61,6 +62,40 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
                         cmd.Parameters.AddWithValue("@Password", data.Password);
                         cmd.Parameters.AddWithValue("@DisplayName", data.DisplayName);
                         cmd.Parameters.AddWithValue("@Email", data.Email);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("select LoginID from Person.Login where username = @username", con))
+                    {
+                        cmd.Parameters.AddWithValue("@username", data.Username);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader != null && reader.Read())
+                            {
+                                id = reader["LoginID"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in SignUp.", ex);
+            }
+
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new InvalidOperationException("Failed to retrieve login ID after account creation");
+            }
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Clicker"].ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("insert into ClickerUserData(LoginID) values(@LoginID)", con))
+                    {
+                        cmd.Parameters.AddWithValue("@LoginID", id);
                         cmd.ExecuteNonQuery();
                     }
                 }

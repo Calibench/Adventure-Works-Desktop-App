@@ -36,6 +36,7 @@
             this.salesInfoButton = new System.Windows.Forms.Button();
             this.viewStoreDetailsButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.clickerButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // employeeInfoButton
@@ -118,11 +119,22 @@
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
+            // clickerButton
+            // 
+            this.clickerButton.Location = new System.Drawing.Point(828, 431);
+            this.clickerButton.Name = "clickerButton";
+            this.clickerButton.Size = new System.Drawing.Size(10, 10);
+            this.clickerButton.TabIndex = 8;
+            this.clickerButton.TabStop = false;
+            this.clickerButton.UseVisualStyleBackColor = true;
+            this.clickerButton.Click += new System.EventHandler(this.clickerButton_Click);
+            // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 441);
+            this.Controls.Add(this.clickerButton);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.viewStoreDetailsButton);
             this.Controls.Add(this.salesInfoButton);
@@ -152,5 +164,6 @@
         private System.Windows.Forms.Button salesInfoButton;
         private System.Windows.Forms.Button viewStoreDetailsButton;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Button clickerButton;
     }
 }

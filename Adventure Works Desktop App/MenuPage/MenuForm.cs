@@ -4,6 +4,7 @@ using Adventure_Works_Desktop_App.ProductReviewPage.Frontend;
 using Adventure_Works_Desktop_App.SalesPersonPage.Frontend;
 using Adventure_Works_Desktop_App.StoreDetailsPage.Frontend;
 using Adventure_Works_Desktop_App.ProductPage.Frontend;
+using Adventure_Works_Desktop_App.ClickerPages.Frontend;
 using System;
 using System.Windows.Forms;
 
@@ -18,6 +19,11 @@ namespace Adventure_Works_Desktop_App.MenuPage
             InitializeComponent();
 
             this.username = username;
+        }
+
+        private void InitalFormLoad(object sender, EventArgs e)
+        {
+            welcomeLabel.Text = string.Format(Properties.Resources.WelcomeUpdate, username);
         }
 
         private void employeeInfoButton_Click(object sender, EventArgs e)
@@ -45,9 +51,15 @@ namespace Adventure_Works_Desktop_App.MenuPage
             FormNavigationHelper.ShowFormAndBackButton(this, new StoreDetailListForm(username));
         }
 
-        private void InitalFormLoad(object sender, EventArgs e)
+        private void clickerButton_Click(object sender, EventArgs e)
         {
-            welcomeLabel.Text = string.Format(Properties.Resources.WelcomeUpdate, username);
+            var protectForm = new ProtectForm();
+            protectForm.ShowDialog();
+
+            if (protectForm.MyDialogResult == ProtectForm.CustomDialogResult.Clicker)
+            {
+                FormNavigationHelper.ShowFormAndBackButton(this, new MainClickerForm(username));
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)

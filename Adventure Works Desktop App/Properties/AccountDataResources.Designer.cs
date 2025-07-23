@@ -136,7 +136,7 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+.
+        ///   Looks up a localized string similar to ^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$.
         /// </summary>
         internal static string RegexForEmail {
             get {

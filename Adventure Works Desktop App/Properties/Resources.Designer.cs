@@ -61,6 +61,15 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MTkyMg==.
+        /// </summary>
+        internal static string CodeKey {
+            get {
+                return ResourceManager.GetString("CodeKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to retrieve or update data due to lost connection with server.
         ///Application will now close..
         /// </summary>

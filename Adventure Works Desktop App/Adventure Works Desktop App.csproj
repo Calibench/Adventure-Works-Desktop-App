@@ -77,6 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClickerPages\Frontend\MainClickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClickerPages\Frontend\MainClickerForm.Designer.cs">
+      <DependentUpon>MainClickerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmployeePage\Backend\EditEmployeeBackend.cs" />
     <Compile Include="EmployeePage\Frontend\EditEmployeeInformationForm.cs">
       <SubType>Form</SubType>
@@ -95,6 +101,12 @@
     </Compile>
     <Compile Include="EmployeePage\Frontend\EmployeeInfoForm.Designer.cs">
       <DependentUpon>EmployeeInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPage\ProtectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuPage\ProtectForm.Designer.cs">
+      <DependentUpon>ProtectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProductPage\Frontend\LanguageProductForm.cs">
       <SubType>Form</SubType>
@@ -207,11 +219,17 @@
     <Compile Include="StoreDetailsPage\Frontend\StoreDetailsForm.Designer.cs">
       <DependentUpon>StoreDetailsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ClickerPages\Frontend\MainClickerForm.resx">
+      <DependentUpon>MainClickerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmployeePage\Frontend\EditEmployeeInformationForm.resx">
       <DependentUpon>EditEmployeeInformationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmployeePage\Frontend\EmployeeInfoForm.resx">
       <DependentUpon>EmployeeInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuPage\ProtectForm.resx">
+      <DependentUpon>ProtectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductPage\Frontend\LanguageProductForm.resx">
       <DependentUpon>LanguageProductForm.cs</DependentUpon>
@@ -285,7 +303,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ClickerPages\Backend\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
