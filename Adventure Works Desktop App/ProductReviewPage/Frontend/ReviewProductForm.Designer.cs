@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.backButton = new System.Windows.Forms.Button();
-            this.usernameLabel = new System.Windows.Forms.Label();
             this.productReviewGroupBox = new System.Windows.Forms.GroupBox();
             this.submitButton = new System.Windows.Forms.Button();
             this.reviewPanel = new System.Windows.Forms.Panel();
@@ -47,34 +45,12 @@
             this.productNameValueLabel = new System.Windows.Forms.Label();
             this.productIDLabel = new System.Windows.Forms.Label();
             this.productIDValueLabel = new System.Windows.Forms.Label();
-            this.usernamePanel = new System.Windows.Forms.Panel();
+            this.loggedBackUserControl = new Adventure_Works_Desktop_App.Globals.Components.LoggedBackUserControl();
             this.productReviewGroupBox.SuspendLayout();
             this.reviewPanel.SuspendLayout();
             this.ratingPanel.SuspendLayout();
             this.namePanel.SuspendLayout();
-            this.usernamePanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // backButton
-            // 
-            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.backButton.Location = new System.Drawing.Point(85, 21);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 1;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
-            // 
-            // usernameLabel
-            // 
-            this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameLabel.Location = new System.Drawing.Point(72, 0);
-            this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Padding = new System.Windows.Forms.Padding(0, 5, 10, 0);
-            this.usernameLabel.Size = new System.Drawing.Size(100, 18);
-            this.usernameLabel.TabIndex = 1;
-            this.usernameLabel.Text = "Logged in: USER";
             // 
             // productReviewGroupBox
             // 
@@ -274,22 +250,19 @@
             this.productIDValueLabel.MouseEnter += new System.EventHandler(this.MouseEnter);
             this.productIDValueLabel.MouseLeave += new System.EventHandler(this.MouseLeave);
             // 
-            // usernamePanel
+            // loggedBackUserControl
             // 
-            this.usernamePanel.Controls.Add(this.usernameLabel);
-            this.usernamePanel.Controls.Add(this.backButton);
-            this.usernamePanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernamePanel.Location = new System.Drawing.Point(560, 0);
-            this.usernamePanel.Name = "usernamePanel";
-            this.usernamePanel.Size = new System.Drawing.Size(172, 332);
-            this.usernamePanel.TabIndex = 2;
+            this.loggedBackUserControl.Location = new System.Drawing.Point(581, 12);
+            this.loggedBackUserControl.Name = "loggedBackUserControl";
+            this.loggedBackUserControl.Size = new System.Drawing.Size(139, 49);
+            this.loggedBackUserControl.TabIndex = 1;
             // 
             // ReviewProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(732, 332);
-            this.Controls.Add(this.usernamePanel);
+            this.Controls.Add(this.loggedBackUserControl);
             this.Controls.Add(this.productReviewGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -305,16 +278,11 @@
             this.ratingPanel.PerformLayout();
             this.namePanel.ResumeLayout(false);
             this.namePanel.PerformLayout();
-            this.usernamePanel.ResumeLayout(false);
-            this.usernamePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button backButton;
-        private System.Windows.Forms.Label usernameLabel;
         private System.Windows.Forms.GroupBox productReviewGroupBox;
         private System.Windows.Forms.Label productIDLabel;
         private System.Windows.Forms.Label productIDValueLabel;
@@ -331,7 +299,7 @@
         private System.Windows.Forms.Panel namePanel;
         private System.Windows.Forms.Panel reviewPanel;
         private System.Windows.Forms.Panel ratingPanel;
-        private System.Windows.Forms.Panel usernamePanel;
         private System.Windows.Forms.Button submitButton;
+        private Globals.Components.LoggedBackUserControl loggedBackUserControl;
     }
 }

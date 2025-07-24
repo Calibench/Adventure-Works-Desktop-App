@@ -41,7 +41,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
 
         private void InitialFormLoad(object sender, EventArgs e)
         {
-            usernameLabel.Text = "Logged in: " + username;
+            loggedBackUserControl.ChangeDisplayName(username);
             backend.GetAllStoreDetailList();
             PopulateList();
 

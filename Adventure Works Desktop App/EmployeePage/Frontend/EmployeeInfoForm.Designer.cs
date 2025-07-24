@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.usernameLabel = new System.Windows.Forms.Label();
             this.businessEntityIDLabel = new System.Windows.Forms.Label();
             this.firstNameLabel = new System.Windows.Forms.Label();
             this.middleInitialLabel = new System.Windows.Forms.Label();
@@ -48,27 +47,14 @@
             this.editButton = new System.Windows.Forms.Button();
             this.searchLabel = new System.Windows.Forms.Label();
             this.searchComboBox = new System.Windows.Forms.ComboBox();
-            this.backButton = new System.Windows.Forms.Button();
+            this.loggedBackUserControl = new Adventure_Works_Desktop_App.Globals.Components.LoggedBackUserControl();
             this.employeeInfoGroupBox.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // usernameLabel
-            // 
-            this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usernameLabel.Location = new System.Drawing.Point(746, 0);
-            this.usernameLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Padding = new System.Windows.Forms.Padding(0, 5, 10, 0);
-            this.usernameLabel.Size = new System.Drawing.Size(92, 18);
-            this.usernameLabel.TabIndex = 0;
-            this.usernameLabel.Text = "Logged in: User";
             // 
             // businessEntityIDLabel
             // 
             this.businessEntityIDLabel.AutoSize = true;
-            this.businessEntityIDLabel.Location = new System.Drawing.Point(9, 25);
+            this.businessEntityIDLabel.Location = new System.Drawing.Point(9, 26);
             this.businessEntityIDLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.businessEntityIDLabel.Name = "businessEntityIDLabel";
             this.businessEntityIDLabel.Size = new System.Drawing.Size(30, 20);
@@ -78,7 +64,7 @@
             // firstNameLabel
             // 
             this.firstNameLabel.AutoSize = true;
-            this.firstNameLabel.Location = new System.Drawing.Point(9, 49);
+            this.firstNameLabel.Location = new System.Drawing.Point(9, 50);
             this.firstNameLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.firstNameLabel.Name = "firstNameLabel";
             this.firstNameLabel.Size = new System.Drawing.Size(90, 20);
@@ -88,7 +74,7 @@
             // middleInitialLabel
             // 
             this.middleInitialLabel.AutoSize = true;
-            this.middleInitialLabel.Location = new System.Drawing.Point(9, 73);
+            this.middleInitialLabel.Location = new System.Drawing.Point(9, 74);
             this.middleInitialLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.middleInitialLabel.Name = "middleInitialLabel";
             this.middleInitialLabel.Size = new System.Drawing.Size(104, 20);
@@ -98,7 +84,7 @@
             // lastNameLabel
             // 
             this.lastNameLabel.AutoSize = true;
-            this.lastNameLabel.Location = new System.Drawing.Point(9, 97);
+            this.lastNameLabel.Location = new System.Drawing.Point(9, 98);
             this.lastNameLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lastNameLabel.Name = "lastNameLabel";
             this.lastNameLabel.Size = new System.Drawing.Size(90, 20);
@@ -108,7 +94,7 @@
             // jobTitleLabel
             // 
             this.jobTitleLabel.AutoSize = true;
-            this.jobTitleLabel.Location = new System.Drawing.Point(9, 121);
+            this.jobTitleLabel.Location = new System.Drawing.Point(9, 122);
             this.jobTitleLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.jobTitleLabel.Name = "jobTitleLabel";
             this.jobTitleLabel.Size = new System.Drawing.Size(72, 20);
@@ -118,7 +104,7 @@
             // birthDateLabel
             // 
             this.birthDateLabel.AutoSize = true;
-            this.birthDateLabel.Location = new System.Drawing.Point(9, 145);
+            this.birthDateLabel.Location = new System.Drawing.Point(9, 146);
             this.birthDateLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.birthDateLabel.Name = "birthDateLabel";
             this.birthDateLabel.Size = new System.Drawing.Size(85, 20);
@@ -128,7 +114,7 @@
             // maritalStatusLabel
             // 
             this.maritalStatusLabel.AutoSize = true;
-            this.maritalStatusLabel.Location = new System.Drawing.Point(9, 169);
+            this.maritalStatusLabel.Location = new System.Drawing.Point(9, 170);
             this.maritalStatusLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.maritalStatusLabel.Name = "maritalStatusLabel";
             this.maritalStatusLabel.Size = new System.Drawing.Size(111, 20);
@@ -138,7 +124,7 @@
             // genderLabel
             // 
             this.genderLabel.AutoSize = true;
-            this.genderLabel.Location = new System.Drawing.Point(9, 193);
+            this.genderLabel.Location = new System.Drawing.Point(9, 194);
             this.genderLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.genderLabel.Name = "genderLabel";
             this.genderLabel.Size = new System.Drawing.Size(67, 20);
@@ -148,7 +134,7 @@
             // hireDateLabel
             // 
             this.hireDateLabel.AutoSize = true;
-            this.hireDateLabel.Location = new System.Drawing.Point(9, 217);
+            this.hireDateLabel.Location = new System.Drawing.Point(9, 218);
             this.hireDateLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.hireDateLabel.Name = "hireDateLabel";
             this.hireDateLabel.Size = new System.Drawing.Size(81, 20);
@@ -158,7 +144,7 @@
             // vacationHoursLabel
             // 
             this.vacationHoursLabel.AutoSize = true;
-            this.vacationHoursLabel.Location = new System.Drawing.Point(9, 241);
+            this.vacationHoursLabel.Location = new System.Drawing.Point(9, 242);
             this.vacationHoursLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.vacationHoursLabel.Name = "vacationHoursLabel";
             this.vacationHoursLabel.Size = new System.Drawing.Size(123, 20);
@@ -168,7 +154,7 @@
             // sickLeaveHoursLabel
             // 
             this.sickLeaveHoursLabel.AutoSize = true;
-            this.sickLeaveHoursLabel.Location = new System.Drawing.Point(9, 265);
+            this.sickLeaveHoursLabel.Location = new System.Drawing.Point(9, 266);
             this.sickLeaveHoursLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.sickLeaveHoursLabel.Name = "sickLeaveHoursLabel";
             this.sickLeaveHoursLabel.Size = new System.Drawing.Size(137, 20);
@@ -178,7 +164,7 @@
             // departmentNameLabel
             // 
             this.departmentNameLabel.AutoSize = true;
-            this.departmentNameLabel.Location = new System.Drawing.Point(9, 289);
+            this.departmentNameLabel.Location = new System.Drawing.Point(9, 290);
             this.departmentNameLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.departmentNameLabel.Name = "departmentNameLabel";
             this.departmentNameLabel.Size = new System.Drawing.Size(139, 20);
@@ -188,7 +174,7 @@
             // departmentGroupLabel
             // 
             this.departmentGroupLabel.AutoSize = true;
-            this.departmentGroupLabel.Location = new System.Drawing.Point(9, 313);
+            this.departmentGroupLabel.Location = new System.Drawing.Point(9, 314);
             this.departmentGroupLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.departmentGroupLabel.Name = "departmentGroupLabel";
             this.departmentGroupLabel.Size = new System.Drawing.Size(147, 20);
@@ -198,7 +184,7 @@
             // shiftLabel
             // 
             this.shiftLabel.AutoSize = true;
-            this.shiftLabel.Location = new System.Drawing.Point(9, 337);
+            this.shiftLabel.Location = new System.Drawing.Point(9, 338);
             this.shiftLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.shiftLabel.Name = "shiftLabel";
             this.shiftLabel.Size = new System.Drawing.Size(46, 20);
@@ -208,7 +194,7 @@
             // yearlySalaryLabel
             // 
             this.yearlySalaryLabel.AutoSize = true;
-            this.yearlySalaryLabel.Location = new System.Drawing.Point(319, 25);
+            this.yearlySalaryLabel.Location = new System.Drawing.Point(319, 26);
             this.yearlySalaryLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.yearlySalaryLabel.Name = "yearlySalaryLabel";
             this.yearlySalaryLabel.Size = new System.Drawing.Size(105, 20);
@@ -234,8 +220,10 @@
             this.employeeInfoGroupBox.Controls.Add(this.maritalStatusLabel);
             this.employeeInfoGroupBox.Controls.Add(this.genderLabel);
             this.employeeInfoGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.employeeInfoGroupBox.Location = new System.Drawing.Point(12, 60);
+            this.employeeInfoGroupBox.Location = new System.Drawing.Point(13, 59);
+            this.employeeInfoGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.employeeInfoGroupBox.Name = "employeeInfoGroupBox";
+            this.employeeInfoGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.employeeInfoGroupBox.Size = new System.Drawing.Size(814, 369);
             this.employeeInfoGroupBox.TabIndex = 16;
             this.employeeInfoGroupBox.TabStop = false;
@@ -245,8 +233,9 @@
             // 
             this.editButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editButton.Location = new System.Drawing.Point(733, 340);
+            this.editButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(75, 23);
+            this.editButton.Size = new System.Drawing.Size(75, 22);
             this.editButton.TabIndex = 20;
             this.editButton.Text = "Edit";
             this.editButton.UseVisualStyleBackColor = true;
@@ -256,7 +245,8 @@
             // 
             this.searchLabel.AutoSize = true;
             this.searchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchLabel.Location = new System.Drawing.Point(12, 19);
+            this.searchLabel.Location = new System.Drawing.Point(13, 18);
+            this.searchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.searchLabel.Name = "searchLabel";
             this.searchLabel.Size = new System.Drawing.Size(59, 18);
             this.searchLabel.TabIndex = 17;
@@ -267,35 +257,33 @@
             this.searchComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.searchComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchComboBox.FormattingEnabled = true;
-            this.searchComboBox.Location = new System.Drawing.Point(77, 16);
+            this.searchComboBox.Location = new System.Drawing.Point(77, 17);
+            this.searchComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.searchComboBox.Name = "searchComboBox";
-            this.searchComboBox.Size = new System.Drawing.Size(190, 26);
+            this.searchComboBox.Size = new System.Drawing.Size(189, 26);
             this.searchComboBox.TabIndex = 18;
             this.searchComboBox.SelectedIndexChanged += new System.EventHandler(this.searchComboBox_SelectedIndexChanged);
             // 
-            // backButton
+            // loggedBackUserControl
             // 
-            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.backButton.Location = new System.Drawing.Point(751, 31);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 19;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
+            this.loggedBackUserControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loggedBackUserControl.Location = new System.Drawing.Point(638, 15);
+            this.loggedBackUserControl.Margin = new System.Windows.Forms.Padding(6);
+            this.loggedBackUserControl.Name = "loggedBackUserControl";
+            this.loggedBackUserControl.Size = new System.Drawing.Size(189, 43);
+            this.loggedBackUserControl.TabIndex = 20;
             // 
             // EmployeeInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 441);
-            this.Controls.Add(this.backButton);
+            this.Controls.Add(this.loggedBackUserControl);
             this.Controls.Add(this.searchComboBox);
             this.Controls.Add(this.searchLabel);
             this.Controls.Add(this.employeeInfoGroupBox);
-            this.Controls.Add(this.usernameLabel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(6);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.Name = "EmployeeInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -309,8 +297,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label usernameLabel;
         private System.Windows.Forms.Label businessEntityIDLabel;
         private System.Windows.Forms.Label firstNameLabel;
         private System.Windows.Forms.Label middleInitialLabel;
@@ -329,7 +315,7 @@
         private System.Windows.Forms.GroupBox employeeInfoGroupBox;
         private System.Windows.Forms.Label searchLabel;
         private System.Windows.Forms.ComboBox searchComboBox;
-        private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Button editButton;
+        private Globals.Components.LoggedBackUserControl loggedBackUserControl;
     }
 }

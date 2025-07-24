@@ -7,7 +7,7 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
 {
     public partial class StoreDetailsForm : Form
     {
-        private string username;
+        private string displayName;
         private StoreDetailsBackend backend;
         private bool editor = false;
 
@@ -39,17 +39,17 @@ namespace Adventure_Works_Desktop_App.StoreDetailsPage.Frontend
             DemograhpicTab
         }
 
-        public StoreDetailsForm(string username, string id, bool editor)
+        public StoreDetailsForm(string displayName, string id, bool editor)
         {
             InitializeComponent();
-            this.username = username;
+            this.displayName = displayName;
             backend = new StoreDetailsBackend(id);
             this.editor = editor;
         }
 
         private void LoadInitialForm(object sender, EventArgs e)
         {
-            usernameLabel.Text = "Logged in: " + username;
+            loggedBackUserControl.ChangeDisplayName(displayName);
             buttonToolTip.SetToolTip(saveDataButton, "Save changes for this section only");
             buttonToolTip.SetToolTip(changeButton, "Show data relating to the selected type");
             saveDataButton.Visible = false;

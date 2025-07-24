@@ -80,7 +80,7 @@ namespace Adventure_Works_Desktop_App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logged in as: {0}.
+        ///   Looks up a localized string similar to Logged in: {0}.
         /// </summary>
         internal static string LoggedInAs {
             get {

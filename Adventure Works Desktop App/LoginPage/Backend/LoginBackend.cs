@@ -25,7 +25,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// otherwise, <see langword="false"/>.</returns>
         public bool ValidateCredentials(string inputUsername, string inputPassword)
         {
-            accountData = GetLoginDB(inputUsername, inputPassword);
+            accountData = GetLogin(inputUsername, inputPassword);
 
             if (accountData.Username == null || accountData.Password == null)
             {
@@ -57,28 +57,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <exception cref="Exception">Unable to connect to the DB</exception>
         private string GetDisplayName(string username, string password)
         {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetDisplayName(@Username, @Password)", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Username", username);
-                        cmd.Parameters.AddWithValue("@Password", password);
-                        var result = cmd.ExecuteScalar();
-                        if (result != null)
-                        {
-                            return result.ToString();
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in GetDisplayName.", ex);
-            }
-            return null;
+            return LoginDAL.DBGetDisplayName(username, password);
         }
 
         /// <summary>
@@ -88,38 +67,9 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <param name="password">user entered password</param>
         /// <returns>Data if the username and password is found</returns>
         /// <exception cref="Exception">Unable to connect to the DB</exception>
-        private AccountData GetLoginDB(string username, string password)
+        private AccountData GetLogin(string username, string password)
         {
-            AccountData data = new AccountData();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetUsernamePassword", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Username", username);
-                        cmd.Parameters.AddWithValue("@Password", password);
-
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                data.Username = reader["Username"].ToString();
-                                data.Password = reader["Password"].ToString();
-                                return data;
-                            }
-                            return data;
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in GetLoginDB.", ex);
-            }
+            return LoginDAL.DBGetAccountLoginData(username, password);
         }
     }
 }

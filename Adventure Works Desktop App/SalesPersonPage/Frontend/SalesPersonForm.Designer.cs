@@ -66,9 +66,6 @@
             this.searchByNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.specificRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usernameLabel = new System.Windows.Forms.Label();
-            this.userBackPanel = new System.Windows.Forms.Panel();
-            this.backButton = new System.Windows.Forms.Button();
             this.territoryIDLabel = new System.Windows.Forms.Label();
             this.territoryIDValueLabel = new System.Windows.Forms.Label();
             this.regionSalesGroupBox = new System.Windows.Forms.GroupBox();
@@ -84,11 +81,11 @@
             this.regionRegionNameLabel = new System.Windows.Forms.Label();
             this.regionContinentLabel = new System.Windows.Forms.Label();
             this.regionCountryCodeLabel = new System.Windows.Forms.Label();
+            this.loggedBackUserControl = new Adventure_Works_Desktop_App.Globals.Components.LoggedBackUserControl();
             this.salesPersonGroupBox.SuspendLayout();
             this.salesLastYearGroupBox.SuspendLayout();
             this.salesYTDGroupBox.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            this.userBackPanel.SuspendLayout();
             this.regionSalesGroupBox.SuspendLayout();
             this.regionSalesYTDGroupBox.SuspendLayout();
             this.regionSalesLastYearGroupBox.SuspendLayout();
@@ -463,37 +460,6 @@
             this.specificRegionToolStripMenuItem.Text = "&Specific Region";
             this.specificRegionToolStripMenuItem.Click += new System.EventHandler(this.ShowSpecificRegion);
             // 
-            // usernameLabel
-            // 
-            this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameLabel.Location = new System.Drawing.Point(43, 0);
-            this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Size = new System.Drawing.Size(90, 13);
-            this.usernameLabel.TabIndex = 0;
-            this.usernameLabel.Text = "Logged in: USER";
-            // 
-            // userBackPanel
-            // 
-            this.userBackPanel.Controls.Add(this.usernameLabel);
-            this.userBackPanel.Controls.Add(this.backButton);
-            this.userBackPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.userBackPanel.Location = new System.Drawing.Point(705, 24);
-            this.userBackPanel.Name = "userBackPanel";
-            this.userBackPanel.Size = new System.Drawing.Size(133, 217);
-            this.userBackPanel.TabIndex = 3;
-            // 
-            // backButton
-            // 
-            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.backButton.Location = new System.Drawing.Point(51, 16);
-            this.backButton.MaximumSize = new System.Drawing.Size(75, 23);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 1;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
-            // 
             // territoryIDLabel
             // 
             this.territoryIDLabel.AutoSize = true;
@@ -643,13 +609,20 @@
             this.regionCountryCodeLabel.TabIndex = 16;
             this.regionCountryCodeLabel.Text = "Country Code:";
             // 
+            // loggedBackUserControl
+            // 
+            this.loggedBackUserControl.Location = new System.Drawing.Point(705, 12);
+            this.loggedBackUserControl.Name = "loggedBackUserControl";
+            this.loggedBackUserControl.Size = new System.Drawing.Size(121, 49);
+            this.loggedBackUserControl.TabIndex = 7;
+            // 
             // SalesPersonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 241);
+            this.Controls.Add(this.loggedBackUserControl);
             this.Controls.Add(this.regionSalesGroupBox);
-            this.Controls.Add(this.userBackPanel);
             this.Controls.Add(this.salesPersonGroupBox);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -667,8 +640,6 @@
             this.salesYTDGroupBox.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.userBackPanel.ResumeLayout(false);
-            this.userBackPanel.PerformLayout();
             this.regionSalesGroupBox.ResumeLayout(false);
             this.regionSalesGroupBox.PerformLayout();
             this.regionSalesYTDGroupBox.ResumeLayout(false);
@@ -695,9 +666,6 @@
         private System.Windows.Forms.ToolStripMenuItem searchByNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem regionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem specificRegionToolStripMenuItem;
-        private System.Windows.Forms.Label usernameLabel;
-        private System.Windows.Forms.Panel userBackPanel;
-        private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Label territoryIDLabel;
         private System.Windows.Forms.Label idLabel;
         private System.Windows.Forms.Label salesYTDLabel;
@@ -738,5 +706,6 @@
         private System.Windows.Forms.Label bonusValueLabel;
         private System.Windows.Forms.Label salesQuotaValueLabel;
         private System.Windows.Forms.Label managerLabel;
+        private Globals.Components.LoggedBackUserControl loggedBackUserControl;
     }
 }

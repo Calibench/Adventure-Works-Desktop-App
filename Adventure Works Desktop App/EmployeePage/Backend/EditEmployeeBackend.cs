@@ -1,8 +1,4 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
-using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Adventure_Works_Desktop_App.EmployeePage.Backend
@@ -12,7 +8,6 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// </summary>
     internal class EditEmployeeBackend
     {
-        
         /// <summary>
         /// Fills the items in the job title combobox on the front end.
         /// </summary>
@@ -20,7 +15,11 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="deptName">The name of the department</param>
         public void FillItemsJobTitle(ComboBox combobox, string deptName)
         {
-            GenStoredProc(combobox, "dbo.uspGetAllUniqueJobTitles", "@DeptName", deptName, "JobTitle");
+            string query = "dbo.uspGetAllUniqueJobTitles",
+                   columnHeader = "JobTitle",
+                   param = "@DeptName",
+                   value = deptName;
+            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, param, value);
         }
 
         /// <summary>
@@ -30,7 +29,11 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="groupName">The name of the department group</param>
         public void FillItemsDepartmentName(ComboBox combobox, string groupName)
         {
-            GenStoredProc(combobox, "dbo.uspGetDepartmentName", "@GroupName", groupName, "name");
+            string query = "dbo.uspGetDepartmentName",
+                   columnHeader = "Name",
+                   param = "@GroupName",
+                   value = groupName;
+            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, param, value);
         }
 
         /// <summary>
@@ -39,7 +42,9 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="combobox">DepartmentGroupNameComboBox should be parsed here</param>
         public void FillItemsGroup(ComboBox combobox)
         {
-            GenStoredProc(combobox, "dbo.uspGetUniqueDepartmentGroupNames", null, null, "GroupName");
+            string query = "dbo.uspGetUniqueDepartmentGroupNames",
+                   columnHeader = "GroupName";
+            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, null, null);
         }
 
         /// <summary>
@@ -48,48 +53,9 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="combobox">ShiftNameComboBox should be parsed here</param>
         public void FillItemsShift(ComboBox combobox)
         {
-            GenStoredProc(combobox, "uspGetAllShiftNames", null, null, "Name");
-        }
-
-        /// <summary>
-        /// Runs a generalized stored proc that takes in one param. Used to get a list of data into a ComboBox.
-        /// </summary>
-        /// <param name="combobox">Combobox that needs to be filled with items</param>
-        /// <param name="query">Query to run and access the DB with</param>
-        /// <param name="param">The parameter that is needed to gain specific data from the DB</param>
-        /// <param name="name">The value needed to be replace the parameter</param>
-        /// <param name="columnHeader">The header of the column needed</param>
-        /// <exception cref="Exception">Connection to database is inaccessible</exception>
-        private void GenStoredProc(ComboBox combobox, string query, string param, string name, string columnHeader)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        if (param != null && name != null)
-                        {
-                            cmd.Parameters.AddWithValue(param, name);
-                        }
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            combobox.Items.Clear();
-                            while (reader.Read())
-                            {
-                                combobox.Items.Add(reader[columnHeader].ToString());
-                            }
-                            return;
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in GenStoredProc.", ex);
-            }
+            string query = "dbo.uspGetAllShiftNames",
+                   columnHeader = "Name";
+            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, null, null);
         }
 
         /// <summary>
@@ -98,181 +64,17 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="data">The employee data that is being pushed</param>
         public void PushToSql(EmployeeData data)
         {
-            UpdateBasicEmployeeInfo(data);
-            UpdateBasicPersonInfo(data);
-            UpdateEmployeeDepartmentHistory(data);
-            UpdateEmployeePayHistory(data);
-        }
-
-        /// <summary>
-        /// Updates the HumanResources.Employee's table to the new general employee data
-        /// </summary>
-        /// <param name="data">The data being used to update the employee</param>
-        /// <exception cref="Exception">Cannot connect to the DB</exception>
-        private void UpdateBasicEmployeeInfo(EmployeeData data)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeData", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                        cmd.Parameters.AddWithValue("@JobTitle", data.JobTitle);
-                        cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
-                        cmd.Parameters.AddWithValue("@MaritalStatus", data.MaritalStatus);
-                        cmd.Parameters.AddWithValue("@Gender", data.Gender);
-                        cmd.Parameters.AddWithValue("@HireDate", data.HireDate);
-                        cmd.Parameters.AddWithValue("@VacationHours", data.VacationHours);
-                        cmd.Parameters.AddWithValue("@SickLeaveHours", data.SickLeaveHours);
-                        cmd.ExecuteNonQuery();
-                        return;
-                    }
-                }
-            }
-            catch(SqlException ex) 
-            {
-                throw new InvalidOperationException("Database access failed in UpdateBasicEmployeeInfo.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Updates the Person.Person table to the new employee's full name
-        /// </summary>
-        /// <param name="data">The data being used to update the employee</param>
-        /// <exception cref="Exception">Cannot connect to the DB</exception>
-        private void UpdateBasicPersonInfo(EmployeeData data)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspUpdatePersonEmployeeName", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
-                        cmd.Parameters.AddWithValue("@MiddleName", data.MiddleName);
-                        cmd.Parameters.AddWithValue("@LastName", data.LastName);
-                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                        cmd.ExecuteNonQuery();
-                        return;
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in UpdateBasicPersonInfo.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Updates the HumanResources.EmployeeDepartmentHistory with the new department of the employee
-        /// </summary>
-        /// <param name="data">The data being used to update the employee</param>
-        /// <exception cref="Exception">Cannot connect to the DB</exception>
-        private void UpdateEmployeeDepartmentHistory(EmployeeData data)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspUpdateEmployeeDepartmentHistory", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@DepartmentID", FindDepartmentDetail(data));
-                        cmd.Parameters.AddWithValue("@ShiftID", FindShiftDetails(data));
-                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                        cmd.ExecuteNonQuery();
-                        return;
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in UpdateEmployeeDepartmentHistory.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Inserts into HumanResources.EmployeePayHistory the new employee pay
-        /// </summary>
-        /// <param name="data">The data being used to update the employee</param>
-        /// <exception cref="Exception"/>Cannot connect to the DB</exception>
-        private void UpdateEmployeePayHistory(EmployeeData data)
-        {
-            // Convert yearly to hourly pay
-            decimal reverseSalaryToRate = decimal.Parse(data.YearlySalary);
-            reverseSalaryToRate /= 52; // 52 weeks -- now weekly pay
-            reverseSalaryToRate /= 40; // 40 hours -- now hourly pay
-            string salaryRate = reverseSalaryToRate.ToString();
+            EmployeeDAL.DBUBasicEmployeeInfo(data);
+            EmployeeDAL.DBUBasicPersonInfo(data);
+            EmployeeDAL.DBUEmployeeDepartmentHistory(data, FindDepartmentDetail(data), FindShiftDetails(data));
 
             // if there has been no change to pay then don't bother inserting new pay history
-            if (!CheckSalaryChange(salaryRate, data))
+            if (!EmployeeDAL.DBCheckSalaryChange(SalaryToRate(data.YearlySalary), data))
             {
                 return;
             }
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspInsertEmployeeNewPay", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                        cmd.Parameters.AddWithValue("@RateChangeDate", DateTime.Now.ToString());
-                        cmd.Parameters.AddWithValue("@NewRate", salaryRate);
-                        cmd.Parameters.AddWithValue("@PayFrequency", GetPayFreq(data));
-                        cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now.ToString());
-                        cmd.ExecuteNonQuery();
-                        return;
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in GetSalesPersonData.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Compares the salary of the one being displayed on the front end and the one in the database.
-        /// </summary>
-        /// <param name="salaryRate">The salary that is being displayed on the front end</param>
-        /// <param name="data">Employee data - Used to get the ID of the employee</param>
-        /// <returns>A <see cref="bool"> is returned, True if the salary is different to the one on the backend, else False</returns>
-        /// <exception cref="Exception">Employee cannot be found | DB Error</exception>
-        private bool CheckSalaryChange(string salaryRate, EmployeeData data)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("select dbo.ufnGetEmployeePayRate(@BusinessEntityID)", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@BusinessEntityID", data.BusinessEntityID);
-                        var result = cmd.ExecuteScalar();
-                        if (result != null)
-                        {
-                            if (result.ToString().Equals(salaryRate))
-                            {
-                                return false;
-                            }
-                            return true;
-                        }
-                        throw new Exception("--Cannot Find Employee In The System--");
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in CheckSalaryChange.", ex);
-            }
+            EmployeeDAL.DBIEmployeePayHistory(data, SalaryToRate(data.YearlySalary), GetPayFreq(data));
         }
 
         /// <summary>
@@ -286,7 +88,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    param = "@BusinessEntityID",
                    id = data.BusinessEntityID;
 
-            return GenFetchOneItem(query, param, id);
+            return EmployeeDAL.DBGenScalarFuncFetch(query, param, id);
         }
 
         /// <summary>
@@ -300,7 +102,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    param = "@Name",
                    name = data.DepartmentName;
 
-            return GenFetchOneItem(query, param, name);
+            return EmployeeDAL.DBGenScalarFuncFetch(query, param, name);
         }
 
         /// <summary>
@@ -314,40 +116,23 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    param = "@Name",
                    name = data.ShiftName;
 
-            return GenFetchOneItem(query, param, name);
+            return EmployeeDAL.DBGenScalarFuncFetch(query, param, name);
         }
 
+        #region Helper Methods
         /// <summary>
-        /// The generalization of grabbing one cell from the database
+        /// Converts a yearly salary to an hourly rate.
         /// </summary>
-        /// <param name="query">A Scalar Function</param>
-        /// <param name="param">The parameter of the scalar function</param>
-        /// <param name="data">Data to set the parameter to</param>
-        /// <returns>Returns the string of the cell that was found</returns>
-        /// <exception cref="ArgumentException">Unable to access DB</exception>
-        private string GenFetchOneItem(string query, string param, string data)
+        /// <param name="yearlySalary">The yearly salary as a string. Must be a valid decimal number.</param>
+        /// <returns>A string representing the equivalent hourly rate, calculated based on a 52-week year and a 40-hour work
+        /// week.</returns>
+        private string SalaryToRate(string yearlySalary)
         {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue(param, data);
-                        var result = cmd.ExecuteScalar();
-                        if (result != null)
-                        {
-                            return result.ToString();
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in GenFetchOneItem.", ex);
-            }
-            return null;
+            decimal reverseSalaryToRate = decimal.Parse(yearlySalary);
+            reverseSalaryToRate /= 52; // 52 weeks -- now weekly pay
+            reverseSalaryToRate /= 40; // 40 hours -- now hourly pay
+            return reverseSalaryToRate.ToString();
         }
+        #endregion
     }
 }

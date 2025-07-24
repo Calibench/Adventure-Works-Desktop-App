@@ -25,12 +25,12 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Frontend
         // Event Driven Methods
         private void InitialLoadForm(object sender, EventArgs e)
         {
-            usernameLabel.Text = string.Format(Properties.Resources.LoggedInAs, displayName);
             editButton.Visible = false;
 
             // Populates the ComboBox with ID's
             backend = new EmployeeInfoBackend();
             backend.UpdateComoboBox(searchComboBox);
+            loggedBackUserControl.ChangeDisplayName(displayName);
         }
 
         private void searchComboBox_SelectedIndexChanged(object sender, EventArgs e)

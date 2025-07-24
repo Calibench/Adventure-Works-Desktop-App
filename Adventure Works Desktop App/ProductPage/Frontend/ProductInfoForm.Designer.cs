@@ -35,8 +35,6 @@
             this.subCategoryLabel = new System.Windows.Forms.Label();
             this.productComboBox = new System.Windows.Forms.ComboBox();
             this.productLabel = new System.Windows.Forms.Label();
-            this.usernameLabel = new System.Windows.Forms.Label();
-            this.backButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.cultureNameLabel = new System.Windows.Forms.Label();
@@ -66,6 +64,7 @@
             this.productDescriptionGroupBox = new System.Windows.Forms.GroupBox();
             this.productDescriptionRichTextBox = new System.Windows.Forms.RichTextBox();
             this.productID = new System.Windows.Forms.Label();
+            this.loggedBackUserControl = new Adventure_Works_Desktop_App.Globals.Components.LoggedBackUserControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -164,28 +163,6 @@
             this.productLabel.Size = new System.Drawing.Size(52, 13);
             this.productLabel.TabIndex = 6;
             this.productLabel.Text = "Products:";
-            // 
-            // usernameLabel
-            // 
-            this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameLabel.Location = new System.Drawing.Point(746, 0);
-            this.usernameLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Padding = new System.Windows.Forms.Padding(0, 5, 10, 0);
-            this.usernameLabel.Size = new System.Drawing.Size(92, 18);
-            this.usernameLabel.TabIndex = 8;
-            this.usernameLabel.Text = "Logged in: User";
-            // 
-            // backButton
-            // 
-            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.backButton.Location = new System.Drawing.Point(751, 24);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 8;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -551,17 +528,23 @@
             this.productID.Text = "937";
             this.productID.Visible = false;
             // 
+            // loggedBackUserControl
+            // 
+            this.loggedBackUserControl.Location = new System.Drawing.Point(664, 12);
+            this.loggedBackUserControl.Name = "loggedBackUserControl";
+            this.loggedBackUserControl.Size = new System.Drawing.Size(160, 49);
+            this.loggedBackUserControl.TabIndex = 8;
+            // 
             // ProductInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 441);
+            this.Controls.Add(this.loggedBackUserControl);
             this.Controls.Add(this.productID);
             this.Controls.Add(this.productNNSGroupBox);
             this.Controls.Add(this.cultureNameLabel);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.usernameLabel);
-            this.Controls.Add(this.backButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ProductInfoForm";
@@ -621,8 +604,6 @@
         private System.Windows.Forms.Label subCategoryLabel;
         private System.Windows.Forms.ComboBox productComboBox;
         private System.Windows.Forms.Label productLabel;
-        private System.Windows.Forms.Label usernameLabel;
-        private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Label cultureNameLabel;
@@ -652,5 +633,6 @@
         private System.Windows.Forms.GroupBox customerReviewGroupBox;
         private System.Windows.Forms.Panel customerReviewPanel;
         private System.Windows.Forms.Label productID;
+        private Globals.Components.LoggedBackUserControl loggedBackUserControl;
     }
 }

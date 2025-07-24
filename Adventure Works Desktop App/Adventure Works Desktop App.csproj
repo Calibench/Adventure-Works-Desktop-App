@@ -84,11 +84,18 @@
       <DependentUpon>MainClickerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EmployeePage\Backend\EditEmployeeBackend.cs" />
+    <Compile Include="EmployeePage\Backend\EmployeeDAL.cs" />
     <Compile Include="EmployeePage\Frontend\EditEmployeeInformationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EmployeePage\Frontend\EditEmployeeInformationForm.Designer.cs">
       <DependentUpon>EditEmployeeInformationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Globals\Components\LoggedBackUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Globals\Components\LoggedBackUserControl.Designer.cs">
+      <DependentUpon>LoggedBackUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals\DataClasses\AccountData.cs" />
     <Compile Include="Globals\FormNavigatorHelper.cs" />
@@ -102,6 +109,7 @@
     <Compile Include="EmployeePage\Frontend\EmployeeInfoForm.Designer.cs">
       <DependentUpon>EmployeeInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoginPage\Backend\LoginDAL.cs" />
     <Compile Include="MenuPage\ProtectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmployeePage\Frontend\EmployeeInfoForm.resx">
       <DependentUpon>EmployeeInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Globals\Components\LoggedBackUserControl.resx">
+      <DependentUpon>LoggedBackUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPage\ProtectForm.resx">
       <DependentUpon>ProtectForm.cs</DependentUpon>

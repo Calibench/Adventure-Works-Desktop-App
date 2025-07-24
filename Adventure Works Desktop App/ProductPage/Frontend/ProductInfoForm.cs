@@ -27,7 +27,7 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
 
         private void InitialFormLoad(object sender, EventArgs e)
         {
-            usernameLabel.Text = $"Logged in: {username}";
+            loggedBackUserControl.ChangeDisplayName(username);
             subCategoryComboBox.Enabled = false;
             productComboBox.Enabled = false;
             UpdateProducts(ProductDetailsUpdate.PrimaryCategoryComboBox);

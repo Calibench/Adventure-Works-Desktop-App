@@ -18,7 +18,7 @@ namespace Adventure_Works_Desktop_App.SalesPersonPage.Frontend
 
         private void InitialFormLoad(object sender, EventArgs e)
         {
-            usernameLabel.Text = $"Logged in: {username}";
+            loggedBackUserControl.ChangeDisplayName(username);
             salesPersonGroupBox.Visible = false;
             regionSalesGroupBox.Visible = false;
         }

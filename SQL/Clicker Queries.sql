@@ -29,6 +29,7 @@ select * from AdventureWorks2017.Person.Login -- using the loginID to see which 
 --);
 
 select * from ClickerUserData -- users are added in the signup on adventureworks db then once it is confirm it is added here via loginID.
+select * from ClickerUpgrade
 --
 INSERT INTO ClickerUserData (LoginID)
 VALUES (2);

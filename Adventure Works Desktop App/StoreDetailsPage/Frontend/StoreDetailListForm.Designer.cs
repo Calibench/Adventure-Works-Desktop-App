@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.usernameBackPanel = new System.Windows.Forms.Panel();
-            this.usernameLabel = new System.Windows.Forms.Label();
-            this.backButton = new System.Windows.Forms.Button();
             this.topPanel = new System.Windows.Forms.Panel();
             this.quickSearchTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,41 +49,10 @@
             this.businessTypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listViewContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editStoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usernameBackPanel.SuspendLayout();
+            this.loggedBackUserControl = new Adventure_Works_Desktop_App.Globals.Components.LoggedBackUserControl();
             this.topPanel.SuspendLayout();
             this.listViewContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // usernameBackPanel
-            // 
-            this.usernameBackPanel.Controls.Add(this.usernameLabel);
-            this.usernameBackPanel.Controls.Add(this.backButton);
-            this.usernameBackPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameBackPanel.Location = new System.Drawing.Point(684, 0);
-            this.usernameBackPanel.Name = "usernameBackPanel";
-            this.usernameBackPanel.Size = new System.Drawing.Size(154, 441);
-            this.usernameBackPanel.TabIndex = 3;
-            // 
-            // usernameLabel
-            // 
-            this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameLabel.Location = new System.Drawing.Point(58, 0);
-            this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Padding = new System.Windows.Forms.Padding(0, 5, 5, 0);
-            this.usernameLabel.Size = new System.Drawing.Size(96, 18);
-            this.usernameLabel.TabIndex = 1;
-            this.usernameLabel.Text = "Logged In: USER";
-            // 
-            // backButton
-            // 
-            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.backButton.Location = new System.Drawing.Point(76, 21);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 0;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
             // 
             // topPanel
             // 
@@ -247,22 +213,28 @@
             this.editStoreToolStripMenuItem.Text = "Edit Store Data";
             this.editStoreToolStripMenuItem.Click += new System.EventHandler(this.editStoreToolStripMenuItem_Click);
             // 
+            // loggedBackUserControl
+            // 
+            this.loggedBackUserControl.Location = new System.Drawing.Point(684, 12);
+            this.loggedBackUserControl.LoggedInText = "Logged in: @User";
+            this.loggedBackUserControl.Name = "loggedBackUserControl";
+            this.loggedBackUserControl.Size = new System.Drawing.Size(142, 49);
+            this.loggedBackUserControl.TabIndex = 7;
+            // 
             // StoreDetailListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 441);
+            this.Controls.Add(this.loggedBackUserControl);
             this.Controls.Add(this.storeListView);
             this.Controls.Add(this.topPanel);
-            this.Controls.Add(this.usernameBackPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "StoreDetailListForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "StoreDetailListForm";
             this.Load += new System.EventHandler(this.InitialFormLoad);
-            this.usernameBackPanel.ResumeLayout(false);
-            this.usernameBackPanel.PerformLayout();
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             this.listViewContextMenuStrip.ResumeLayout(false);
@@ -271,10 +243,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel usernameBackPanel;
-        private System.Windows.Forms.Label usernameLabel;
-        private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label countLabel;
         private System.Windows.Forms.Label sortListByLabel;
@@ -295,5 +263,6 @@
         private System.Windows.Forms.ColumnHeader businessTypeColumnHeader;
         private System.Windows.Forms.ContextMenuStrip listViewContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem editStoreToolStripMenuItem;
+        private Globals.Components.LoggedBackUserControl loggedBackUserControl;
     }
 }

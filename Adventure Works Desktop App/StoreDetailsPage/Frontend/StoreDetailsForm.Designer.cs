@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.backButton = new System.Windows.Forms.Button();
-            this.usernameLabel = new System.Windows.Forms.Label();
-            this.usernameBackPanel = new System.Windows.Forms.Panel();
             this.saveDataButton = new System.Windows.Forms.Button();
             this.changeButton = new System.Windows.Forms.Button();
             this.detailsTabControl = new System.Windows.Forms.TabControl();
@@ -105,7 +102,7 @@
             this.demographicsBusinessIDGroupBox = new System.Windows.Forms.GroupBox();
             this.demographicsBusinessIDTextBox = new System.Windows.Forms.TextBox();
             this.buttonToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.usernameBackPanel.SuspendLayout();
+            this.loggedBackUserControl = new Adventure_Works_Desktop_App.Globals.Components.LoggedBackUserControl();
             this.detailsTabControl.SuspendLayout();
             this.storeAddressTabPage.SuspendLayout();
             this.countryGroupBox.SuspendLayout();
@@ -145,42 +142,9 @@
             this.demographicsBusinessIDGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // backButton
-            // 
-            this.backButton.Location = new System.Drawing.Point(57, 21);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(79, 23);
-            this.backButton.TabIndex = 0;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
-            // 
-            // usernameLabel
-            // 
-            this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameLabel.Location = new System.Drawing.Point(43, 0);
-            this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Padding = new System.Windows.Forms.Padding(0, 5, 5, 0);
-            this.usernameLabel.Size = new System.Drawing.Size(96, 18);
-            this.usernameLabel.TabIndex = 1;
-            this.usernameLabel.Text = "Logged In: USER";
-            // 
-            // usernameBackPanel
-            // 
-            this.usernameBackPanel.Controls.Add(this.saveDataButton);
-            this.usernameBackPanel.Controls.Add(this.changeButton);
-            this.usernameBackPanel.Controls.Add(this.usernameLabel);
-            this.usernameBackPanel.Controls.Add(this.backButton);
-            this.usernameBackPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.usernameBackPanel.Location = new System.Drawing.Point(540, 0);
-            this.usernameBackPanel.Name = "usernameBackPanel";
-            this.usernameBackPanel.Size = new System.Drawing.Size(139, 429);
-            this.usernameBackPanel.TabIndex = 2;
-            // 
             // saveDataButton
             // 
-            this.saveDataButton.Location = new System.Drawing.Point(57, 100);
+            this.saveDataButton.Location = new System.Drawing.Point(590, 102);
             this.saveDataButton.Name = "saveDataButton";
             this.saveDataButton.Size = new System.Drawing.Size(75, 23);
             this.saveDataButton.TabIndex = 2;
@@ -190,7 +154,7 @@
             // 
             // changeButton
             // 
-            this.changeButton.Location = new System.Drawing.Point(57, 71);
+            this.changeButton.Location = new System.Drawing.Point(590, 73);
             this.changeButton.Name = "changeButton";
             this.changeButton.Size = new System.Drawing.Size(75, 23);
             this.changeButton.TabIndex = 1;
@@ -207,7 +171,7 @@
             this.detailsTabControl.Name = "detailsTabControl";
             this.detailsTabControl.SelectedIndex = 0;
             this.detailsTabControl.Size = new System.Drawing.Size(524, 400);
-            this.detailsTabControl.TabIndex = 3;
+            this.detailsTabControl.TabIndex = 0;
             // 
             // storeAddressTabPage
             // 
@@ -869,21 +833,29 @@
             this.demographicsBusinessIDTextBox.Size = new System.Drawing.Size(100, 20);
             this.demographicsBusinessIDTextBox.TabIndex = 27;
             // 
+            // loggedBackUserControl
+            // 
+            this.loggedBackUserControl.Location = new System.Drawing.Point(539, 12);
+            this.loggedBackUserControl.LoggedInText = "Logged in: @User";
+            this.loggedBackUserControl.Name = "loggedBackUserControl";
+            this.loggedBackUserControl.Size = new System.Drawing.Size(128, 49);
+            this.loggedBackUserControl.TabIndex = 3;
+            // 
             // StoreDetailsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 429);
+            this.Controls.Add(this.loggedBackUserControl);
+            this.Controls.Add(this.saveDataButton);
             this.Controls.Add(this.detailsTabControl);
-            this.Controls.Add(this.usernameBackPanel);
+            this.Controls.Add(this.changeButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "StoreDetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "StoreDetailsForm";
             this.Load += new System.EventHandler(this.LoadInitialForm);
-            this.usernameBackPanel.ResumeLayout(false);
-            this.usernameBackPanel.PerformLayout();
             this.detailsTabControl.ResumeLayout(false);
             this.storeAddressTabPage.ResumeLayout(false);
             this.countryGroupBox.ResumeLayout(false);
@@ -957,10 +929,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button backButton;
-        private System.Windows.Forms.Label usernameLabel;
-        private System.Windows.Forms.Panel usernameBackPanel;
         private System.Windows.Forms.TabControl detailsTabControl;
         private System.Windows.Forms.TabPage storeAddressTabPage;
         private System.Windows.Forms.TabPage storeContactTabPage;
@@ -1034,5 +1002,6 @@
         private System.Windows.Forms.Button changeButton;
         private System.Windows.Forms.Button saveDataButton;
         private System.Windows.Forms.ToolTip buttonToolTip;
+        private Globals.Components.LoggedBackUserControl loggedBackUserControl;
     }
 }

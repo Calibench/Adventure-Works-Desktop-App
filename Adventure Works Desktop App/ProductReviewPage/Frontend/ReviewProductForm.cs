@@ -18,7 +18,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Frontend
 
         private void InitialFormLoad(object sender, EventArgs e)
         {
-            usernameLabel.Text = $"Logged in: {username}";
+            loggedBackUserControl.ChangeDisplayName(username);
 
             // ensure everything is invisible upon entering till the product has been selected
             productIDLabel.Visible = false;
@@ -116,7 +116,7 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Frontend
             // Submission
             try
             {
-                new ReviewProductBackend(productIDValueLabel.Text, rating, usernameLabel.Text, customerReviewRichTextBox.Text);
+                new ReviewProductBackend(productIDValueLabel.Text, rating, loggedBackUserControl.LoggedInText/*usernameLabel.Text*/, customerReviewRichTextBox.Text);
                 MessageBox.Show(Properties.ProductReviewResources.SuccessfulSubmit);
             }
             catch (Exception ex)
