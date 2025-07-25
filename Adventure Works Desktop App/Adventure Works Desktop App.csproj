@@ -116,6 +116,7 @@
     <Compile Include="MenuPage\ProtectForm.Designer.cs">
       <DependentUpon>ProtectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductPage\Backend\ProductDAL.cs" />
     <Compile Include="ProductPage\Frontend\LanguageProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +139,7 @@
       <DependentUpon>ProductInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProductReviewPage\Backend\ChangeProductBackend.cs" />
+    <Compile Include="ProductReviewPage\Backend\ProductReviewDAL.cs" />
     <Compile Include="ProductReviewPage\Backend\ReviewProductBackend.cs" />
     <Compile Include="Globals\DataClasses\ReviewProductData.cs" />
     <Compile Include="ProductReviewPage\Frontend\ChangeProductForm.cs">

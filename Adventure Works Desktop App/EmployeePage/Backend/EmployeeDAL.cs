@@ -22,7 +22,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <returns>An <see cref="EmployeeData"/> object containing the employee's details if found; otherwise, <see
         /// langword="null"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
-        public static EmployeeData DBGetEmployeeData(string businessEntityID)
+        public EmployeeData DBGetEmployeeData(string businessEntityID)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="data">The value to assign to the parameter specified by <paramref name="param"/>.</param>
         /// <returns>The result of the scalar query as a string, or <see langword="null"/> if the query returns no result.</returns>
         /// <exception cref="InvalidOperationException">Thrown if there is an error accessing the database.</exception>
-        public static string DBGenScalarFuncFetch(string query, string param, string data)
+        public string DBGenScalarFuncFetch(string query, string param, string data)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="data">The employee data containing the business entity ID.</param>
         /// <returns><see langword="true"/> if the salary rate has changed; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the employee cannot be found in the system or if database access fails.</exception>
-        public static  bool DBCheckSalaryChange(string salaryRate, EmployeeData data)
+        public bool DBCheckSalaryChange(string salaryRate, EmployeeData data)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <paramref name="eData"/> parameter is not null and contains valid information for each field.</remarks>
         /// <param name="eData">An <see cref="EmployeeData"/> object containing the employee's updated information.</param>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
-        public static void DBUBasicEmployeeInfo(EmployeeData eData)
+        public void DBUBasicEmployeeInfo(EmployeeData eData)
         {
             try
             {
@@ -191,7 +191,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// information before calling this method.</remarks>
         /// <param name="eData">The employee data containing the first name, middle name, last name, and business entity ID to update.</param>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
-        public static void DBUBasicPersonInfo(EmployeeData eData)
+        public void DBUBasicPersonInfo(EmployeeData eData)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="department">The identifier of the department to assign to the employee. Cannot be null or empty.</param>
         /// <param name="shift">The identifier of the shift to assign to the employee. Cannot be null or empty.</param>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database during the update operation.</exception>
-        public static void DBUEmployeeDepartmentHistory(EmployeeData eData, string department, string shift)
+        public void DBUEmployeeDepartmentHistory(EmployeeData eData, string department, string shift)
         {
             try
             {
@@ -260,7 +260,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="newRate">The new pay rate to be applied to the employee.</param>
         /// <param name="payFrequency">The frequency of the pay period, such as weekly or bi-weekly.</param>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
-        public static void DBIEmployeePayHistory(EmployeeData data, string newRate, string payFrequency)
+        public void DBIEmployeePayHistory(EmployeeData data, string newRate, string payFrequency)
         {
             try
             {
@@ -303,7 +303,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="value">The value of the parameter to pass to the stored procedure. Can be <see langword="null"/> if no parameter is
         /// needed.</param>
         /// <exception cref="InvalidOperationException">Thrown if database access fails.</exception>
-        public static void DBGenComboBoxStoredProc(ComboBox combobox, string query, string columnHeader, string param, string value)
+        public void DBGenComboBoxStoredProc(ComboBox combobox, string query, string columnHeader, string param, string value)
         {
             try
             {

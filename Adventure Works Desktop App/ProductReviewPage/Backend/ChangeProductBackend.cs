@@ -9,38 +9,32 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Backend
 {
     internal class ChangeProductBackend
     {
+        private readonly ProductReviewDAL _dal = new ProductReviewDAL();
 
-        // I am aware you can make this a generic function and class that just populates the combobox selected and pass a string that holds a query.
-        // But this is just a practice project. (Similiar class - ProductLanguageSelect)
         public void PopulateComboBox(ComboBox comboBox, List<string> productIDs)
         {
-            try
+            List<string> productNames = _dal.GetProductNames();
+
+            if (productNames == null)
             {
-                using (SqlConnection connect = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    connect.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetAllProducts", connect))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            comboBox.Items.Clear();
-                            productIDs.Clear();
-                            while (reader.Read())
-                            {
-                                string language = reader["Name"].ToString();
-                                string productID = reader["ProductID"].ToString();
-                                productIDs.Add(productID);
-                                comboBox.Items.Add(language);
-                            }
-                            return;
-                        }
-                    }
-                }
+                throw new InvalidOperationException("Unable to continue due to null productNames");
             }
-            catch (SqlException ex)
+
+            foreach (string products in productNames)
+            { 
+                comboBox.Items.Add(products);
+            }
+
+            List<string> tempProductID = _dal.GetProductIDs();
+
+            if (tempProductID == null)
             {
-                throw new InvalidOperationException("Database access failed in PopulateComboBox.", ex);
+                throw new InvalidOperationException("Unable to continue due to null productID");
+            }
+
+            foreach (string id in tempProductID)
+            {
+                productIDs.Add(id);
             }
         }
     }

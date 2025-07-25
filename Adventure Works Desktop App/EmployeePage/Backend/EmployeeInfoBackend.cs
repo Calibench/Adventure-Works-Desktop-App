@@ -8,6 +8,8 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// </summary>
     internal class EmployeeInfoBackend
     {
+        private readonly EmployeeDAL _dal = new EmployeeDAL();
+
         /// <summary>
         /// Gets employee ID's and populates them into a given combobox.
         /// </summary>
@@ -16,7 +18,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             string query = "dbo.uspGetAllEmployeeIDs",
                    columnHeader = "businessEntityID";
-            EmployeeDAL.DBGenComboBoxStoredProc(comboBox, query, columnHeader, null, null);
+            _dal.DBGenComboBoxStoredProc(comboBox, query, columnHeader, null, null);
         }
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <returns></returns>
         public EmployeeData GetData(string businessEntityID)
         {
-            return EmployeeDAL.DBGetEmployeeData(businessEntityID);
+            return _dal.DBGetEmployeeData(businessEntityID);
         }
     }
 }

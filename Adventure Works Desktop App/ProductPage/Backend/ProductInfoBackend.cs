@@ -1,10 +1,8 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
-using System.Configuration;
-using System.Data;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Adventure_Works_Desktop_App.ProductPage.Backend
 {
@@ -12,12 +10,21 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
     {
         private List<CustomerReviewData> customerData;
         private List<ProductData> productData;
+        private readonly ProductDAL _dal = new ProductDAL();
 
         public enum Procedure
         {
             Category = 1,
             SubCategory,
             ProductName
+        }
+
+        public enum ProductDetailsUpdate
+        {
+            PrimaryCategoryComboBox = 1,
+            SubCategoryComboBox,
+            ProductComboBox,
+            UpdateProductDetails
         }
 
         public List<CustomerReviewData> CustomerData
@@ -29,84 +36,8 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         {
             customerData = new List<CustomerReviewData>();
             productData = new List<ProductData>();
-            SearchReview();
-            SearchProduct(cultureName);
-        }
-
-        // Put this data into the CustomerReviewData (productID, customerName, date, rating, comment)
-        /// <summary>
-        /// Retrieves customer reviews from the database and populates the customer data collection.
-        /// </summary>
-        /// <remarks>This method executes a stored procedure to fetch customer reviews, which are then
-        /// added to the <paramref name="customerData"/> collection. Each review includes details such as product ID, reviewer name,
-        /// review date, rating, and comments.</remarks>
-        private void SearchReview()
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspGetCustomerReviews", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                CustomerReviewData tempCustomerData = new CustomerReviewData(
-                                    reader["productID"].ToString(), reader["ReviewerName"].ToString(),
-                                    reader["ReviewDate"].ToString(), Convert.ToInt16(reader["Rating"]),
-                                    reader["Comments"].ToString());
-                                customerData.Add(tempCustomerData);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in SearchReview.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Searches for product data based on the specified culture name.
-        /// </summary>
-        /// <remarks>This method executes a stored procedure to retrieve product information localized to
-        /// the specified culture. The results are added to the <paramref name="productData"/> collection.</remarks>
-        /// <param name="cultureName">The name of the culture used to filter the product data. This parameter cannot be null or empty.</param>
-        private void SearchProduct(string cultureName)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspProductSearchLang", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@cultureName", cultureName);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                ProductData tempProductData = new ProductData(
-                                    reader["Product_Catagory"].ToString(), reader["Product_SubCategory"].ToString(),
-                                    reader["ProductID"].ToString(), reader["ProductNumber"].ToString(), reader["Product_Name"].ToString(),
-                                    reader["ListPrice"].ToString(), reader["StandardCost"].ToString(), reader["Margin_Profit"].ToString(),
-                                    reader["Size"].ToString(), reader["Color"].ToString(), reader["Weight"].ToString(),
-                                    reader["Description"].ToString(), reader["Culture_Name"].ToString());
-                                productData.Add(tempProductData);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in SearchProduct.", ex);
-            }
+            _dal.DBSearchReview(customerData);
+            _dal.DBSearchProduct(cultureName, productData);
         }
 
         /// <summary>
@@ -126,57 +57,10 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         public List<string> GetCategories(Procedure procedure, string category)
         {
             List<string> categories = new List<string>();
-            string query;
-            CommandType commandType = CommandType.StoredProcedure;
-            switch (procedure)
-            {
-                case Procedure.Category:
-                    query = "select Name from Production.ProductCategory";
-                    commandType = CommandType.Text;
-                    break;
-                case Procedure.SubCategory:
-                    query = "dbo.uspGetSubcategory";
-                    break;
-                case Procedure.ProductName:
-                    query = "dbo.uspGetProductName";
-                    break;
-                default:
-                    throw new ArgumentException("Invalid procedure type.", nameof(procedure));
-            }
 
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.CommandType = commandType;
+            categories = _dal.DBGetCategories(GetQueryByProcedure(procedure), procedure, category);
 
-                        if (procedure == Procedure.SubCategory)
-                        {
-                            cmd.Parameters.AddWithValue("@Category", category);
-                        }
-                        else if (procedure == Procedure.ProductName)
-                        {
-                            cmd.Parameters.AddWithValue("@SubCategory", category);
-                        }
-
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                categories.Add(reader["Name"].ToString());
-                            }
-                        }
-                        return categories;
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in GetCategories.", ex);
-            }
+            return categories;
         }
 
         /// <summary>
@@ -189,15 +73,51 @@ namespace Adventure_Works_Desktop_App.ProductPage.Backend
         /// name="productName"/>.</exception>
         public ProductData GetProductData(string cultureName, string productName)
         {
-            foreach (ProductData data in productData)
+            try
             {
-                if (data.CultureID == cultureName && data.ProductName == productName)
+                foreach (ProductData data in productData)
                 {
-                    return data;
+                    if (data.CultureID == cultureName && data.ProductName == productName)
+                    {
+                        return data;
+                    }
                 }
+                return null;
             }
-            // refer(https://stackoverflow.com/questions/16434842/invalidoperationexception-vs-argumentexception)
-            throw new InvalidOperationException($"No product data found for culture '{cultureName}' and product name '{productName}'.");
+            catch (InvalidOperationException ex)
+            {
+                // refer(https://stackoverflow.com/questions/16434842/invalidoperationexception-vs-argumentexception)
+                throw new InvalidOperationException($"No product data found for culture '{cultureName}' and product name '{productName}'.", ex);
+            }
         }
+
+        #region Helper Methods
+
+        private string GetQueryByProcedure(Procedure procedure)
+        {
+            switch (procedure)
+            {
+                case Procedure.Category:
+                    return "dbo.uspGetCategory";
+                case Procedure.SubCategory:
+                    return "dbo.uspGetSubcategory";
+                case Procedure.ProductName:
+                    return "dbo.uspGetProductName";
+                default:
+                    throw new ArgumentException("Invalid procedure type.", nameof(procedure));
+            }
+        }
+
+        public static string TrimSpacesBetweenString(string s)
+        {
+            return Regex.Replace(s, @"\s{2,}", " ");
+        }
+
+        public static string GetFirst(ComboBox combo)
+        {
+            return combo.Items[0].ToString();
+        }
+
+        #endregion
     }
 }

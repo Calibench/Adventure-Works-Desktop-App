@@ -8,6 +8,8 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
     /// </summary>
     internal class EditEmployeeBackend
     {
+        private readonly EmployeeDAL _dal = new EmployeeDAL();
+
         /// <summary>
         /// Fills the items in the job title combobox on the front end.
         /// </summary>
@@ -19,7 +21,8 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    columnHeader = "JobTitle",
                    param = "@DeptName",
                    value = deptName;
-            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, param, value);
+
+            _dal.DBGenComboBoxStoredProc(combobox, query, columnHeader, param, value);
         }
 
         /// <summary>
@@ -33,7 +36,8 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    columnHeader = "Name",
                    param = "@GroupName",
                    value = groupName;
-            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, param, value);
+
+            _dal.DBGenComboBoxStoredProc(combobox, query, columnHeader, param, value);
         }
 
         /// <summary>
@@ -44,7 +48,8 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             string query = "dbo.uspGetUniqueDepartmentGroupNames",
                    columnHeader = "GroupName";
-            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, null, null);
+
+            _dal.DBGenComboBoxStoredProc(combobox, query, columnHeader, null, null);
         }
 
         /// <summary>
@@ -55,7 +60,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         {
             string query = "dbo.uspGetAllShiftNames",
                    columnHeader = "Name";
-            EmployeeDAL.DBGenComboBoxStoredProc(combobox, query, columnHeader, null, null);
+            _dal.DBGenComboBoxStoredProc(combobox, query, columnHeader, null, null);
         }
 
         /// <summary>
@@ -64,17 +69,17 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
         /// <param name="data">The employee data that is being pushed</param>
         public void PushToSql(EmployeeData data)
         {
-            EmployeeDAL.DBUBasicEmployeeInfo(data);
-            EmployeeDAL.DBUBasicPersonInfo(data);
-            EmployeeDAL.DBUEmployeeDepartmentHistory(data, FindDepartmentDetail(data), FindShiftDetails(data));
+            _dal.DBUBasicEmployeeInfo(data);
+            _dal.DBUBasicPersonInfo(data);
+            _dal.DBUEmployeeDepartmentHistory(data, FindDepartmentDetail(data), FindShiftDetails(data));
 
             // if there has been no change to pay then don't bother inserting new pay history
-            if (!EmployeeDAL.DBCheckSalaryChange(SalaryToRate(data.YearlySalary), data))
+            if (!_dal.DBCheckSalaryChange(SalaryToRate(data.YearlySalary), data))
             {
                 return;
             }
 
-            EmployeeDAL.DBIEmployeePayHistory(data, SalaryToRate(data.YearlySalary), GetPayFreq(data));
+            _dal.DBIEmployeePayHistory(data, SalaryToRate(data.YearlySalary), GetPayFreq(data));
         }
 
         /// <summary>
@@ -88,7 +93,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    param = "@BusinessEntityID",
                    id = data.BusinessEntityID;
 
-            return EmployeeDAL.DBGenScalarFuncFetch(query, param, id);
+            return _dal.DBGenScalarFuncFetch(query, param, id);
         }
 
         /// <summary>
@@ -102,7 +107,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    param = "@Name",
                    name = data.DepartmentName;
 
-            return EmployeeDAL.DBGenScalarFuncFetch(query, param, name);
+            return _dal.DBGenScalarFuncFetch(query, param, name);
         }
 
         /// <summary>
@@ -116,7 +121,7 @@ namespace Adventure_Works_Desktop_App.EmployeePage.Backend
                    param = "@Name",
                    name = data.ShiftName;
 
-            return EmployeeDAL.DBGenScalarFuncFetch(query, param, name);
+            return _dal.DBGenScalarFuncFetch(query, param, name);
         }
 
         #region Helper Methods

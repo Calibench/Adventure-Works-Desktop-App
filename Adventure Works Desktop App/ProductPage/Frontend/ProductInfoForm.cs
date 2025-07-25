@@ -1,40 +1,33 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using Adventure_Works_Desktop_App.ProductPage.Backend;
+using static Adventure_Works_Desktop_App.ProductPage.Backend.ProductInfoBackend;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Adventure_Works_Desktop_App.ProductPage.Frontend
 {
     public partial class ProductInfoForm : Form
     {
-        private string username;
-        private enum ProductDetailsUpdate
-        {
-            PrimaryCategoryComboBox = 1,
-            SubCategoryComboBox,
-            ProductComboBox,
-            UpdateProductDetails
-        }
+        private string displayName;
 
-        public ProductInfoForm(string username)
+        public ProductInfoForm(string displayName)
         {
             InitializeComponent();
-            this.username = username;
+            this.displayName = displayName;
         }
 
         private void InitialFormLoad(object sender, EventArgs e)
         {
-            loggedBackUserControl.ChangeDisplayName(username);
+            loggedBackUserControl.ChangeDisplayName(displayName);
             subCategoryComboBox.Enabled = false;
             productComboBox.Enabled = false;
             UpdateProducts(ProductDetailsUpdate.PrimaryCategoryComboBox);
             cultureNameLabel.Visible = false;
         }
 
-        // Event Section
+        #region Events Section
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             subCategoryComboBox.Enabled = true;
@@ -59,14 +52,14 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
             UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);
         }
 
-        // Start Lang Section
+        #region Lang Section
         private void LanguageLabelClicked(object sender, EventArgs e)
         {
             // open a box that allows user to select the language of choice (this will then filter the sql query to that language through cultureID)
             var langWin = new LanguageProductForm(cultureNameLabel.Text);
             langWin.ShowDialog();
             // checks if the back button was pressed instead of the window was just closed
-            if (langWin.DialogResult == DialogResult.OK && categoryComboBox.Text != "")
+            if (langWin.DialogResult == DialogResult.OK)
             {
                 cultureNameLabel.Text = langWin.GetSelectedLanguage();
                 UpdateProducts(ProductDetailsUpdate.UpdateProductDetails);
@@ -90,24 +83,10 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
             // disabling the tooltip prevents ghosting
             langToolTip.Active = false;
         }
-        // End Lang Section
+        #endregion
+        #endregion
 
-        // End Event Section
-
-        /// <summary>
-        /// Wrapper to update front end details
-        /// </summary>
-        /// <param name="numProductDetailsUpdate">1=update primcatcombo, 2=update subcatcombo, 3=update productcombo, 4=update product details</param>
-        private void UpdateProducts(ProductDetailsUpdate numProductDetailsUpdate)
-        {
-            // to do the reviews, use this container (customerReviewPanel) encapsulate it with a groupbox
-            ProductInfoBackend backend = new ProductInfoBackend(cultureNameLabel.Text);
-            
-            ProductDetailsProcedureUpdate(backend, numProductDetailsUpdate);
-            CustomerReviewUpdate(backend.CustomerData);
-        }
-
-        // Start of Product Details
+        #region Product Details
         /// <summary>
         /// Updates the product details UI components based on the specified update procedure.
         /// </summary>
@@ -122,15 +101,15 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
             {
                 // update primary combobox - this is upon initial enter of the form
                 case ProductDetailsUpdate.PrimaryCategoryComboBox:
-                    UpdateComboBox(backend.GetCategories(ProductInfoBackend.Procedure.Category, "Nothing"), categoryComboBox);
+                    UpdateComboBox(backend.GetCategories(Procedure.Category, "Nothing"), categoryComboBox);
                     break;
                 // update secondary combobox - when category combobox gets a select update choices for secondary combobox
                 case ProductDetailsUpdate.SubCategoryComboBox:
-                    UpdateComboBox(backend.GetCategories(ProductInfoBackend.Procedure.SubCategory, categoryComboBox.Text), subCategoryComboBox);
+                    UpdateComboBox(backend.GetCategories(Procedure.SubCategory, categoryComboBox.Text), subCategoryComboBox);
                     break;
                 // update product combobox - when secondary combobox gets a select update choices for product combobox
                 case ProductDetailsUpdate.ProductComboBox:
-                    UpdateComboBox(backend.GetCategories(ProductInfoBackend.Procedure.ProductName, subCategoryComboBox.Text), productComboBox);
+                    UpdateComboBox(backend.GetCategories(Procedure.ProductName, subCategoryComboBox.Text), productComboBox);
                     break;
                 // update product details to match the select product name from the product combobox
                 case ProductDetailsUpdate.UpdateProductDetails:
@@ -145,15 +124,24 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
         /// <param name="prodData">Product data being parsed to update text</param>
         private void UpdateProductDetails(ProductData prodData)
         {
+            if (prodData == null)
+            {
+                throw new Exception("Unable to update product details due to no product information");
+            }
+
             productNNSGroupBox.Visible = true;
             productID.Text = prodData.ProductID;
             productNNSGroupBox.Text = $"({prodData.ProductNumber}) - {prodData.ProductName}";
+            
             sizeValueLabel.Text = prodData.Size;
             sizeValueLabel.TextAlign = ContentAlignment.MiddleRight;
+
             colorValueLabel.Text = prodData.Color;
             colorValueLabel.TextAlign = ContentAlignment.MiddleRight;
+
             weightValueLabel.Text = prodData.Weight;
             weightValueLabel.TextAlign = ContentAlignment.MiddleRight;
+
             productDescriptionRichTextBox.Text = prodData.Description;
             costValueLabel.Text = prodData.StandardCost;
             listingPriceValueLabel.Text = prodData.ListPrice;
@@ -179,9 +167,9 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
                 }    
             }
         }
-        // --End of Product Details--
+        #endregion
 
-        // --Start of Customer Reviews--
+        #region Customer Review Section
         /// <summary>
         /// Updates the customer review panel with the provided customer review data.
         /// </summary>
@@ -212,14 +200,14 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
         /// <param name="customerReview">Customer review data</param>
         private void AddReview(int numReviews, CustomerReviewData[] customerReview)
         {
-            // Default box to get loc
-            GroupBox initialGroupBox = new GroupBox();
-            
             // If there are no reviews then dont update
             if (numReviews == 0)
             {
                 return;
             }
+
+            // Default box to get loc
+            GroupBox initialGroupBox = new GroupBox();
 
             // Create the first review
             initialGroupBox = CreateCustomerGroupBox(initialGroupBox, customerReview[0].CustomerName, 
@@ -298,27 +286,21 @@ namespace Adventure_Works_Desktop_App.ProductPage.Frontend
             commentRichTextBox.BringToFront();
             groupBox.Controls.Add(commentRichTextBox);
         }
-        // --End of Customer Reviews--
+        #endregion
 
-        // Helper Methods
+        #region Helper Methods
         /// <summary>
-        /// Helper function to rid of extra spaces between words (used in comments, as in db double spaces are apparent).
+        /// Wrapper to update front end details
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public static string TrimSpacesBetweenString(string s)
+        /// <param name="numProductDetailsUpdate">1=update primcatcombo, 2=update subcatcombo, 3=update productcombo, 4=update product details</param>
+        private void UpdateProducts(ProductDetailsUpdate numProductDetailsUpdate)
         {
-            return Regex.Replace(s, @"\s{2,}", " ");
-        }
+            // to do the reviews, use this container (customerReviewPanel) encapsulate it with a groupbox
+            ProductInfoBackend backend = new ProductInfoBackend(cultureNameLabel.Text);
 
-        /// <summary>
-        /// Get first key in newly populated combobox
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        private string GetFirst(ComboBox combo)
-        {
-            return combo.Items[0].ToString();
+            ProductDetailsProcedureUpdate(backend, numProductDetailsUpdate);
+            CustomerReviewUpdate(backend.CustomerData);
         }
+        #endregion
     }
 }

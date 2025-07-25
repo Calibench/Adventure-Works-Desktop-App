@@ -1,6 +1,5 @@
 ﻿using Adventure_Works_Desktop_App.ProductReviewPage.Backend;
 using System;
-using System.CodeDom;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -116,7 +115,9 @@ namespace Adventure_Works_Desktop_App.ProductReviewPage.Frontend
             // Submission
             try
             {
-                new ReviewProductBackend(productIDValueLabel.Text, rating, loggedBackUserControl.LoggedInText/*usernameLabel.Text*/, customerReviewRichTextBox.Text);
+                // Correct the instantiation of the SubmitReview method call
+                var backend = new ReviewProductBackend();
+                backend.SubmitReview(productIDValueLabel.Text, rating, loggedBackUserControl.LoggedInText, customerReviewRichTextBox.Text);
                 MessageBox.Show(Properties.ProductReviewResources.SuccessfulSubmit);
             }
             catch (Exception ex)

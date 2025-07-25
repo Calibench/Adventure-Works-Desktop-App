@@ -531,6 +531,7 @@
             // loggedBackUserControl
             // 
             this.loggedBackUserControl.Location = new System.Drawing.Point(664, 12);
+            this.loggedBackUserControl.LoggedInText = "Logged in: @User";
             this.loggedBackUserControl.Name = "loggedBackUserControl";
             this.loggedBackUserControl.Size = new System.Drawing.Size(160, 49);
             this.loggedBackUserControl.TabIndex = 8;

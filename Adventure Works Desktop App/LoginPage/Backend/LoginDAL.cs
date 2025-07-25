@@ -21,7 +21,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <returns>An <see cref="AccountData"/> object containing the username and password if the account is found; otherwise,
         /// an empty <see cref="AccountData"/> object.</returns>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
-        public static  AccountData DBGetAccountLoginData(string username, string password)
+        public  AccountData DBGetAccountLoginData(string username, string password)
         {
             AccountData data = new AccountData();
             try
@@ -63,7 +63,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <param name="password">The password associated with the username. Cannot be null or empty.</param>
         /// <returns>The display name if the username and password are valid; otherwise, <see langword="null"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
-        public static string DBGetDisplayName(string username, string password)
+        public string DBGetDisplayName(string username, string password)
         {
             try
             {

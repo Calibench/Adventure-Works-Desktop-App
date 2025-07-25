@@ -76,6 +76,7 @@
             this.Name = "LanguageProductForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Choose Lang";
+            this.Load += new System.EventHandler(this.InitialFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

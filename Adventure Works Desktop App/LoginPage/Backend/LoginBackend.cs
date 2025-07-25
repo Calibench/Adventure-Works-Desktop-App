@@ -12,6 +12,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
     /// </summary>
     internal class LoginBackend
     {
+        private readonly LoginDAL _dal = new LoginDAL();
         public AccountData accountData;
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <exception cref="Exception">Unable to connect to the DB</exception>
         private string GetDisplayName(string username, string password)
         {
-            return LoginDAL.DBGetDisplayName(username, password);
+            return _dal.DBGetDisplayName(username, password);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Adventure_Works_Desktop_App.LoginPage.Backend
         /// <exception cref="Exception">Unable to connect to the DB</exception>
         private AccountData GetLogin(string username, string password)
         {
-            return LoginDAL.DBGetAccountLoginData(username, password);
+            return _dal.DBGetAccountLoginData(username, password);
         }
     }
 }
