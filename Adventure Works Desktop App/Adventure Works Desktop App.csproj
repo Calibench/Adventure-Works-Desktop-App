@@ -172,6 +172,7 @@
     <Compile Include="Globals\DataClasses\RegionData.cs" />
     <Compile Include="SalesPersonPage\Backend\SalesPersonBackend.cs" />
     <Compile Include="Globals\DataClasses\SalesPersonData.cs" />
+    <Compile Include="SalesPersonPage\Backend\SalesPersonDAL.cs" />
     <Compile Include="SalesPersonPage\Frontend\ChangeRegionByNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,6 +192,7 @@
       <DependentUpon>SalesPersonForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SignUpPage\Backend\SignUpBackend.cs" />
+    <Compile Include="SignUpPage\Backend\SignUpDAL.cs" />
     <Compile Include="SignUpPage\Frontend\SignUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,6 +212,7 @@
     <Compile Include="Globals\DataClasses\StoreContactsData.cs" />
     <Compile Include="Globals\DataClasses\StoreDemographicsData.cs" />
     <Compile Include="StoreDetailsPage\Backend\StoreDetailsBackend.cs" />
+    <Compile Include="StoreDetailsPage\Backend\StoreDetailsDAL.cs" />
     <Compile Include="StoreDetailsPage\Backend\StoreDetailsEditBackend.cs" />
     <Compile Include="StoreDetailsPage\Frontend\StoreDetailListForm.cs">
       <SubType>Form</SubType>

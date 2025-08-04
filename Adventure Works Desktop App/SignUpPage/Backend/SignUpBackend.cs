@@ -1,8 +1,5 @@
 ﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
 using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -10,6 +7,7 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
 {
     public class SignUpBackend
     {
+        SignUpDAL _dal = new SignUpDAL();
 
         /// <summary>
         /// Checks whether the username is already in use by comparing it to the login table.
@@ -18,27 +16,7 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         /// <returns>Returns a <see cref="bool">, of whether the username is currently in use or not.</cref></returns>
         public bool CheckUnique(AccountData data)
         {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT dbo.ufnCheckUserName(@GivenUsername)", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@GivenUsername", data.Username);
-                        var result = cmd.ExecuteScalar();
-                        if (result != null && !string.IsNullOrWhiteSpace(result.ToString()))
-                        {
-                            return false; // it is not unique
-                        }
-                        return true; // it is unique
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in CheckUnique.", ex);
-            }
+            return _dal.CheckUnique(data);
         }
 
         /// <summary>
@@ -48,62 +26,15 @@ namespace Adventure_Works_Desktop_App.SignUpPage.Backend
         public void SignUp(AccountData data)
         {
             string id = "";
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("dbo.uspInsertNewAccount", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
-                        cmd.Parameters.AddWithValue("@LastName", data.LastName);
-                        cmd.Parameters.AddWithValue("@Username", data.Username);
-                        cmd.Parameters.AddWithValue("@Password", data.Password);
-                        cmd.Parameters.AddWithValue("@DisplayName", data.DisplayName);
-                        cmd.Parameters.AddWithValue("@Email", data.Email);
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    using (SqlCommand cmd = new SqlCommand("select LoginID from Person.Login where username = @username", con))
-                    {
-                        cmd.Parameters.AddWithValue("@username", data.Username);
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            if (reader != null && reader.Read())
-                            {
-                                id = reader["LoginID"].ToString();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in SignUp.", ex);
-            }
+            _dal.SignUp(data); // regular signup to adventureworks db
+            id = _dal.GetID(data); // get id for clicker signup if the signup was successful.
 
             if (string.IsNullOrEmpty(id))
             {
                 throw new InvalidOperationException("Failed to retrieve login ID after account creation");
             }
 
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Clicker"].ConnectionString))
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("insert into ClickerUserData(LoginID) values(@LoginID)", con))
-                    {
-                        cmd.Parameters.AddWithValue("@LoginID", id);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException("Database access failed in SignUp.", ex);
-            }
+            _dal.ClickerSignUp(id); // for clicker db
         }
 
         /// <summary>

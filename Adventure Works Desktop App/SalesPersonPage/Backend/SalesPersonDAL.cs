@@ -1,0 +1,151 @@
+﻿using Adventure_Works_Desktop_App.Globals.DataClasses;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace Adventure_Works_Desktop_App.SalesPersonPage.Backend
+{
+    internal class SalesPersonDAL
+    {
+        #region Sales Person Backend
+
+        #region Stored Procedures:
+        /// <summary>
+        /// Retrieves sales person data for a specified identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the sales person whose data is to be retrieved. Cannot be null or empty.</param>
+        /// <returns>A <see cref="SalesPersonData"/> object containing detailed information about the sales person, including
+        /// personal details and sales performance metrics. Returns an empty <see cref="SalesPersonData"/> object if no
+        /// data is found for the specified identifier.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
+        public SalesPersonData GetSalesPersonData(string id)
+        {
+            RegionData regionData = new RegionData();
+            SalesPersonData salesPersonData = new SalesPersonData();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("uspGetSalesPersonData", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                regionData.RegionName = reader["Region_Name"].ToString();
+                                regionData.RegionCode = reader["CountryRegionCode"].ToString();
+                                regionData.TerritoryID = reader["TerritoryID"].ToString();
+                                regionData.Continent = reader["Continent"].ToString();
+                                regionData.TotalSalesYTD = reader["Total_SalesYTD"].ToString();
+                                regionData.TotalSalesLY = reader["Total_SalesYTD_LastYear"].ToString();
+
+                                salesPersonData.BusinessEntityID = reader["BusinessEntityID"].ToString();
+                                salesPersonData.SalesQuota = reader["SalesQuota"].ToString();
+                                salesPersonData.Bonus = reader["Bonus"].ToString();
+                                salesPersonData.CommissionPct = reader["CommissionPct"].ToString();
+                                salesPersonData.SalesYTD = reader["SalesYTD"].ToString();
+                                salesPersonData.SalesLY = reader["SalesLastYear"].ToString();
+                                salesPersonData.FirstName = reader["FirstName"].ToString();
+                                salesPersonData.LastName = reader["LastName"].ToString();
+                                salesPersonData.RegionData = regionData;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetSalesPersonData.", ex);
+            }
+            return salesPersonData;
+        }
+
+        /// <summary>
+        /// Retrieves region data for a specified region name from the database.
+        /// </summary>
+        /// <remarks>This method executes a stored procedure to fetch region data. Ensure that the
+        /// database connection  string is correctly configured and that the stored procedure 'uspGetRegionData' is
+        /// available in the database.</remarks>
+        /// <param name="name">The name of the region for which to retrieve data. Cannot be null or empty.</param>
+        /// <returns>A <see cref="RegionData"/> object containing details about the specified region,  including the region name,
+        /// region code, territory ID, continent, total sales year-to-date,  and total sales from the last year.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is a failure accessing the database.</exception>
+        public RegionData GetRegionData(string name)
+        {
+            RegionData regionData = new RegionData();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("uspGetRegionData", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Name", name);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                regionData.RegionName = reader["Name"].ToString();
+                                regionData.RegionCode = reader["CountryRegionCode"].ToString();
+                                regionData.TerritoryID = reader["TerritoryID"].ToString();
+                                regionData.Continent = reader["Group"].ToString();
+                                regionData.TotalSalesYTD = reader["SalesYTD"].ToString();
+                                regionData.TotalSalesLY = reader["SalesLastYear"].ToString();
+                            }
+                            return regionData;
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GetRegionData.", ex);
+            }
+        }
+        #endregion
+
+        #region Scalar Functions:
+        
+        /// <summary>
+        /// Executes a SQL query and returns the first column of the first row in the result set as a string.
+        /// </summary>
+        /// <param name="query">The SQL query to execute. Must be a valid SQL command that returns a scalar value.</param>
+        /// <param name="param">The name of the parameter to be added to the SQL command. This should match a parameter placeholder in the
+        /// query.</param>
+        /// <param name="data">The value to be assigned to the parameter specified by <paramref name="param"/>.</param>
+        /// <returns>The first column of the first row in the result set as a string, or <see langword="null"/> if the result set
+        /// is empty.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if database access fails during the execution of the query.</exception>
+        public string GenQueryScalar(string query, string param, string data)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorksDb"].ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue(param, data);
+                        object result = cmd.ExecuteScalar();
+                        return result != null ? result.ToString() : null;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new InvalidOperationException("Database access failed in GenQueryScalar.", ex);
+            }
+        }
+
+        #endregion
+
+        #endregion
+    }
+}
