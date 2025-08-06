@@ -1,4 +1,4 @@
-﻿namespace Adventure_Works_Desktop_App.ClickerPages.Frontend
+﻿namespace Clicker.ClickerPages.Frontend
 {
     partial class MainClickerForm
     {
@@ -51,9 +51,8 @@
             this.numOfClicksLabel.AutoSize = true;
             this.numOfClicksLabel.Location = new System.Drawing.Point(91, 6);
             this.numOfClicksLabel.Name = "numOfClicksLabel";
-            this.numOfClicksLabel.Size = new System.Drawing.Size(67, 13);
+            this.numOfClicksLabel.Size = new System.Drawing.Size(0, 13);
             this.numOfClicksLabel.TabIndex = 1;
-            this.numOfClicksLabel.Text = "2147483646";
             // 
             // numOfClicksPanels
             // 

@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Clicker.ClickerPages.Backend;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Numerics;
 
-namespace Adventure_Works_Desktop_App.ClickerPages.Frontend
+namespace Clicker.ClickerPages.Frontend
 {
     public partial class MainClickerForm : Form
     {
-        private int userPower = 1;
+        Player player = new Player();
+
         public MainClickerForm(string username)
         {
             InitializeComponent();
+            CenterClickNumber();
         }
 
         private void clickMeButton_Click(object sender, EventArgs e)
         {
-            int currNum = int.Parse(numOfClicksLabel.Text);
+            NumberHandler numberHandler = new NumberHandler();
+            player.Currency += player.UserPower;
 
-            currNum += userPower;
-
-            numOfClicksLabel.Text = currNum.ToString();
+            numOfClicksLabel.Text = numberHandler.FormatLargeNumber((double)player.Currency);
             CenterClickNumber();
         }
 
@@ -33,7 +29,7 @@ namespace Adventure_Works_Desktop_App.ClickerPages.Frontend
         {
             int x = (numOfClicksPanels.Size.Width - numOfClicksLabel.Size.Width) / 2;
             int y = (numOfClicksPanels.Size.Height - numOfClicksLabel.Size.Height) / 2;
-            numOfClicksLabel.Location = new Point(x,y);
+            numOfClicksLabel.Location = new Point(x, y);
         }
     }
 }
