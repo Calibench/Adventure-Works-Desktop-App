@@ -11,14 +11,18 @@ namespace Adventure_Works_Desktop_App.MenuPage
         private int[] code = new int[4];
         private int currIndex = 0;
         private const int MAX_CODE_LENGTH = 4;
-        private static readonly int[] correctCode = DecodeCode(Properties.Resources.CodeKey);
+        private static readonly int[] correctClickerCode = DecodeCode(Properties.Resources.CodeKey);
+        private static readonly int[] correctTicTacCode = new int[] { 8, 2, 7, 8 };
+        private static readonly int[] correctChessCode = new int[] { 1, 2, 3, 4 };
 
         public enum CustomDialogResult
         {
             None = 0,
             OK = 1,
             Cancel = 2,
-            Clicker = 101
+            Clicker = 101,
+            TicTac = 102,
+            Chess = 103
         }
 
         public CustomDialogResult MyDialogResult { get; private set; } = CustomDialogResult.None;
@@ -86,7 +90,22 @@ namespace Adventure_Works_Desktop_App.MenuPage
         /// langword="false"/>.</returns>
         private bool CheckValidCode()
         {
-            return code.SequenceEqual(correctCode);
+            if (code.SequenceEqual(correctClickerCode))
+            {
+                MyDialogResult = CustomDialogResult.Clicker;
+                return true;
+            }
+            else if (code.SequenceEqual(correctTicTacCode))
+            {
+                MyDialogResult = CustomDialogResult.TicTac;
+                return true;
+            }
+            else if (code.SequenceEqual(correctChessCode))
+            {
+                MyDialogResult = CustomDialogResult.Chess;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -97,7 +116,6 @@ namespace Adventure_Works_Desktop_App.MenuPage
         private void CorrectCode()
         {
             MessageBox.Show("CORRECT CODE");
-            MyDialogResult = CustomDialogResult.Clicker;
             this.Close();
         }
 

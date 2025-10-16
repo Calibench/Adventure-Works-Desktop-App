@@ -11,7 +11,7 @@ namespace Clicker.ClickerPages.Backend
 
         public Player()
         {
-            UserPower = 50;
+            UserPower = 1;
             Currency = 0;
         }
     }

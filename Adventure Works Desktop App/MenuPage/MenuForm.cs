@@ -5,8 +5,10 @@ using Adventure_Works_Desktop_App.SalesPersonPage.Frontend;
 using Adventure_Works_Desktop_App.StoreDetailsPage.Frontend;
 using Adventure_Works_Desktop_App.ProductPage.Frontend;
 using Clicker.ClickerPages.Frontend;
+using TicTac;
 using System;
 using System.Windows.Forms;
+using Chess;
 
 namespace Adventure_Works_Desktop_App.MenuPage
 {
@@ -56,9 +58,18 @@ namespace Adventure_Works_Desktop_App.MenuPage
             var protectForm = new ProtectForm();
             protectForm.ShowDialog();
 
-            if (protectForm.MyDialogResult == ProtectForm.CustomDialogResult.Clicker)
+            switch (protectForm.MyDialogResult)
             {
-                FormNavigationHelper.ShowFormAndBackButton(this, new MainClickerForm(username));
+                case ProtectForm.CustomDialogResult.Clicker:
+                    FormNavigationHelper.ShowFormAndBackButton(this, new MainClickerForm(username));
+                    break;
+                case ProtectForm.CustomDialogResult.TicTac:
+                    // You need to add a reference to your CH_App namespace and make TicTacForm accessible
+                    FormNavigationHelper.ShowFormAndBackButton(this, new TicTacForm());
+                    break;
+                case ProtectForm.CustomDialogResult.Chess:
+                    FormNavigationHelper.ShowFormAndBackButton(this, new ChessForm());
+                    break;
             }
         }
 

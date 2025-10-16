@@ -311,9 +311,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chess\Chess.csproj">
+      <Project>{f6059b9c-8af3-47a2-bb3f-f09aff52a251}</Project>
+      <Name>Chess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Clicker\Clicker.csproj">
       <Project>{a3828c0b-86b3-4dbb-93a1-187a4a5f77f4}</Project>
       <Name>Clicker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicTac\TicTac.csproj">
+      <Project>{174f8594-bc6d-46a9-8112-dacdaa12f084}</Project>
+      <Name>TicTac</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

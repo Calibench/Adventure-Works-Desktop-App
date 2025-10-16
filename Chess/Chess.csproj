@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A3828C0B-86B3-4DBB-93A1-187A4A5F77F4}</ProjectGuid>
+    <ProjectGuid>{F6059B9C-8AF3-47A2-BB3F-F09AFF52A251}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Clicker</RootNamespace>
-    <AssemblyName>Clicker</AssemblyName>
+    <RootNamespace>Chess</RootNamespace>
+    <AssemblyName>Chess</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,9 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,22 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClickerPages\Backend\ClickerRepository.cs" />
-    <Compile Include="ClickerPages\Backend\NumberHandler.cs" />
-    <Compile Include="ClickerPages\Backend\Player.cs" />
-    <Compile Include="ClickerPages\Backend\UpgradeCatalog.cs" />
-    <Compile Include="ClickerPages\Backend\UpgradeDefinition.cs" />
-    <Compile Include="ClickerPages\Backend\UpgradeTypes.cs" />
-    <Compile Include="ClickerPages\Frontend\MainClickerForm.cs">
+    <Compile Include="ChessAI.cs" />
+    <Compile Include="ChessBoard.cs" />
+    <Compile Include="ChessForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClickerPages\Frontend\MainClickerForm.Designer.cs">
-      <DependentUpon>MainClickerForm.cs</DependentUpon>
+    <Compile Include="ChessForm.Designer.cs">
+      <DependentUpon>ChessForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pieces\BishopPiece.cs" />
+    <Compile Include="Pieces\CastlePiece.cs" />
+    <Compile Include="Pieces\ChessPieceBase.cs" />
+    <Compile Include="Pieces\KingPiece.cs" />
+    <Compile Include="Pieces\KnightPiece.cs" />
+    <Compile Include="Pieces\PawnPiece.cs" />
+    <Compile Include="Pieces\QueenPiece.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ClickerPages\Frontend\MainClickerForm.resx">
-      <DependentUpon>MainClickerForm.cs</DependentUpon>
+    <EmbeddedResource Include="ChessForm.resx">
+      <DependentUpon>ChessForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,6 +88,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

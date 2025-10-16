@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Clicker.ClickerPages.Backend
 {
@@ -9,16 +10,31 @@ namespace Clicker.ClickerPages.Backend
         }
 
         // Converts a double to a readable string with suffixes (K, M, B, T, etc.)
-        public string FormatLargeNumber(double number)
+        public string FormatLargeNumber(BigInteger number)
         {
+            if (number == 0) return "0";
+
             string[] suffixes = { "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc" };
-            int suffixIndex = 0;
-            while (number >= 1000 && suffixIndex < suffixes.Length - 1)
+            int idx = 0;
+            BigInteger n = number;
+            while (n >= 1000 && idx < suffixes.Length - 1)
             {
-                number /= 1000;
-                suffixIndex++;
+                n /= 1000;
+                idx++;
             }
-            return $"{number:0.###}{suffixes[suffixIndex]}";
+
+            BigInteger divisor = BigInteger.Pow(1000, idx);
+            BigInteger integerPart = number / divisor;
+            BigInteger remainder = number % divisor;
+
+            // First 3 decimal digits, truncated (change to rounded if preferred)
+            BigInteger fracTimes1000 = (remainder * 1000) / divisor;
+
+            if (fracTimes1000 == 0)
+                return integerPart.ToString() + suffixes[idx];
+
+            string frac = fracTimes1000.ToString().TrimEnd('0');
+            return integerPart.ToString() + "." + frac + suffixes[idx];
         }
 
         // Adds two large numbers represented as doubles
